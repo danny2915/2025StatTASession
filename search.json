@@ -1,68 +1,68 @@
 [
   {
-    "objectID": "example_code/Example_Code_wk2.html",
-    "href": "example_code/Example_Code_wk2.html",
-    "title": "Week 2 Example R Code (0909)",
+    "objectID": "example_code/Example_Code_wk3.html",
+    "href": "example_code/Example_Code_wk3.html",
+    "title": "Week 3 Example R Code (0916)",
     "section": "",
-    "text": "Right click to download:\n\nwk2_example_code.R",
+    "text": "Right click to download:\n\nwk3_example_code.R",
     "crumbs": [
       "Example R code",
-      "Week 2 Example R Code (0909)"
+      "Week 3 Example R Code (0916)"
     ]
   },
   {
-    "objectID": "answers/wk2_answer.html",
-    "href": "answers/wk2_answer.html",
-    "title": "Week 2 Answers (0909)",
+    "objectID": "example_code/Example_Code_wk1.html",
+    "href": "example_code/Example_Code_wk1.html",
+    "title": "Week 1 Example R Code (0902)",
     "section": "",
-    "text": "Please download the datasets county.csv and loan50.csv here.",
+    "text": "Right click to download:\n\nwk1_example_code.R",
     "crumbs": [
-      "Answers",
-      "Week 2 Answers (0909)"
+      "Example R code",
+      "Week 1 Example R Code (0902)"
     ]
   },
   {
-    "objectID": "answers/wk2_answer.html#download-data",
-    "href": "answers/wk2_answer.html#download-data",
-    "title": "Week 2 Answers (0909)",
+    "objectID": "answers/wk1_answer.html",
+    "href": "answers/wk1_answer.html",
+    "title": "Week 1 Answers (0902)",
     "section": "",
-    "text": "Please download the datasets county.csv and loan50.csv here.",
+    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.\nx &lt;- 20250902\ny &lt;- 1031\nprint(x / y)",
     "crumbs": [
       "Answers",
-      "Week 2 Answers (0909)"
+      "Week 1 Answers (0902)"
     ]
   },
   {
-    "objectID": "answers/wk2_answer.html#import-data",
-    "href": "answers/wk2_answer.html#import-data",
-    "title": "Week 2 Answers (0909)",
-    "section": "2 Import Data",
-    "text": "2 Import Data\n\nImport the package tidyverse, which contains several useful functions for data wrangling and visualization.\nCreate a folder on your computer to store the dataset downloaded from NTU COOL or OpenIntro website.\nSet your working directory as that folder and import the datasets county.csv and loan50.csv.\n\nlibrary(tidyverse)\nsetwd(\"/your/working/directory\")\ncounty &lt;- read.csv(\"county.csv\")\nloan &lt;- read.csv(\"loan50.csv\")",
+    "objectID": "answers/wk1_answer.html#assign-values",
+    "href": "answers/wk1_answer.html#assign-values",
+    "title": "Week 1 Answers (0902)",
+    "section": "",
+    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.\nx &lt;- 20250902\ny &lt;- 1031\nprint(x / y)",
     "crumbs": [
       "Answers",
-      "Week 2 Answers (0909)"
+      "Week 1 Answers (0902)"
     ]
   },
   {
-    "objectID": "answers/wk2_answer.html#scatter-plot",
-    "href": "answers/wk2_answer.html#scatter-plot",
-    "title": "Week 2 Answers (0909)",
-    "section": "3 Scatter Plot",
-    "text": "3 Scatter Plot\n\nUse county.csv to draw the scatter plot of unemployment_rate (x-axis) and per_capita_income (y-axis).\n\n\n\n\n\n\n\nTip\n\n\n\nHint: You don’t need to specify any parameter in geom_point().\n\n\nggplot(county, aes(x = unemployment_rate, y = per_capita_income)) + \n  geom_point()\n\n\n\n\n\n\n\n\n\n\nDraw the same graph again, but this time make the following adjustments:\n\nadjust the point color to lightcoral\nadjust the point size to 0.5\n\n\nggplot(county, aes(x = unemployment_rate, y = per_capita_income)) +\n  geom_point(color = \"lightcoral\", size = 0.5)",
+    "objectID": "answers/wk1_answer.html#help",
+    "href": "answers/wk1_answer.html#help",
+    "title": "Week 1 Answers (0902)",
+    "section": "2 Help",
+    "text": "2 Help\nUse the help() function to check docs, e.g. data.frame() or mean().\nhelp(data.frame)\nhelp(mean)",
     "crumbs": [
       "Answers",
-      "Week 2 Answers (0909)"
+      "Week 1 Answers (0902)"
     ]
   },
   {
-    "objectID": "answers/wk2_answer.html#histogram",
-    "href": "answers/wk2_answer.html#histogram",
-    "title": "Week 2 Answers (0909)",
-    "section": "4 Histogram",
-    "text": "4 Histogram\nUse loan50.csv data to draw the histogram of loan_amount (set as x-axis), and adjust the parameter binwidth in geom_histogram() to 5000.\nggplot(loan, aes(x = loan_amount)) +\n  geom_histogram(binwidth = 5000)\n\n\n[1] \"C:/Users/danny/Dropbox/Graduate/統計學TA/2025/InClassPractice/answers\"",
+    "objectID": "answers/wk1_answer.html#matrix",
+    "href": "answers/wk1_answer.html#matrix",
+    "title": "Week 1 Answers (0902)",
+    "section": "3 Matrix",
+    "text": "3 Matrix\nCreate the following vectors:\nname_vec &lt;- c(\"James\", \"Noc\", \"Monica\")\n\nage_vec &lt;- c(25, 30, 28)\nand create a 3 × 2 matrix with these two vectors.\nDo you encounter errors? Can you print the matrix out? What’s the data type of the matrix?\nname_vec &lt;- c(\"James\", \"Noc\", \"Monica\")\nage_vec &lt;- c(25, 30, 28)\nmat &lt;- matrix(c(name_vec, age_vec), nrow = 3)\nprint(mat)\nclass(mat)\n\n# `mat[,2]` only select the second column\n# note that the `age_vec` become character type after merging into matrix\nprint(mat[,2])\nclass(mat[,2])",
     "crumbs": [
       "Answers",
-      "Week 2 Answers (0909)"
+      "Week 1 Answers (0902)"
     ]
   },
   {
@@ -121,14 +121,25 @@
     ]
   },
   {
-    "objectID": "slides/Slides_wk2.html",
-    "href": "slides/Slides_wk2.html",
-    "title": "Week 2 Slides (0909)",
+    "objectID": "slides/Slides_wk3.html",
+    "href": "slides/Slides_wk3.html",
+    "title": "Week 3 Slides (0916)",
+    "section": "",
+    "text": "Open in new tab 3 Download PDF",
+    "crumbs": [
+      "Slides",
+      "Week 3 Slides (0916)"
+    ]
+  },
+  {
+    "objectID": "slides/Slides_wk1.html",
+    "href": "slides/Slides_wk1.html",
+    "title": "Week 1 Slides (0902)",
     "section": "",
     "text": "Open in new tab · Download PDF",
     "crumbs": [
       "Slides",
-      "Week 2 Slides (0909)"
+      "Week 1 Slides (0902)"
     ]
   },
   {
@@ -142,14 +153,14 @@
     ]
   },
   {
-    "objectID": "slides/Slides_wk1.html",
-    "href": "slides/Slides_wk1.html",
-    "title": "Week 1 Slides (0902)",
+    "objectID": "slides/Slides_wk2.html",
+    "href": "slides/Slides_wk2.html",
+    "title": "Week 2 Slides (0909)",
     "section": "",
     "text": "Open in new tab · Download PDF",
     "crumbs": [
       "Slides",
-      "Week 1 Slides (0902)"
+      "Week 2 Slides (0909)"
     ]
   },
   {
@@ -197,58 +208,124 @@
     ]
   },
   {
-    "objectID": "answers/wk1_answer.html",
-    "href": "answers/wk1_answer.html",
-    "title": "Week 1 Answers (0902)",
+    "objectID": "practices/wk3.html",
+    "href": "practices/wk3.html",
+    "title": "Week 3 Practices (0916)",
     "section": "",
-    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.\nx &lt;- 20250902\ny &lt;- 1031\nprint(x / y)",
+    "text": "Please download the datasets county.csv and loan_full_schema.csv here.",
     "crumbs": [
-      "Answers",
-      "Week 1 Answers (0902)"
+      "Practices",
+      "Week 3 Practices (0916)"
     ]
   },
   {
-    "objectID": "answers/wk1_answer.html#assign-values",
-    "href": "answers/wk1_answer.html#assign-values",
-    "title": "Week 1 Answers (0902)",
+    "objectID": "practices/wk3.html#download-data",
+    "href": "practices/wk3.html#download-data",
+    "title": "Week 3 Practices (0916)",
     "section": "",
-    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.\nx &lt;- 20250902\ny &lt;- 1031\nprint(x / y)",
+    "text": "Please download the datasets county.csv and loan_full_schema.csv here.",
     "crumbs": [
-      "Answers",
-      "Week 1 Answers (0902)"
+      "Practices",
+      "Week 3 Practices (0916)"
     ]
   },
   {
-    "objectID": "answers/wk1_answer.html#help",
-    "href": "answers/wk1_answer.html#help",
-    "title": "Week 1 Answers (0902)",
-    "section": "2 Help",
-    "text": "2 Help\nUse the help() function to check docs, e.g. data.frame() or mean().\nhelp(data.frame)\nhelp(mean)",
+    "objectID": "practices/wk3.html#coding-style",
+    "href": "practices/wk3.html#coding-style",
+    "title": "Week 3 Practices (0916)",
+    "section": "2 Coding Style",
+    "text": "2 Coding Style\n\nCreate an RStudio project inside a folder with proper names (e.g. TA_Session).\nCreate folders for R scripts and data. (optional: put scripts for the first two weeks’ TA session in the script folder as well.)\nFor the following questions, your code should follow the coding styles in the slides.",
     "crumbs": [
-      "Answers",
-      "Week 1 Answers (0902)"
+      "Practices",
+      "Week 3 Practices (0916)"
     ]
   },
   {
-    "objectID": "answers/wk1_answer.html#matrix",
-    "href": "answers/wk1_answer.html#matrix",
-    "title": "Week 1 Answers (0902)",
-    "section": "3 Matrix",
-    "text": "3 Matrix\nCreate the following vectors:\nname_vec &lt;- c(\"James\", \"Noc\", \"Monica\")\n\nage_vec &lt;- c(25, 30, 28)\nand create a 3 × 2 matrix with these two vectors.\nDo you encounter errors? Can you print the matrix out? What’s the data type of the matrix?\nname_vec &lt;- c(\"James\", \"Noc\", \"Monica\")\nage_vec &lt;- c(25, 30, 28)\nmat &lt;- matrix(c(name_vec, age_vec), nrow = 3)\nprint(mat)\nclass(mat)\n\n# `mat[,2]` only select the second column\n# note that the `age_vec` become character type after merging into matrix\nprint(mat[,2])\nclass(mat[,2])",
+    "objectID": "practices/wk3.html#contingency-table",
+    "href": "practices/wk3.html#contingency-table",
+    "title": "Week 3 Practices (0916)",
+    "section": "3 Contingency Table",
+    "text": "3 Contingency Table\nUsing the dataset loans_full_schema.csv, create a contingency table by loan_purpose (set as row) and application_type (set as column), and add the sum row and sum column.",
     "crumbs": [
-      "Answers",
-      "Week 1 Answers (0902)"
+      "Practices",
+      "Week 3 Practices (0916)"
     ]
   },
   {
-    "objectID": "example_code/Example_Code_wk1.html",
-    "href": "example_code/Example_Code_wk1.html",
-    "title": "Week 1 Example R Code (0902)",
+    "objectID": "practices/wk3.html#bar-graph",
+    "href": "practices/wk3.html#bar-graph",
+    "title": "Week 3 Practices (0916)",
+    "section": "4 Bar Graph",
+    "text": "4 Bar Graph\nUsing the dataset loans_full_schema.csv, draw the bar graph to show the numbers of applicant according to each credit grade by following procedures:\n\nSpecify sub_grade as the x-axis, and fill the bar with grade.\nAdd graph title and axis labels\n\nTitle: Number of Applicant by Credit Grade\n\nx-axis: Credit Grade\n\ny-axis: Number of Applicant\n\nCenter the graph title.\n\n\n\n\n\n\n\nTip\n\n\n\nHint: Add theme(plot.title = element_text(hjust = 0.5)) to the graph.\n\n\nAfter that, you should have a beautiful graph and share it with me! :)",
+    "crumbs": [
+      "Practices",
+      "Week 3 Practices (0916)"
+    ]
+  },
+  {
+    "objectID": "answers/wk2_answer.html",
+    "href": "answers/wk2_answer.html",
+    "title": "Week 2 Answers (0909)",
     "section": "",
-    "text": "Right click to download:\n\nwk1_example_code.R",
+    "text": "Please download the datasets county.csv and loan50.csv here.",
+    "crumbs": [
+      "Answers",
+      "Week 2 Answers (0909)"
+    ]
+  },
+  {
+    "objectID": "answers/wk2_answer.html#download-data",
+    "href": "answers/wk2_answer.html#download-data",
+    "title": "Week 2 Answers (0909)",
+    "section": "",
+    "text": "Please download the datasets county.csv and loan50.csv here.",
+    "crumbs": [
+      "Answers",
+      "Week 2 Answers (0909)"
+    ]
+  },
+  {
+    "objectID": "answers/wk2_answer.html#import-data",
+    "href": "answers/wk2_answer.html#import-data",
+    "title": "Week 2 Answers (0909)",
+    "section": "2 Import Data",
+    "text": "2 Import Data\n\nImport the package tidyverse, which contains several useful functions for data wrangling and visualization.\nCreate a folder on your computer to store the dataset downloaded from NTU COOL or OpenIntro website.\nSet your working directory as that folder and import the datasets county.csv and loan50.csv.\n\nlibrary(tidyverse)\nsetwd(\"/your/working/directory\")\ncounty &lt;- read.csv(\"county.csv\")\nloan &lt;- read.csv(\"loan50.csv\")",
+    "crumbs": [
+      "Answers",
+      "Week 2 Answers (0909)"
+    ]
+  },
+  {
+    "objectID": "answers/wk2_answer.html#scatter-plot",
+    "href": "answers/wk2_answer.html#scatter-plot",
+    "title": "Week 2 Answers (0909)",
+    "section": "3 Scatter Plot",
+    "text": "3 Scatter Plot\n\nUse county.csv to draw the scatter plot of unemployment_rate (x-axis) and per_capita_income (y-axis).\n\n\n\n\n\n\n\nTip\n\n\n\nHint: You don’t need to specify any parameter in geom_point().\n\n\nggplot(county, aes(x = unemployment_rate, y = per_capita_income)) + \n  geom_point()\n\n\n\n\n\n\n\n\n\n\nDraw the same graph again, but this time make the following adjustments:\n\nadjust the point color to lightcoral\nadjust the point size to 0.5\n\n\nggplot(county, aes(x = unemployment_rate, y = per_capita_income)) +\n  geom_point(color = \"lightcoral\", size = 0.5)",
+    "crumbs": [
+      "Answers",
+      "Week 2 Answers (0909)"
+    ]
+  },
+  {
+    "objectID": "answers/wk2_answer.html#histogram",
+    "href": "answers/wk2_answer.html#histogram",
+    "title": "Week 2 Answers (0909)",
+    "section": "4 Histogram",
+    "text": "4 Histogram\nUse loan50.csv data to draw the histogram of loan_amount (set as x-axis), and adjust the parameter binwidth in geom_histogram() to 5000.\nggplot(loan, aes(x = loan_amount)) +\n  geom_histogram(binwidth = 5000)",
+    "crumbs": [
+      "Answers",
+      "Week 2 Answers (0909)"
+    ]
+  },
+  {
+    "objectID": "example_code/Example_Code_wk2.html",
+    "href": "example_code/Example_Code_wk2.html",
+    "title": "Week 2 Example R Code (0909)",
+    "section": "",
+    "text": "Right click to download:\n\nwk2_example_code.R",
     "crumbs": [
       "Example R code",
-      "Week 1 Example R Code (0902)"
+      "Week 2 Example R Code (0909)"
     ]
   }
 ]
