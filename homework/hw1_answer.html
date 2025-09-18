@@ -90,6 +90,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -272,6 +301,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#figure-2.17-contingency-table" id="toc-figure-2.17-contingency-table" class="nav-link" data-scroll-target="#figure-2.17-contingency-table"><span class="header-section-number">1.5</span> Figure 2.17: Contingency Table</a></li>
   <li><a href="#figure-2.18-frequency-table" id="toc-figure-2.18-frequency-table" class="nav-link" data-scroll-target="#figure-2.18-frequency-table"><span class="header-section-number">1.6</span> Figure 2.18: Frequency Table</a></li>
   <li><a href="#figure-2.23-bar-graph" id="toc-figure-2.23-bar-graph" class="nav-link" data-scroll-target="#figure-2.23-bar-graph"><span class="header-section-number">1.7</span> Figure 2.23: Bar Graph</a></li>
+  <li><a href="#summary-statistics-table" id="toc-summary-statistics-table" class="nav-link" data-scroll-target="#summary-statistics-table"><span class="header-section-number">1.8</span> Summary Statistics Table</a></li>
   </ul></li>
   <li><a href="#textbook-exercise" id="toc-textbook-exercise" class="nav-link" data-scroll-target="#textbook-exercise"><span class="header-section-number">2</span> Textbook Exercise</a>
   <ul class="collapse">
@@ -696,6 +726,9 @@ MORTGAGE      OWN     RENT      Sum
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">q75 =</span> <span class="fu">c</span>(<span class="fu">quantile</span>(loan<span class="sc">$</span>annual_income, .<span class="dv">75</span>), <span class="fu">quantile</span>(loan<span class="sc">$</span>total_credit_lines, .<span class="dv">75</span>)),</span>
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">row.names =</span> <span class="fu">c</span>(<span class="st">"annual_income"</span>, <span class="st">"total_credit_line"</span>)</span>
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="summary-statistics-table" class="level3" data-number="1.8">
+<h3 data-number="1.8" class="anchored" data-anchor-id="summary-statistics-table"><span class="header-section-number">1.8</span> Summary Statistics Table</h3>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>                        mean median          sd   q25   q75
@@ -781,7 +814,7 @@ Control: those instructed not to exercise.</li>
 <li>Yes. The blocking variable is age group; randomization is carried out within each block.</li>
 <li>Participants cannot realistically be blinded to whether they exercise. Blinding of outcome assessors is possible but not described. As written, the study is not blinded and could be subject to placebo/Hawthorne/observer effects.</li>
 <li>Because of random assignment, a causal effect of exercise on the measured mental-health outcome can be inferred for the study participants (and, with blocking done well, within age groups). Generalization depends on how the stratified sample was obtained; if it’s a good probability sample of the target population of 18–55-year-olds, results generalize to that population. Otherwise, external validity is limited.</li>
-<li>Consider adherence and dropout, specify duration and intensity of exercise, pre-register outcomes, blind exam scorers, ensure adequate sample size, record potential time-varying confounders, and plan for attrition.</li>
+<li>Pre-register outcomes, blinded-trials, ensure adequate sample size, record potential time-varying confounders.</li>
 </ol>
 </section>
 <section id="question-1.38" class="level3" data-number="2.5">
@@ -815,9 +848,6 @@ Response variable: per-capita income (in thousands).<br>
 </section>
 <section id="question-2.22" class="level3" data-number="2.8">
 <h3 data-number="2.8" class="anchored" data-anchor-id="question-2.22"><span class="header-section-number">2.8</span> Question 2.22</h3>
-<p>910 registered voters from Tampa, FL were cross-tabulated by political ideology and preferred policy.</p>
-<p>Totals: Conservatives 372, Moderates 363, Liberals 175, Overall 910.<br>
-Row totals: Apply for citizenship 278; Guest worker 262; Leave the country 350; Not sure 20.</p>
 <ol type="a">
 <li>Percent identifying as conservatives<br>
 372 / 910 ≈ 40.9%.</li>
@@ -836,17 +866,23 @@ No.&nbsp;If independent, the percent favoring citizenship would be about the sam
 <section id="question-2.30" class="level3" data-number="2.9">
 <h3 data-number="2.9" class="anchored" data-anchor-id="question-2.30"><span class="header-section-number">2.9</span> Question 2.30</h3>
 <ol type="a">
-<li>If ( = 1 ), then ( {x} = ). This matches symmetric distributions.<br>
+<li>If <span class="math inline">\(\dfrac{\bar{x}}{\mathrm{median}} = 1\)</span>, then <span class="math inline">\(\bar{x}=\mathrm{median}\)</span>. This matches symmetric distributions.<br>
 </li>
-<li>If ( &lt; 1 ), then ( {x} &lt; ). This matches left-skewed distributions (lower values pull the mean down).<br>
+<li>If <span class="math inline">\(\dfrac{\bar{x}}{\mathrm{median}} &lt; 1\)</span>, then <span class="math inline">\(\bar{x}&lt;\mathrm{median}\)</span>. This matches left-skewed distributions (lower values pull the mean down).<br>
 </li>
-<li>If ( &gt; 1 ), then ( {x} &gt; ). This matches right-skewed distributions (higher values pull the mean up).</li>
+<li>If <span class="math inline">\(\dfrac{\bar{x}}{\mathrm{median}} &gt; 1\)</span>, then <span class="math inline">\(\bar{x}&gt;\mathrm{median}\)</span>. This matches right-skewed distributions (higher values pull the mean up).</li>
 </ol>
 </section>
 <section id="question-2.34" class="level3" data-number="2.10">
 <h3 data-number="2.10" class="anchored" data-anchor-id="question-2.34"><span class="header-section-number">2.10</span> Question 2.34</h3>
-<p>a.Histogram: overall shape (including bimodality), gaps, and fine-grained density are apparent; these are not visible in a box plot.<br>
-Box plot: median, quartiles (IQR), and identification of outliers are explicit; these are harder to read from the histogram. b.Plausibly two groups with systematically different times: men vs women. (A secondary contributor could be improvement over calendar time.) c.Women’s finishing times are generally higher (slower) than men’s, with a larger median and typically greater spread (IQR). Men’s times are lower on average and a bit less variable. d.A downward trend over years (times generally improve) and the changing gap between men and women. It highlights temporal patterns (e.g., early years slower, later years faster) that a single histogram/box plot, which aggregates over time, cannot show.</p>
+<ol type="a">
+<li>Histogram: overall shape (including bimodality) and density are apparent, while these are not visible in a box plot.<br>
+Box plot: median, quartiles (IQR), and identification of outliers are explicit, while these are harder to read from the histogram.</li>
+<li>Plausibly two groups with systematically different times: men vs women.</li>
+<li>Women’s finishing times are generally higher than men’s, with a larger median and typically greater spread (IQR). Men’s times are lower on average and a bit less variable.</li>
+<li>A downward trend over years and the changing gap between men and women. It highlights temporal patterns that a single histogram/box plot, which aggregates over time, cannot show.</li>
+</ol>
+
 
 
 </section>
