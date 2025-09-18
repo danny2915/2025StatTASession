@@ -1,221 +1,145 @@
 [
   {
-    "objectID": "example_code/Example_Code_wk3.html",
-    "href": "example_code/Example_Code_wk3.html",
-    "title": "Week 3 Example R Code (0916)",
+    "objectID": "homework/hw1_answer.html",
+    "href": "homework/hw1_answer.html",
+    "title": "Homework 1 Answers",
     "section": "",
-    "text": "Right click to download:\n\nwk3_example_code.R",
+    "text": "If you find any typos or errors, please feel free to contact me via email at r13323002@ntu.edu.tw. I would appreciate it and will correct the solution to prevent any misunderstandings.\nFor some R commands marked with ‘OPTIONAL,’ you don’t need to learn them. You will be completely fine on the computer quiz even if you choose to ignore them.\nIf you’re having trouble understanding the code, don’t hesitate to ask me for help. I’ll do my best to assist you during office hours or after the TA session.",
+    "crumbs": [
+      "Homework Solutions",
+      "Homework 1 Answers"
+    ]
+  },
+  {
+    "objectID": "homework/hw1_answer.html#computer-exercises",
+    "href": "homework/hw1_answer.html#computer-exercises",
+    "title": "Homework 1 Answers",
+    "section": "1 Computer Exercises",
+    "text": "1 Computer Exercises\n\n1.1 Figure 1.8: Scatter Plot\n# draw the scatter plot \nscatter_plot_1 &lt;- ggplot(county, aes(x = multi_unit, y = homeownership)) +\n  \n  ## adjust the points\n  geom_point(color = \"steelblue\", fill = \"black\", shape = 21, stroke = 0.9) +\n  \n  ## add labels and graph title to make the graph readable\n  labs(\n    x = \"Percent of Units in Multi-Unit Structures\",\n    y = \"Homeownership Rate\",\n    title = \"Figure 1.8: Homeownership vs. Multi-Unit Structures\"\n  ) +\n  \n  ## center the title text\n  theme(plot.title = element_text(hjust = 0.5)) +\n  \n  ## adjust the scale of x, y-axis\n  scale_x_continuous(\n    breaks = c(0, 20, 40, 60, 80, 100),\n    labels = c(\"0%\", \"20%\", \"40%\", \"60%\", \"80%\", \"100%\")\n  ) +\n  scale_x_continuous(\n    breaks = c(0, 20, 40, 60, 80, 100),\n    labels = c(\"0%\", \"20%\", \"40%\", \"60%\", \"80%\", \"100%\")\n  )\n\n# show the plot\nscatter_plot_1\n\n\n\n\n\n\n\n\n\n# highlight point at (31.3, 39.4)\nhighlight_point_1 &lt;- data.frame(\n  homeownership = 31.3,\n  multi_unit = 39.4\n)\n\n# highlighting the point\nscatter_plot_1_hl &lt;- scatter_plot_1 +\n  \n  ## add highlight point circle\n  geom_point(data = highlight_point_1, aes(x = multi_unit, y = homeownership), color = \"red\", size = 3, shape = 1) +\n  \n  ## add both vertical and horizontal dash lines\n  geom_vline(xintercept = highlight_point_1$multi_unit, linetype = \"dashed\", color = \"red\") +\n  geom_hline(yintercept = highlight_point_1$homeownership, linetype = \"dashed\", color = \"red\")\n\n# show the plot\nscatter_plot_1_hl\n\n\n\n\n\n\n\n\n\n\n\n1.2 Figure 1.9: Scatter Plot\n# draw the scatter plot\nscatter_plot_2 &lt;- ggplot(county, aes(x = median_hh_income, y = pop_change)) +\n  \n  ## adjust the points\n  geom_point(color = \"steelblue\", fill = \"black\", shape = 21, stroke = 0.9) +\n  \n  ## add labels and graph title to make the graph readable\n  labs(\n    x = \"Median Household Income\",\n    y = \"Population Change Over 7 Years\",\n    title = \"Figure 1.9: Population Change vs. Median Household Income\"\n  ) +\n  \n  ## center the title text\n  theme(plot.title = element_text(hjust = 0.5)) +\n  \n  ## adjust the scale of x, y-axis\n  scale_x_continuous(\n    labels = c(\"$0K\", \"$20K\", \"$40K\", \"$60K\", \"$80K\", \"$100K\", \"$120K\"),\n    breaks = seq(0, 120000, by = 20000)\n  ) +\n  scale_y_continuous(\n    breaks = c(-10, 0, 10, 20),\n    labels = c(\"-10%\", \"0%\", \"10%\", \"20%\")\n  )\n\n# show the plot\nscatter_plot_2\n\n\n\n\n\n\n\n\n\n# highlight point at (22736, -3.63)\nhighlight_point_2 &lt;- data.frame(\n  median_hh_income = 22736,\n  pop_change = -3.63\n)\n\n# highlighting the point\nscatter_plot_2_hl &lt;- scatter_plot_2 +\n  \n  ## add highlight point circle\n  geom_point(data = highlight_point_2, aes(x = median_hh_income, y = pop_change), color = \"red\", size = 3, shape = 1) +\n  \n  ## add both vertical and horizontal dash lines\n  geom_vline(xintercept = highlight_point_2$median_hh_income, linetype = \"dashed\", color = \"red\") +\n  geom_hline(yintercept = highlight_point_2$pop_change, linetype = \"dashed\", color = \"red\")\n\n# show the plot\nscatter_plot_2_hl\n\n\n\n\n\n\n\n\n\n\n\n1.3 Figure 2.6: Histogram\nggplot(loan50, aes(x = interest_rate)) +\n  \n  ## plot the histogram (OPTIONAL: `boundary` specify the location of edge for each bin)\n  geom_histogram(binwidth = 2.5, fill = \"steelblue\", color = \"black\", boundary = 5) +\n  \n  ## other adjustments\n  labs(\n    x = \"Interest Rate\",\n    y = \"Frequency\",\n    title = \"Figure 2.6: A histogram of interest rate\"\n  ) +\n  scale_x_continuous(\n    labels = c(\"5%\", \"10%\", \"15%\", \"20%\", \"25%\"),\n    breaks = c(5, 10, 15, 20, 25)\n  ) +\n  theme(plot.title = element_text(hjust = 0.5))\n\n\n\n\n\n\n\n\n\n\n\n1.4 Figure 2.10: Box Plot & Dot Plot\n# draw the graph by two different ways: box plot, and dot plot\nbox_dot_plot_raw &lt;- ggplot(loan50, aes(x = \"\", y = interest_rate)) +\n  \n  ## draw the box plot, dot plot, and overlap them together\n  geom_boxplot(width = 0.3) +\n  geom_dotplot(binaxis = 'y', stackdir = 'center', dotsize = 0.5, fill = \"lightblue\") +\n  \n  labs(\n    y = \"Interest Rate\",\n    title = \"Figure 2.10: Box plot and dot plot of interest rate\"\n  ) +\n  \n  ## adjust the scale and range of y-axis\n  scale_y_continuous(\n    labels = c(\"5%\", \"10%\", \"15%\", \"20%\", \"25%\"),\n    breaks = seq(5, 25, by = 5)\n  ) +\n  \n  ## adjust the graph title and x-axis title\n  theme(plot.title = element_text(hjust = 0.5))\n  \n# show the plot\nbox_dot_plot_raw\n\n\n\n\n\n\n\n\n\n\n1.4.1 (OPTIONAL) How to separate the box plot and dot plot beautifully?\nSince we haven’t introduced facet command, this should be leaved optional.\n# create two distinct dataset for dot/box graph, and append them together\n\n  ## data for dot plot\n  loan_data_plot_dot &lt;- loan50 %&gt;%\n    mutate(plot_type = \"Dot Plot\")\n\n  ## data for box plot\n  loan_data_plot_box &lt;- loan50 %&gt;%\n    mutate(plot_type = \"Box Plot\")\n\n  ## append together\n  loan_data_combined &lt;- bind_rows(loan_data_plot_dot, loan_data_plot_box)\n  \n# Draw two graphs separately with `facet` command\nbox_dot_plot &lt;- ggplot(loan_data_combined, aes(x = plot_type, y = interest_rate)) +\n  \n  ## dot plot and box plot\n  geom_dotplot(data = loan_data_combined %&gt;% filter(plot_type == \"Dot Plot\"), \n               binaxis = 'y', \n               stackdir = 'center', \n               dotsize = 0.5, \n               fill = \"lightblue\", \n               position = position_dodge(width = 0.4)\n              ) +\n  geom_boxplot(data = loan_data_combined %&gt;% filter(plot_type == \"Box Plot\"), \n               width = 0.3, \n               position = position_dodge(width = 0.9)\n              ) +\n  \n  ## other adjustments\n  labs(\n    y = \"Interest Rate\",\n    x = NULL,\n    title = NULL\n  ) +\n  scale_y_continuous(\n    labels = c(\"5%\", \"10%\", \"15%\", \"20%\", \"25%\"),\n    breaks = seq(5, 25, by = 5)\n  ) +\n  \n  theme(\n    axis.title.x = element_blank(),\n    plot.title = element_text(hjust = 0.5)\n  ) +\n  \n  ## (!!) utilize `facet_wrap` command to align the graphs by using variable \"plot_type\"\n  facet_wrap(~plot_type, scales = \"free_x\")\n\n# show the plot\nbox_dot_plot\n\n\n\n\n\n\n\n\n\n\n\n\n1.5 Figure 2.17: Contingency Table\ntable1 &lt;- table(loan$application_type, loan$homeownership, \n               dnn = c(\"app_type\", \"homeownership\"))\ntable1_withsum &lt;- addmargins(table1)\ntable1_withsum\n\n\n            homeownership\napp_type     MORTGAGE   OWN  RENT   Sum\n  individual     3839  1170  3496  8505\n  joint           950   183   362  1495\n  Sum            4789  1353  3858 10000\n\n\n\n\n1.6 Figure 2.18: Frequency Table\ntable2 &lt;- table(loan$homeownership)\ntable2_withsum &lt;- addmargins(table2)\ntable2_withsum\n\n\n\nMORTGAGE      OWN     RENT      Sum \n    4789     1353     3858    10000 \n\n\n\n\n1.7 Figure 2.23: Bar Graph\n# (OPTIONAL) adjust the order\nloan$application_type &lt;- fct_relevel(loan$application_type, \"joint\", \"individual\")\nloan$homeownership &lt;- fct_relevel(loan$homeownership, \"RENT\", \"MORTGAGE\", \"OWN\")\n\n# plot a: stacked bar\nggplot(loan, aes(x = homeownership, fill = application_type)) +\n  geom_bar() +\n  labs(\n    y = \"Frequency\",\n    fill = \"\"\n  ) +\n  scale_fill_manual(\n    values = c(\"individual\" = \"steelblue\", \"joint\" = \"gold\")\n  )\n\n\n\n\n\n\n\n\n\n# (OPTIONAL) adjust the order\nloan$application_type &lt;- fct_relevel(loan$application_type, \"individual\", \"joint\")\nloan$homeownership &lt;- fct_relevel(loan$homeownership, \"RENT\", \"MORTGAGE\", \"OWN\")\n\n# plot b: dodged bar\nggplot(loan, aes(x = homeownership, fill = application_type)) +\n  geom_bar(position = \"dodge\") +\n  labs(\n    y = \"Frequency\",\n    fill = \"\"\n  ) +\n  scale_fill_manual(\n    values = c(\"individual\" = \"steelblue\", \"joint\" = \"gold\")\n  )\n\n\n\n\n\n\n\n\n\n# (OPTIONAL) adjust the order\nloan$application_type &lt;- fct_relevel(loan$application_type, \"joint\", \"individual\")\nloan$homeownership &lt;- fct_relevel(loan$homeownership, \"RENT\", \"MORTGAGE\", \"OWN\")\n\n# plot c: standard stacked bar\nggplot(loan, aes(x = homeownership, fill = application_type)) +\n  geom_bar(position = \"fill\") +\n  labs(\n    y = \"Proportion\", \n    fill = \"\"\n  ) +\n  scale_fill_manual(values = c(\"individual\" = \"steelblue\", \"joint\" = \"gold\"))\n\n\n\n\n\n\n\n\n\ndata.frame(\n  mean = c(mean(loan$annual_income), mean(loan$total_credit_lines)),\n  median = c(median(loan$annual_income), median(loan$total_credit_lines)),\n  sd = c(sd(loan$annual_income), sd(loan$total_credit_lines)),\n  q25 = c(quantile(loan$annual_income, .25), quantile(loan$total_credit_lines, .25)),\n  q75 = c(quantile(loan$annual_income, .75), quantile(loan$total_credit_lines, .75)),\n  row.names = c(\"annual_income\", \"total_credit_line\")\n)\n\n\n                        mean median          sd   q25   q75\nannual_income     79222.1484  65000 64734.29049 45000 95000\ntotal_credit_line    22.6796     21    11.88544    14    29",
+    "crumbs": [
+      "Homework Solutions",
+      "Homework 1 Answers"
+    ]
+  },
+  {
+    "objectID": "homework/hw1_answer.html#textbook-exercise",
+    "href": "homework/hw1_answer.html#textbook-exercise",
+    "title": "Homework 1 Answers",
+    "section": "2 Textbook Exercise",
+    "text": "2 Textbook Exercise\n\n2.1 Question 1.4\n\nThe research question is: “Do asthmatic patients who practice the Buteyko method experience improvement in their condition?”\nThe cases are 600 adult patients aged 18–69 years diagnosed and currently treated for asthma.\nThe variables are whether or not the patient practiced the Buteyko method (categorical) and measures of quality of life, activity, asthma symptoms, and medication reduction of the patients (categorical, ordinal). It may also be reasonable to treat the ratings on a scale of 0 to 10 as discrete numerical variables.\n\n\n\n2.2 Question 1.10\n\nEach row of the data matrix represents a participant in the survey.\nThere are 1,691 participants in the survey.\nThe table below lists the types of variables included in the study:\n\n\n\n\nVariable\nType\n\n\n\n\nsex\ncategorical\n\n\nage\nnumerical, continuous\n\n\nmaritalStatus\ncategorical\n\n\ngrossIncome\nordinal*\n\n\nsmoke\ncategorical\n\n\namtWeekends\nnumerical, discrete\n\n\namtWeekdays\nnumerical, discrete\n\n\n\n* Note that income is a continuous numerical variable, but in this survey, it is recorded as an ordinal variable.\n\n\n2.3 Question 1.22\n\nObservational.\n\nNo. Because the study is observational, we cannot infer causation.\n\nPossible confounders: caffeine intake and lack of sleep. Either could explain the observed association between stress and muscle cramps (e.g., students may cramp due to increased caffeine use or insufficient sleep).\n\n\n\n2.4 Question 1.34\n\nRandomized experiment. Sampling is stratified by age; treatment is assigned at random.\nTreatment: those assigned to exercise twice a week.\nControl: those instructed not to exercise.\nYes. The blocking variable is age group; randomization is carried out within each block.\nParticipants cannot realistically be blinded to whether they exercise. Blinding of outcome assessors is possible but not described. As written, the study is not blinded and could be subject to placebo/Hawthorne/observer effects.\nBecause of random assignment, a causal effect of exercise on the measured mental-health outcome can be inferred for the study participants (and, with blocking done well, within age groups). Generalization depends on how the stratified sample was obtained; if it’s a good probability sample of the target population of 18–55-year-olds, results generalize to that population. Otherwise, external validity is limited.\nConsider adherence and dropout, specify duration and intensity of exercise, pre-register outcomes, blind exam scorers, ensure adequate sample size, record potential time-varying confounders, and plan for attrition.\n\n\n\n2.5 Question 1.38\n\nSimple random sampling: effective — gives every household equal probability of selection.\n\nStratified sampling: effective — neighborhoods are distinct; stratifying ensures sampling from each neighborhood.\n\nCluster sampling: not effective — sampling whole neighborhoods would miss households from some areas, and neighborhoods differ greatly.\n\nMulti-stage sampling: suffers from the same issue as (c).\n\nConvenience sampling: not effective — yields a biased sample (e.g., only nearby/similar neighborhoods; misses distant ones).\n\n\n\n2.6 Question 1.40\n\nExplanatory variable: percent of the population with a bachelor’s degree.\nResponse variable: per-capita income (in thousands).\n\nRelationship: strong positive linear association — as the bachelor’s-degree percent increases, per-capita income tends to increase. Few counties exceed 60% bachelor’s degree or $50k per-capita income.\n\nCausality: observational study; no causal claim. We can only say higher bachelor’s-degree share is associated with higher per-capita income.\n\n\n\n2.7 Question 2.12\nMedian is around 80. Because the distribution is left-skewed, the mean is expected to be slightly lower than the median.\n\n\n2.8 Question 2.22\n910 registered voters from Tampa, FL were cross-tabulated by political ideology and preferred policy.\nTotals: Conservatives 372, Moderates 363, Liberals 175, Overall 910.\nRow totals: Apply for citizenship 278; Guest worker 262; Leave the country 350; Not sure 20.\n\nPercent identifying as conservatives\n372 / 910 ≈ 40.9%.\nPercent favoring “apply for citizenship”\n278 / 910 ≈ 30.6%.\nPercent who are conservatives and favor citizenship\n57 / 910 ≈ 6.3%.\nAmong each ideology, percent who favor citizenship\nConservatives: 57 / 372 ≈ 15.3%.\nModerates: 120 / 363 ≈ 33.1%.\nLiberals: 101 / 175 ≈ 57.7%.\nDo ideology and immigration views appear independent?\nNo. If independent, the percent favoring citizenship would be about the same across ideologies; the conditional percents differ widely (15%, 33%, 58%), indicating association.\n\n\n\n2.9 Question 2.30\n\nIf ( = 1 ), then ( {x} = ). This matches symmetric distributions.\n\nIf ( &lt; 1 ), then ( {x} &lt; ). This matches left-skewed distributions (lower values pull the mean down).\n\nIf ( &gt; 1 ), then ( {x} &gt; ). This matches right-skewed distributions (higher values pull the mean up).\n\n\n\n2.10 Question 2.34\na.Histogram: overall shape (including bimodality), gaps, and fine-grained density are apparent; these are not visible in a box plot.\nBox plot: median, quartiles (IQR), and identification of outliers are explicit; these are harder to read from the histogram. b.Plausibly two groups with systematically different times: men vs women. (A secondary contributor could be improvement over calendar time.) c.Women’s finishing times are generally higher (slower) than men’s, with a larger median and typically greater spread (IQR). Men’s times are lower on average and a bit less variable. d.A downward trend over years (times generally improve) and the changing gap between men and women. It highlights temporal patterns (e.g., early years slower, later years faster) that a single histogram/box plot, which aggregates over time, cannot show.",
+    "crumbs": [
+      "Homework Solutions",
+      "Homework 1 Answers"
+    ]
+  },
+  {
+    "objectID": "example_code/Example_Code_wk2.html",
+    "href": "example_code/Example_Code_wk2.html",
+    "title": "Week 2 Example R Code (0909)",
+    "section": "",
+    "text": "Right click to download:\n\nwk2_example_code.R",
     "crumbs": [
       "Example R code",
-      "Week 3 Example R Code (0916)"
+      "Week 2 Example R Code (0909)"
     ]
   },
   {
-    "objectID": "example_code/Example_Code_wk1.html",
-    "href": "example_code/Example_Code_wk1.html",
-    "title": "Week 1 Example R Code (0902)",
-    "section": "",
-    "text": "Right click to download:\n\nwk1_example_code.R",
-    "crumbs": [
-      "Example R code",
-      "Week 1 Example R Code (0902)"
-    ]
-  },
-  {
-    "objectID": "answers/wk2_answer.html",
-    "href": "answers/wk2_answer.html",
-    "title": "Week 2 Answers (0909)",
-    "section": "",
-    "text": "Please download the datasets county.csv and loan50.csv here.",
-    "crumbs": [
-      "Answers",
-      "Week 2 Answers (0909)"
-    ]
-  },
-  {
-    "objectID": "answers/wk2_answer.html#download-data",
-    "href": "answers/wk2_answer.html#download-data",
-    "title": "Week 2 Answers (0909)",
-    "section": "",
-    "text": "Please download the datasets county.csv and loan50.csv here.",
-    "crumbs": [
-      "Answers",
-      "Week 2 Answers (0909)"
-    ]
-  },
-  {
-    "objectID": "answers/wk2_answer.html#import-data",
-    "href": "answers/wk2_answer.html#import-data",
-    "title": "Week 2 Answers (0909)",
-    "section": "2 Import Data",
-    "text": "2 Import Data\n\nImport the package tidyverse, which contains several useful functions for data wrangling and visualization.\nCreate a folder on your computer to store the dataset downloaded from NTU COOL or OpenIntro website.\nSet your working directory as that folder and import the datasets county.csv and loan50.csv.\n\nlibrary(tidyverse)\nsetwd(\"/your/working/directory\")\ncounty &lt;- read.csv(\"county.csv\")\nloan &lt;- read.csv(\"loan50.csv\")",
-    "crumbs": [
-      "Answers",
-      "Week 2 Answers (0909)"
-    ]
-  },
-  {
-    "objectID": "answers/wk2_answer.html#scatter-plot",
-    "href": "answers/wk2_answer.html#scatter-plot",
-    "title": "Week 2 Answers (0909)",
-    "section": "3 Scatter Plot",
-    "text": "3 Scatter Plot\n\nUse county.csv to draw the scatter plot of unemployment_rate (x-axis) and per_capita_income (y-axis).\n\n\n\n\n\n\n\nTip\n\n\n\nHint: You don’t need to specify any parameter in geom_point().\n\n\nggplot(county, aes(x = unemployment_rate, y = per_capita_income)) + \n  geom_point()\n\n\n\n\n\n\n\n\n\n\nDraw the same graph again, but this time make the following adjustments:\n\nadjust the point color to lightcoral\nadjust the point size to 0.5\n\n\nggplot(county, aes(x = unemployment_rate, y = per_capita_income)) +\n  geom_point(color = \"lightcoral\", size = 0.5)",
-    "crumbs": [
-      "Answers",
-      "Week 2 Answers (0909)"
-    ]
-  },
-  {
-    "objectID": "answers/wk2_answer.html#histogram",
-    "href": "answers/wk2_answer.html#histogram",
-    "title": "Week 2 Answers (0909)",
-    "section": "4 Histogram",
-    "text": "4 Histogram\nUse loan50.csv data to draw the histogram of loan_amount (set as x-axis), and adjust the parameter binwidth in geom_histogram() to 5000.\nggplot(loan, aes(x = loan_amount)) +\n  geom_histogram(binwidth = 5000)",
-    "crumbs": [
-      "Answers",
-      "Week 2 Answers (0909)"
-    ]
-  },
-  {
-    "objectID": "practices/wk3.html",
-    "href": "practices/wk3.html",
-    "title": "Week 3 Practices (0916)",
+    "objectID": "answers/wk3_answer.html",
+    "href": "answers/wk3_answer.html",
+    "title": "Week 3 Answers (0916)",
     "section": "",
     "text": "Please download the datasets county.csv and loan_full_schema.csv here.",
     "crumbs": [
-      "Practices",
-      "Week 3 Practices (0916)"
+      "Practice Answers",
+      "Week 3 Answers (0916)"
     ]
   },
   {
-    "objectID": "practices/wk3.html#download-data",
-    "href": "practices/wk3.html#download-data",
-    "title": "Week 3 Practices (0916)",
+    "objectID": "answers/wk3_answer.html#download-data",
+    "href": "answers/wk3_answer.html#download-data",
+    "title": "Week 3 Answers (0916)",
     "section": "",
     "text": "Please download the datasets county.csv and loan_full_schema.csv here.",
     "crumbs": [
-      "Practices",
-      "Week 3 Practices (0916)"
+      "Practice Answers",
+      "Week 3 Answers (0916)"
     ]
   },
   {
-    "objectID": "practices/wk3.html#coding-style",
-    "href": "practices/wk3.html#coding-style",
-    "title": "Week 3 Practices (0916)",
+    "objectID": "answers/wk3_answer.html#coding-style",
+    "href": "answers/wk3_answer.html#coding-style",
+    "title": "Week 3 Answers (0916)",
     "section": "2 Coding Style",
     "text": "2 Coding Style\n\nCreate an RStudio project inside a folder with proper names (e.g. TA_Session).\nCreate folders for R scripts and data. (optional: put scripts for the first two weeks’ TA session in the script folder as well.)\nFor the following questions, your code should follow the coding styles in the slides.",
     "crumbs": [
-      "Practices",
-      "Week 3 Practices (0916)"
+      "Practice Answers",
+      "Week 3 Answers (0916)"
     ]
   },
   {
-    "objectID": "practices/wk3.html#contingency-table",
-    "href": "practices/wk3.html#contingency-table",
-    "title": "Week 3 Practices (0916)",
+    "objectID": "answers/wk3_answer.html#contingency-table",
+    "href": "answers/wk3_answer.html#contingency-table",
+    "title": "Week 3 Answers (0916)",
     "section": "3 Contingency Table",
-    "text": "3 Contingency Table\nUsing the dataset loans_full_schema.csv, create a contingency table by loan_purpose (set as row) and application_type (set as column), and add the sum row and sum column.",
+    "text": "3 Contingency Table\nUsing the dataset loans_full_schema.csv, create a contingency table by loan_purpose (set as row) and application_type (set as column), and add the sum row and sum column.\nloan   &lt;- read.csv(\"data/loans_full_schema.csv\")\ntable &lt;- table(loan$loan_purpose, loan$application_type)\ntable_sum &lt;- addmargins(table)\nprint(table_sum)\n##                      individual joint   Sum\n##   car                       116    15   131\n##   credit_card              1971   278  2249\n##   debt_consolidation       4289   855  5144\n##   home_improvement          566   114   680\n##   house                     146     5   151\n##   major_purchase            273    30   303\n##   medical                   128    34   162\n##   moving                     59    10    69\n##   other                     793   121   914\n##   renewable_energy            9     1    10\n##   small_business            101    24   125\n##   vacation                   54     8    62\n##   Sum                      8505  1495 10000",
     "crumbs": [
-      "Practices",
-      "Week 3 Practices (0916)"
+      "Practice Answers",
+      "Week 3 Answers (0916)"
     ]
   },
   {
-    "objectID": "practices/wk3.html#bar-graph",
-    "href": "practices/wk3.html#bar-graph",
-    "title": "Week 3 Practices (0916)",
+    "objectID": "answers/wk3_answer.html#bar-graph",
+    "href": "answers/wk3_answer.html#bar-graph",
+    "title": "Week 3 Answers (0916)",
     "section": "4 Bar Graph",
-    "text": "4 Bar Graph\nUsing the dataset loans_full_schema.csv, draw the bar graph to show the numbers of applicant according to each credit grade by following procedures:\n\nSpecify sub_grade as the x-axis, and fill the bar with grade.\nAdd graph title and axis labels\n\nTitle: Number of Applicant by Credit Grade\n\nx-axis: Credit Grade\n\ny-axis: Number of Applicant\n\nCenter the graph title.\n\n\n\n\n\n\n\nTip\n\n\n\nHint: Add theme(plot.title = element_text(hjust = 0.5)) to the graph.\n\n\nAfter that, you should have a beautiful graph and share it with me! :)",
+    "text": "4 Bar Graph\nUsing the dataset loans_full_schema.csv, draw the bar graph to show the numbers of applicant according to each credit grade by following procedures:\n\nSpecify sub_grade as the x-axis, and fill the bar with grade.\nAdd graph title and axis labels\n\nTitle: Number of Applicant by Credit Grade\n\nx-axis: Credit Grade\n\ny-axis: Number of Applicant\n\nCenter the graph title.\n\n\n\n\n\n\n\nTip\n\n\n\nHint: Add theme(plot.title = element_text(hjust = 0.5)) to the graph.\n\n\nAfter that, you should have a beautiful graph and share it with me! :)\nggplot(loan, aes(x = sub_grade, fill = grade)) +\n  geom_bar() +\n  labs(\n    x = \"Credit Grade\",\n    y = \"Number of Applicant\",\n    title = \"Number of Applicant by Credit Grade\"\n  ) +\n  theme(plot.title = element_text(hjust = 0.5))",
     "crumbs": [
-      "Practices",
-      "Week 3 Practices (0916)"
+      "Practice Answers",
+      "Week 3 Answers (0916)"
     ]
   },
   {
-    "objectID": "practices/wk1.html",
-    "href": "practices/wk1.html",
-    "title": "Week 1 Practices (0902)",
+    "objectID": "answers/wk1_answer.html",
+    "href": "answers/wk1_answer.html",
+    "title": "Week 1 Answers (0902)",
     "section": "",
-    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.",
+    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.\nx &lt;- 20250902\ny &lt;- 1031\nprint(x / y)",
     "crumbs": [
-      "Practices",
-      "Week 1 Practices (0902)"
+      "Practice Answers",
+      "Week 1 Answers (0902)"
     ]
   },
   {
-    "objectID": "practices/wk1.html#assign-values",
-    "href": "practices/wk1.html#assign-values",
-    "title": "Week 1 Practices (0902)",
+    "objectID": "answers/wk1_answer.html#assign-values",
+    "href": "answers/wk1_answer.html#assign-values",
+    "title": "Week 1 Answers (0902)",
     "section": "",
-    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.",
+    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.\nx &lt;- 20250902\ny &lt;- 1031\nprint(x / y)",
     "crumbs": [
-      "Practices",
-      "Week 1 Practices (0902)"
+      "Practice Answers",
+      "Week 1 Answers (0902)"
     ]
   },
   {
-    "objectID": "practices/wk1.html#help",
-    "href": "practices/wk1.html#help",
-    "title": "Week 1 Practices (0902)",
+    "objectID": "answers/wk1_answer.html#help",
+    "href": "answers/wk1_answer.html#help",
+    "title": "Week 1 Answers (0902)",
     "section": "2 Help",
-    "text": "2 Help\nUse the help() function to check docs, e.g. data.frame() or mean().",
+    "text": "2 Help\nUse the help() function to check docs, e.g. data.frame() or mean().\nhelp(data.frame)\nhelp(mean)",
     "crumbs": [
-      "Practices",
-      "Week 1 Practices (0902)"
+      "Practice Answers",
+      "Week 1 Answers (0902)"
     ]
   },
   {
-    "objectID": "practices/wk1.html#matrix",
-    "href": "practices/wk1.html#matrix",
-    "title": "Week 1 Practices (0902)",
+    "objectID": "answers/wk1_answer.html#matrix",
+    "href": "answers/wk1_answer.html#matrix",
+    "title": "Week 1 Answers (0902)",
     "section": "3 Matrix",
-    "text": "3 Matrix\nCreate the following vectors:\nname_vec &lt;- c(\"James\", \"Noc\", \"Monica\")\n\nage_vec &lt;- c(25, 30, 28)\nand create a 3 × 2 matrix with these two vectors.\nDo you encounter errors? Can you print the matrix out? What’s the data type of the matrix?",
+    "text": "3 Matrix\nCreate the following vectors:\nname_vec &lt;- c(\"James\", \"Noc\", \"Monica\")\n\nage_vec &lt;- c(25, 30, 28)\nand create a 3 × 2 matrix with these two vectors.\nDo you encounter errors? Can you print the matrix out? What’s the data type of the matrix?\nname_vec &lt;- c(\"James\", \"Noc\", \"Monica\")\nage_vec &lt;- c(25, 30, 28)\nmat &lt;- matrix(c(name_vec, age_vec), nrow = 3)\nprint(mat)\nclass(mat)\n\n# `mat[,2]` only select the second column\n# note that the `age_vec` become character type after merging into matrix\nprint(mat[,2])\nclass(mat[,2])",
     "crumbs": [
-      "Practices",
-      "Week 1 Practices (0902)"
-    ]
-  },
-  {
-    "objectID": "slides/Slides_wk2.html",
-    "href": "slides/Slides_wk2.html",
-    "title": "Week 2 Slides (0909)",
-    "section": "",
-    "text": "Open in new tab · Download PDF",
-    "crumbs": [
-      "Slides",
-      "Week 2 Slides (0909)"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "2025Fall Statistics TA Session",
-    "section": "",
-    "text": "Welcome! Use the sidebar to open weekly Slides, Practices and Answers\nAnswers to the practice will be published after each TA Session.\nSending email: r13323002@ntu.edu.tw (mail title including [Statistics TA])\nTA Office hours: Tuesday, 4:30-5:20 p.m. at SSB. (社會科學院) Room 645.",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "slides/Slides_wk1.html",
-    "href": "slides/Slides_wk1.html",
-    "title": "Week 1 Slides (0902)",
-    "section": "",
-    "text": "Open in new tab · Download PDF",
-    "crumbs": [
-      "Slides",
-      "Week 1 Slides (0902)"
-    ]
-  },
-  {
-    "objectID": "slides/Slides_wk3.html",
-    "href": "slides/Slides_wk3.html",
-    "title": "Week 3 Slides (0916)",
-    "section": "",
-    "text": "Open in new tab 3 Download PDF",
-    "crumbs": [
-      "Slides",
-      "Week 3 Slides (0916)"
+      "Practice Answers",
+      "Week 1 Answers (0902)"
     ]
   },
   {
@@ -274,113 +198,222 @@
     ]
   },
   {
-    "objectID": "answers/wk1_answer.html",
-    "href": "answers/wk1_answer.html",
-    "title": "Week 1 Answers (0902)",
+    "objectID": "slides/Slides_wk3.html",
+    "href": "slides/Slides_wk3.html",
+    "title": "Week 3 Slides (0916)",
     "section": "",
-    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.\nx &lt;- 20250902\ny &lt;- 1031\nprint(x / y)",
+    "text": "Open in new tab 3 Download PDF",
     "crumbs": [
-      "Answers",
-      "Week 1 Answers (0902)"
+      "Slides",
+      "Week 3 Slides (0916)"
     ]
   },
   {
-    "objectID": "answers/wk1_answer.html#assign-values",
-    "href": "answers/wk1_answer.html#assign-values",
-    "title": "Week 1 Answers (0902)",
+    "objectID": "slides/Slides_wk1.html",
+    "href": "slides/Slides_wk1.html",
+    "title": "Week 1 Slides (0902)",
     "section": "",
-    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.\nx &lt;- 20250902\ny &lt;- 1031\nprint(x / y)",
+    "text": "Open in new tab · Download PDF",
     "crumbs": [
-      "Answers",
-      "Week 1 Answers (0902)"
+      "Slides",
+      "Week 1 Slides (0902)"
     ]
   },
   {
-    "objectID": "answers/wk1_answer.html#help",
-    "href": "answers/wk1_answer.html#help",
-    "title": "Week 1 Answers (0902)",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "2025Fall Statistics TA Session",
+    "section": "",
+    "text": "Welcome! Use the sidebar to open weekly Slides, Practices and Answers\nAnswers to the practice will be published after each TA Session.\nSending email: r13323002@ntu.edu.tw (mail title including [Statistics TA])\nTA Office hours: Tuesday, 4:30-5:20 p.m. at SSB. (社會科學院) Room 645.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "slides/Slides_wk2.html",
+    "href": "slides/Slides_wk2.html",
+    "title": "Week 2 Slides (0909)",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Slides",
+      "Week 2 Slides (0909)"
+    ]
+  },
+  {
+    "objectID": "practices/wk1.html",
+    "href": "practices/wk1.html",
+    "title": "Week 1 Practices (0902)",
+    "section": "",
+    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.",
+    "crumbs": [
+      "Practices",
+      "Week 1 Practices (0902)"
+    ]
+  },
+  {
+    "objectID": "practices/wk1.html#assign-values",
+    "href": "practices/wk1.html#assign-values",
+    "title": "Week 1 Practices (0902)",
+    "section": "",
+    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.",
+    "crumbs": [
+      "Practices",
+      "Week 1 Practices (0902)"
+    ]
+  },
+  {
+    "objectID": "practices/wk1.html#help",
+    "href": "practices/wk1.html#help",
+    "title": "Week 1 Practices (0902)",
     "section": "2 Help",
-    "text": "2 Help\nUse the help() function to check docs, e.g. data.frame() or mean().\nhelp(data.frame)\nhelp(mean)",
+    "text": "2 Help\nUse the help() function to check docs, e.g. data.frame() or mean().",
     "crumbs": [
-      "Answers",
-      "Week 1 Answers (0902)"
+      "Practices",
+      "Week 1 Practices (0902)"
     ]
   },
   {
-    "objectID": "answers/wk1_answer.html#matrix",
-    "href": "answers/wk1_answer.html#matrix",
-    "title": "Week 1 Answers (0902)",
+    "objectID": "practices/wk1.html#matrix",
+    "href": "practices/wk1.html#matrix",
+    "title": "Week 1 Practices (0902)",
     "section": "3 Matrix",
-    "text": "3 Matrix\nCreate the following vectors:\nname_vec &lt;- c(\"James\", \"Noc\", \"Monica\")\n\nage_vec &lt;- c(25, 30, 28)\nand create a 3 × 2 matrix with these two vectors.\nDo you encounter errors? Can you print the matrix out? What’s the data type of the matrix?\nname_vec &lt;- c(\"James\", \"Noc\", \"Monica\")\nage_vec &lt;- c(25, 30, 28)\nmat &lt;- matrix(c(name_vec, age_vec), nrow = 3)\nprint(mat)\nclass(mat)\n\n# `mat[,2]` only select the second column\n# note that the `age_vec` become character type after merging into matrix\nprint(mat[,2])\nclass(mat[,2])",
+    "text": "3 Matrix\nCreate the following vectors:\nname_vec &lt;- c(\"James\", \"Noc\", \"Monica\")\n\nage_vec &lt;- c(25, 30, 28)\nand create a 3 × 2 matrix with these two vectors.\nDo you encounter errors? Can you print the matrix out? What’s the data type of the matrix?",
     "crumbs": [
-      "Answers",
-      "Week 1 Answers (0902)"
+      "Practices",
+      "Week 1 Practices (0902)"
     ]
   },
   {
-    "objectID": "answers/wk3_answer.html",
-    "href": "answers/wk3_answer.html",
-    "title": "Week 3 Answers (0916)",
+    "objectID": "practices/wk3.html",
+    "href": "practices/wk3.html",
+    "title": "Week 3 Practices (0916)",
     "section": "",
     "text": "Please download the datasets county.csv and loan_full_schema.csv here.",
     "crumbs": [
-      "Answers",
-      "Week 3 Answers (0916)"
+      "Practices",
+      "Week 3 Practices (0916)"
     ]
   },
   {
-    "objectID": "answers/wk3_answer.html#download-data",
-    "href": "answers/wk3_answer.html#download-data",
-    "title": "Week 3 Answers (0916)",
+    "objectID": "practices/wk3.html#download-data",
+    "href": "practices/wk3.html#download-data",
+    "title": "Week 3 Practices (0916)",
     "section": "",
     "text": "Please download the datasets county.csv and loan_full_schema.csv here.",
     "crumbs": [
-      "Answers",
-      "Week 3 Answers (0916)"
+      "Practices",
+      "Week 3 Practices (0916)"
     ]
   },
   {
-    "objectID": "answers/wk3_answer.html#coding-style",
-    "href": "answers/wk3_answer.html#coding-style",
-    "title": "Week 3 Answers (0916)",
+    "objectID": "practices/wk3.html#coding-style",
+    "href": "practices/wk3.html#coding-style",
+    "title": "Week 3 Practices (0916)",
     "section": "2 Coding Style",
     "text": "2 Coding Style\n\nCreate an RStudio project inside a folder with proper names (e.g. TA_Session).\nCreate folders for R scripts and data. (optional: put scripts for the first two weeks’ TA session in the script folder as well.)\nFor the following questions, your code should follow the coding styles in the slides.",
     "crumbs": [
-      "Answers",
-      "Week 3 Answers (0916)"
+      "Practices",
+      "Week 3 Practices (0916)"
     ]
   },
   {
-    "objectID": "answers/wk3_answer.html#contingency-table",
-    "href": "answers/wk3_answer.html#contingency-table",
-    "title": "Week 3 Answers (0916)",
+    "objectID": "practices/wk3.html#contingency-table",
+    "href": "practices/wk3.html#contingency-table",
+    "title": "Week 3 Practices (0916)",
     "section": "3 Contingency Table",
-    "text": "3 Contingency Table\nUsing the dataset loans_full_schema.csv, create a contingency table by loan_purpose (set as row) and application_type (set as column), and add the sum row and sum column.\nloan   &lt;- read.csv(here(\"data\", \"loans_full_schema.csv\"))\ntable &lt;- table(loan$loan_purpose, loan$application_type)\ntable_sum &lt;- addmargins(table)\nprint(table_sum)\n##                      individual joint   Sum\n##   car                       116    15   131\n##   credit_card              1971   278  2249\n##   debt_consolidation       4289   855  5144\n##   home_improvement          566   114   680\n##   house                     146     5   151\n##   major_purchase            273    30   303\n##   medical                   128    34   162\n##   moving                     59    10    69\n##   other                     793   121   914\n##   renewable_energy            9     1    10\n##   small_business            101    24   125\n##   vacation                   54     8    62\n##   Sum                      8505  1495 10000",
+    "text": "3 Contingency Table\nUsing the dataset loans_full_schema.csv, create a contingency table by loan_purpose (set as row) and application_type (set as column), and add the sum row and sum column.",
     "crumbs": [
-      "Answers",
-      "Week 3 Answers (0916)"
+      "Practices",
+      "Week 3 Practices (0916)"
     ]
   },
   {
-    "objectID": "answers/wk3_answer.html#bar-graph",
-    "href": "answers/wk3_answer.html#bar-graph",
-    "title": "Week 3 Answers (0916)",
+    "objectID": "practices/wk3.html#bar-graph",
+    "href": "practices/wk3.html#bar-graph",
+    "title": "Week 3 Practices (0916)",
     "section": "4 Bar Graph",
-    "text": "4 Bar Graph\nUsing the dataset loans_full_schema.csv, draw the bar graph to show the numbers of applicant according to each credit grade by following procedures:\n\nSpecify sub_grade as the x-axis, and fill the bar with grade.\nAdd graph title and axis labels\n\nTitle: Number of Applicant by Credit Grade\n\nx-axis: Credit Grade\n\ny-axis: Number of Applicant\n\nCenter the graph title.\n\n\n\n\n\n\n\nTip\n\n\n\nHint: Add theme(plot.title = element_text(hjust = 0.5)) to the graph.\n\n\nAfter that, you should have a beautiful graph and share it with me! :)\nggplot(loan, aes(x = sub_grade, fill = grade)) +\n  geom_bar() +\n  labs(\n    x = \"Credit Grade\",\n    y = \"Number of Applicant\",\n    title = \"Number of Applicant by Credit Grade\"\n  ) +\n  theme(plot.title = element_text(hjust = 0.5))",
+    "text": "4 Bar Graph\nUsing the dataset loans_full_schema.csv, draw the bar graph to show the numbers of applicant according to each credit grade by following procedures:\n\nSpecify sub_grade as the x-axis, and fill the bar with grade.\nAdd graph title and axis labels\n\nTitle: Number of Applicant by Credit Grade\n\nx-axis: Credit Grade\n\ny-axis: Number of Applicant\n\nCenter the graph title.\n\n\n\n\n\n\n\nTip\n\n\n\nHint: Add theme(plot.title = element_text(hjust = 0.5)) to the graph.\n\n\nAfter that, you should have a beautiful graph and share it with me! :)",
     "crumbs": [
-      "Answers",
-      "Week 3 Answers (0916)"
+      "Practices",
+      "Week 3 Practices (0916)"
     ]
   },
   {
-    "objectID": "example_code/Example_Code_wk2.html",
-    "href": "example_code/Example_Code_wk2.html",
-    "title": "Week 2 Example R Code (0909)",
+    "objectID": "answers/wk2_answer.html",
+    "href": "answers/wk2_answer.html",
+    "title": "Week 2 Answers (0909)",
     "section": "",
-    "text": "Right click to download:\n\nwk2_example_code.R",
+    "text": "Please download the datasets county.csv and loan50.csv here.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 2 Answers (0909)"
+    ]
+  },
+  {
+    "objectID": "answers/wk2_answer.html#download-data",
+    "href": "answers/wk2_answer.html#download-data",
+    "title": "Week 2 Answers (0909)",
+    "section": "",
+    "text": "Please download the datasets county.csv and loan50.csv here.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 2 Answers (0909)"
+    ]
+  },
+  {
+    "objectID": "answers/wk2_answer.html#import-data",
+    "href": "answers/wk2_answer.html#import-data",
+    "title": "Week 2 Answers (0909)",
+    "section": "2 Import Data",
+    "text": "2 Import Data\n\nImport the package tidyverse, which contains several useful functions for data wrangling and visualization.\nCreate a folder on your computer to store the dataset downloaded from NTU COOL or OpenIntro website.\nSet your working directory as that folder and import the datasets county.csv and loan50.csv.\n\nlibrary(tidyverse)\nsetwd(\"/your/working/directory\")\ncounty &lt;- read.csv(\"county.csv\")\nloan &lt;- read.csv(\"loan50.csv\")",
+    "crumbs": [
+      "Practice Answers",
+      "Week 2 Answers (0909)"
+    ]
+  },
+  {
+    "objectID": "answers/wk2_answer.html#scatter-plot",
+    "href": "answers/wk2_answer.html#scatter-plot",
+    "title": "Week 2 Answers (0909)",
+    "section": "3 Scatter Plot",
+    "text": "3 Scatter Plot\n\nUse county.csv to draw the scatter plot of unemployment_rate (x-axis) and per_capita_income (y-axis).\n\n\n\n\n\n\n\nTip\n\n\n\nHint: You don’t need to specify any parameter in geom_point().\n\n\nggplot(county, aes(x = unemployment_rate, y = per_capita_income)) + \n  geom_point()\n\n\n\n\n\n\n\n\n\n\nDraw the same graph again, but this time make the following adjustments:\n\nadjust the point color to lightcoral\nadjust the point size to 0.5\n\n\nggplot(county, aes(x = unemployment_rate, y = per_capita_income)) +\n  geom_point(color = \"lightcoral\", size = 0.5)",
+    "crumbs": [
+      "Practice Answers",
+      "Week 2 Answers (0909)"
+    ]
+  },
+  {
+    "objectID": "answers/wk2_answer.html#histogram",
+    "href": "answers/wk2_answer.html#histogram",
+    "title": "Week 2 Answers (0909)",
+    "section": "4 Histogram",
+    "text": "4 Histogram\nUse loan50.csv data to draw the histogram of loan_amount (set as x-axis), and adjust the parameter binwidth in geom_histogram() to 5000.\nggplot(loan, aes(x = loan_amount)) +\n  geom_histogram(binwidth = 5000)",
+    "crumbs": [
+      "Practice Answers",
+      "Week 2 Answers (0909)"
+    ]
+  },
+  {
+    "objectID": "example_code/Example_Code_wk1.html",
+    "href": "example_code/Example_Code_wk1.html",
+    "title": "Week 1 Example R Code (0902)",
+    "section": "",
+    "text": "Right click to download:\n\nwk1_example_code.R",
     "crumbs": [
       "Example R code",
-      "Week 2 Example R Code (0909)"
+      "Week 1 Example R Code (0902)"
+    ]
+  },
+  {
+    "objectID": "example_code/Example_Code_wk3.html",
+    "href": "example_code/Example_Code_wk3.html",
+    "title": "Week 3 Example R Code (0916)",
+    "section": "",
+    "text": "Right click to download:\n\nwk3_example_code.R",
+    "crumbs": [
+      "Example R code",
+      "Week 3 Example R Code (0916)"
     ]
   }
 ]
