@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Week 3 Example R Code (0916) – 2025Fall Statistics TA Session</title>
+<title>Week 4 Practices (0923) – 2025Fall Statistics TA Session</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,8 +25,8 @@ ul.task-list li input[type="checkbox"] {
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<link href="../example_code/Example_Code_wk4.html" rel="next">
-<link href="../example_code/Example_Code_wk2.html" rel="prev">
+<link href="../answers/wk1_answer.html" rel="next">
+<link href="../practices/wk3.html" rel="prev">
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -97,7 +97,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../example_code/Example_Code_wk1.html">Example R code</a></li><li class="breadcrumb-item"><a href="../example_code/Example_Code_wk3.html">Week 3 Example R Code (0916)</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../practices/wk1.html">Practices</a></li><li class="breadcrumb-item"><a href="../practices/wk4.html">Week 4 Practices (0923)</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -156,13 +156,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
  <span class="menu-text">Example R code</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../example_code/Example_Code_wk1.html" class="sidebar-item-text sidebar-link">
@@ -177,7 +177,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../example_code/Example_Code_wk3.html" class="sidebar-item-text sidebar-link active">
+  <a href="../example_code/Example_Code_wk3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Week 3 Example R Code (0916)</span></a>
   </div>
 </li>
@@ -191,13 +191,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
  <span class="menu-text">Practices</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../practices/wk1.html" class="sidebar-item-text sidebar-link">
@@ -218,7 +218,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../practices/wk4.html" class="sidebar-item-text sidebar-link">
+  <a href="../practices/wk4.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Week 4 Practices (0923)</span></a>
   </div>
 </li>
@@ -272,7 +272,15 @@ window.Quarto = {
   </li>
     </ul>
     </div>
-    
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#project" id="toc-project" class="nav-link active" data-scroll-target="#project"><span class="header-section-number">1</span> Project</a></li>
+  <li><a href="#draw-uniform-random-sample" id="toc-draw-uniform-random-sample" class="nav-link" data-scroll-target="#draw-uniform-random-sample"><span class="header-section-number">2</span> Draw Uniform Random Sample</a></li>
+  <li><a href="#histogram" id="toc-histogram" class="nav-link" data-scroll-target="#histogram"><span class="header-section-number">3</span> Histogram</a></li>
+  </ul>
+</nav>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
@@ -281,9 +289,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../example_code/Example_Code_wk1.html">Example R code</a></li><li class="breadcrumb-item"><a href="../example_code/Example_Code_wk3.html">Week 3 Example R Code (0916)</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../practices/wk1.html">Practices</a></li><li class="breadcrumb-item"><a href="../practices/wk4.html">Week 4 Practices (0923)</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Week 3 Example R Code (0916)</h1>
+<h1 class="title">Week 4 Practices (0923)</h1>
 </div>
 
 
@@ -300,13 +308,37 @@ window.Quarto = {
 </header>
 
 
-<p>Right click to download:</p>
-<ul>
-<li><a href="wk3_example_code.R">wk3_example_code.R</a></li>
-</ul>
+<section id="project" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="project"><span class="header-section-number">1</span> Project</h2>
+<p>Remember to use the project you create last week!</p>
+</section>
+<section id="draw-uniform-random-sample" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="draw-uniform-random-sample"><span class="header-section-number">2</span> Draw Uniform Random Sample</h2>
+<p>Set random seed as 2025. Draw 200 observations from uniform distribution [0, 100] and compute the mean of the observations.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Hint:</strong> Use <code>mean()</code> function.</p>
+</div>
+</div>
+</section>
+<section id="histogram" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="histogram"><span class="header-section-number">3</span> Histogram</h2>
+<ol type="1">
+<li><p>Using the random sample you just generated, create a DataFrame to store the drawn values by using <code>data.frame()</code> function, and draw the histogram graph to see the distribution.</p></li>
+<li><p>Now, draw another 10,000 observations from uniform distribution [0, 100], and draw the histogram graph to see the distribution.</p></li>
+</ol>
 
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -710,13 +742,13 @@ window.Quarto = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../example_code/Example_Code_wk2.html" class="pagination-link" aria-label="Week 2 Example R Code (0909)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Week 2 Example R Code (0909)</span>
+      <a href="../practices/wk3.html" class="pagination-link" aria-label="Week 3 Practices (0916)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Week 3 Practices (0916)</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../example_code/Example_Code_wk4.html" class="pagination-link" aria-label="Week 4 Example R Code (0923)">
-        <span class="nav-page-text">Week 4 Example R Code (0923)</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../answers/wk1_answer.html" class="pagination-link" aria-label="Week 1 Answers (0902)">
+        <span class="nav-page-text">Week 1 Answers (0902)</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
