@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.21">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Homework 2 Answers – 2025Fall Statistics TA Session</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../quiz/Quiz_1.html" rel="next">
+<link href="../homework/hw1_answer.html" rel="prev">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-7e9717d9caa9b4d114d189eaeb260ada.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-038ecb341aaccd104988af8ce711e8d5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../homework/hw1_answer.html">Homework Solutions</a></li><li class="breadcrumb-item"><a href="../homework/hw2_answer.html">Homework 2 Answers</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Slides</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../slides/Slides_wk1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 1 Slides (0902)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../slides/Slides_wk2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 2 Slides (0909)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../slides/Slides_wk3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 3 Slides (0916)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../slides/Slides_wk4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 4 Slides (0923)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../slides/Slides_wk5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 5 Slides (0930)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Example R code</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../example_code/Example_Code_wk1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 1 Example R Code (0902)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../example_code/Example_Code_wk2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 2 Example R Code (0909)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../example_code/Example_Code_wk3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 3 Example R Code (0916)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../example_code/Example_Code_wk4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 4 Example R Code (0923)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../example_code/Example_Code_wk5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 5 Example R Code (0930)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Practices</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../practices/wk1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 1 Practices (0902)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../practices/wk2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 2 Practices (0909)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../practices/wk3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 3 Practices (0916)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../practices/wk4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 4 Practices (0923)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../practices/wk5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 5 Practices (0930)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Practice Answers</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../answers/wk1_answer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 1 Answers (0902)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../answers/wk2_answer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 2 Answers (0909)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../answers/wk3_answer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 3 Answers (0916)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../answers/wk4_answer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 4 Answers (0923)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../answers/wk5_answer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 5 Answers (0930)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Homework Solutions</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../homework/hw1_answer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework 1 Answers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../homework/hw2_answer.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Homework 2 Answers</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Quizzes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quiz/Quiz_1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quiz 1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quiz/Quiz_1_Answer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quiz 1 Answers</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#computer-exercises" id="toc-computer-exercises" class="nav-link active" data-scroll-target="#computer-exercises"><span class="header-section-number">1</span> Computer Exercises</a>
+  <ul class="collapse">
+  <li><a href="#bernoulli-simulation" id="toc-bernoulli-simulation" class="nav-link" data-scroll-target="#bernoulli-simulation"><span class="header-section-number">1.1</span> Bernoulli Simulation</a></li>
+  <li><a href="#normal-simulation" id="toc-normal-simulation" class="nav-link" data-scroll-target="#normal-simulation"><span class="header-section-number">1.2</span> Normal Simulation</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">1.3</span> </a></li>
+  <li><a href="#binomial-simulation" id="toc-binomial-simulation" class="nav-link" data-scroll-target="#binomial-simulation"><span class="header-section-number">1.4</span> Binomial Simulation</a></li>
+  </ul></li>
+  <li><a href="#textbook-exercise" id="toc-textbook-exercise" class="nav-link" data-scroll-target="#textbook-exercise"><span class="header-section-number">2</span> Textbook Exercise</a>
+  <ul class="collapse">
+  <li><a href="#question-3.8" id="toc-question-3.8" class="nav-link" data-scroll-target="#question-3.8"><span class="header-section-number">2.1</span> Question 3.8</a></li>
+  <li><a href="#question-3.16" id="toc-question-3.16" class="nav-link" data-scroll-target="#question-3.16"><span class="header-section-number">2.2</span> Question 3.16</a></li>
+  <li><a href="#question-3.34" id="toc-question-3.34" class="nav-link" data-scroll-target="#question-3.34"><span class="header-section-number">2.3</span> Question 3.34</a></li>
+  <li><a href="#question-3.44" id="toc-question-3.44" class="nav-link" data-scroll-target="#question-3.44"><span class="header-section-number">2.4</span> Question 3.44</a></li>
+  <li><a href="#question-4.4" id="toc-question-4.4" class="nav-link" data-scroll-target="#question-4.4"><span class="header-section-number">2.5</span> Question 4.4</a></li>
+  <li><a href="#question-4.6" id="toc-question-4.6" class="nav-link" data-scroll-target="#question-4.6"><span class="header-section-number">2.6</span> Question 4.6</a></li>
+  <li><a href="#question-4.24" id="toc-question-4.24" class="nav-link" data-scroll-target="#question-4.24"><span class="header-section-number">2.7</span> Question 4.24</a></li>
+  <li><a href="#question-4.28" id="toc-question-4.28" class="nav-link" data-scroll-target="#question-4.28"><span class="header-section-number">2.8</span> Question 4.28</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../homework/hw1_answer.html">Homework Solutions</a></li><li class="breadcrumb-item"><a href="../homework/hw2_answer.html">Homework 2 Answers</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Homework 2 Answers</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><p>If you find any typos or errors, please feel free to contact me via email at r13323002@ntu.edu.tw. I would appreciate it and will correct the solution to prevent any misunderstandings.</p></li>
+<li><p>For some R commands marked with ‘OPTIONAL,’ you don’t need to learn them. You will be completely fine on the computer quiz even if you choose to ignore them.</p></li>
+<li><p>If you’re having trouble understanding the code, don’t hesitate to ask me for help. I’ll do my best to assist you during office hours or after the TA session.</p></li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># clear the mamory and import package</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2025</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="computer-exercises" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="computer-exercises"><span class="header-section-number">1</span> Computer Exercises</h2>
+<section id="bernoulli-simulation" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="bernoulli-simulation"><span class="header-section-number">1.1</span> Bernoulli Simulation</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># simulate 1,000 coin flips by denoting head if value above 0.5, tail otherwise</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>coin_flips <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1000</span>) <span class="sc">&gt;</span> <span class="fl">0.5</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate cumulative number and fraction of heads for coin flips of 1, 2, 3, ..., 1000</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>cum_heads <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(coin_flips)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>frac_heads <span class="ot">&lt;-</span> cum_heads <span class="sc">/</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># record the result of each flip in dataframe</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">flips =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">coin_outcome =</span> coin_flips,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">cumulative_heads =</span> cum_heads,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">fraction_heads =</span> frac_heads</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># take a look at the fitst five records</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  flips coin_outcome cumulative_heads fraction_heads
+1     1         TRUE                1      1.0000000
+2     2        FALSE                1      0.5000000
+3     3         TRUE                2      0.6666667
+4     4        FALSE                2      0.5000000
+5     5         TRUE                3      0.6000000
+6     6         TRUE                4      0.6666667</code></pre>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># draw the fraction of head over each flip</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> flips, <span class="at">y =</span> fraction_heads)) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="do">## draw the fraction of head</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="do">## (OPTIONAL) baseline fraction is 0.5</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> <span class="fl">0.5</span>), <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="do">## add label to make the graph more readable</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Fraction of Heads in 1,000 Coin Flips"</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Number of Coin Flips"</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Fraction of Heads"</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="do">## center the graph title</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="hw2_answer_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="normal-simulation" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="normal-simulation"><span class="header-section-number">1.2</span> Normal Simulation</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define distribution parameters</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fl">2.5</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># draw the random normal samples according to different sample size</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>draw_size20   <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>draw_size100  <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>draw_size500  <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">500</span>, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>draw_size1000 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the simulated mean and standard deviation according to different draw sizes</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>sim_result <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_size =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">100</span>, <span class="dv">500</span>, <span class="dv">1000</span>),</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean =</span> <span class="fu">c</span>(<span class="fu">mean</span>(draw_size20), <span class="fu">mean</span>(draw_size100), <span class="fu">mean</span>(draw_size500), <span class="fu">mean</span>(draw_size1000)),</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">sd =</span> <span class="fu">c</span>(<span class="fu">sd</span>(draw_size20), <span class="fu">sd</span>(draw_size100), <span class="fu">sd</span>(draw_size500), <span class="fu">sd</span>(draw_size1000))</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(sim_result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  sample_size     mean       sd
+1          20 1.785653 2.632694
+2         100 2.363479 2.829786
+3         500 1.918210 2.483657
+4        1000 1.941324 2.556143</code></pre>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the histogram when draw size = 20</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df_size20 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">values =</span> draw_size20</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_size20, <span class="fu">aes</span>(<span class="at">x =</span> values)) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="hw2_answer_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the histogram when draw size = 100</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df_size100 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">values =</span> draw_size100</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_size100, <span class="fu">aes</span>(<span class="at">x =</span> values)) <span class="sc">+</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="hw2_answer_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the histogram when draw size = 500</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df_size500 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">values =</span> draw_size500</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_size500, <span class="fu">aes</span>(<span class="at">x =</span> values)) <span class="sc">+</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="hw2_answer_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="section" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="section"><span class="header-section-number">1.3</span> </h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the histogram when draw size = 1000</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df_size1000 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">values =</span> draw_size1000</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_size1000, <span class="fu">aes</span>(<span class="at">x =</span> values)) <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="hw2_answer_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="binomial-simulation" class="level3" data-number="1.4">
+<h3 data-number="1.4" class="anchored" data-anchor-id="binomial-simulation"><span class="header-section-number">1.4</span> Binomial Simulation</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define distribution parameter and trial size</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>sample_num <span class="ot">&lt;-</span> <span class="dv">200</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># draw the random binomial samples according to different sample size</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>draw_size10   <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(sample_num, <span class="at">size =</span> <span class="dv">10</span>,  <span class="at">prob =</span> p)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>draw_size50  <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(sample_num, <span class="at">size =</span> <span class="dv">50</span>,  <span class="at">prob =</span> p)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>draw_size100  <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(sample_num, <span class="at">size =</span> <span class="dv">100</span>, <span class="at">prob =</span> p)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>draw_size500 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(sample_num, <span class="at">size =</span> <span class="dv">500</span>, <span class="at">prob =</span> p)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the simulated mean and standard deviation according to different draw sizes</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>sim_result <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_size =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">500</span>),</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean =</span> <span class="fu">c</span>(<span class="fu">mean</span>(draw_size10), <span class="fu">mean</span>(draw_size50), <span class="fu">mean</span>(draw_size100), <span class="fu">mean</span>(draw_size500)),</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">sd =</span> <span class="fu">c</span>(<span class="fu">sd</span>(draw_size10), <span class="fu">sd</span>(draw_size50), <span class="fu">sd</span>(draw_size100), <span class="fu">sd</span>(draw_size500))</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(sim_result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  sample_size   mean        sd
+1          10  0.995 0.9999874
+2          50  4.900 2.0836767
+3         100 10.090 2.6603170
+4         500 50.025 6.5696405</code></pre>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the histogram when draw size = 10</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df_size10 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">values =</span> draw_size10</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_size10, <span class="fu">aes</span>(<span class="at">x =</span> values)) <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="hw2_answer_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the histogram when draw size = 50</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df_size50 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">values =</span> draw_size50</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_size50, <span class="fu">aes</span>(<span class="at">x =</span> values)) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="hw2_answer_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the histogram when draw size = 100</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df_size100 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">values =</span> draw_size100</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_size100, <span class="fu">aes</span>(<span class="at">x =</span> values)) <span class="sc">+</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="hw2_answer_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the histogram when draw size = 500</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df_size500 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">values =</span> draw_size500</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_size500, <span class="fu">aes</span>(<span class="at">x =</span> values)) <span class="sc">+</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="hw2_answer_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="textbook-exercise" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="textbook-exercise"><span class="header-section-number">2</span> Textbook Exercise</h2>
+<section id="question-3.8" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="question-3.8"><span class="header-section-number">2.1</span> Question 3.8</h3>
+<p>We denote <strong>Poverty Line</strong> as <strong>PL</strong>, and <strong>Foreign Language</strong> as <strong>FL</strong>.</p>
+<ol type="a">
+<li><p>No, there are people who are both living below the poverty line and speak a language other than English at home.</p></li>
+<li><p>The Venn diagram is shown below.</p></li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/hw_2_Q2_1.jpeg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+<ol start="3" type="a">
+<li><p>Each person living below the poverty line either speaks only English at home or doesn’t.<br>
+Since 14.6% of Americans live below the poverty line and 4.2% speak a language other than English at home, the other 10.4% only speak English at home.</p></li>
+<li><p>Using the <strong>General Addition Rule</strong>:</p></li>
+</ol>
+<p><span class="math display">\[
+\begin{aligned}
+P(\text{below PL or speak FL})
+&amp;= P(\text{below PL}) + P(\text{FL}) - P(\text{both}) \\
+&amp;= 0.146 + 0.207 - 0.042 \\
+&amp;= 0.311.
+\end{aligned}
+\]</span></p>
+<ol start="5" type="a">
+<li>Probability of <strong>neither</strong> below PL <strong>nor</strong> speak FL:</li>
+</ol>
+<p><span class="math display">\[
+P(\text{neither below PL nor speak FL})
+= 1 - P(\text{below PL or speak FL})
+= 1 - 0.311
+= 0.689.
+\]</span></p>
+<ol start="6" type="a">
+<li>Two approaches to assess independence:</li>
+</ol>
+<!-- -->
+<ol type="1">
+<li><strong>Multiplication rule (if independent)</strong></li>
+</ol>
+<p><span class="math display">\[
+P(\text{below PL}) \times P(\text{FL})
+= 0.146 \times 0.207
+= 0.030.
+\]</span></p>
+<p>This does <strong>not</strong> equal ( P() = 0.042 ), therefore the events are <strong>dependent</strong>.</p>
+<ol start="2" type="1">
+<li><strong>Bayes’ theorem</strong></li>
+</ol>
+<p>If the two events were independent, then ( P() = P() ).</p>
+<p>Using Bayes’ theorem:</p>
+<p><span class="math display">\[
+P(\text{below PL} \mid \text{FL})
+= \frac{P(\text{below PL and FL})}{P(\text{FL})}
+= \frac{0.042}{0.207}
+\approx 0.203.
+\]</span></p>
+<p>Since this probability (()) is different from ( P() = 0.146 ), we determine that the two events are <strong>dependent</strong>.</p>
+</section>
+<section id="question-3.16" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="question-3.16"><span class="header-section-number">2.2</span> Question 3.16</h3>
+<ol type="a">
+<li><p>No, there are individuals who are both in excellent health and <strong>have</strong> health coverage.</p></li>
+<li><p>Overall probability: <span class="math display">\[ P(\text{excellent health}) = 0.2329 \]</span></p></li>
+<li><p>Conditional on <strong>having</strong> health coverage: <span class="math display">\[
+P(\text{excellent health}\mid \text{coverage}) =
+\frac{0.2099}{0.8738} \approx 0.24 \]</span></p></li>
+<li><p>Conditional on <strong>not having</strong> health coverage: <span class="math display">\[
+P(\text{excellent health}\mid \text{no coverage}) =
+\frac{0.0230}{0.1262} \approx 0.18 \]</span></p></li>
+<li><p>Conclusion: Since the probability of excellent health differs between coverage groups (24% vs 18%), the variables <strong>are not independent</strong>.</p></li>
+</ol>
+</section>
+<section id="question-3.34" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="question-3.34"><span class="header-section-number">2.3</span> Question 3.34</h3>
+<ol type="a">
+<li>The probability model and the calculation of average revenue per passenger (expected value)</li>
+</ol>
+<div id="tbl-model" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Probability model for baggage fee revenue per passenger
+</figcaption>
+<div aria-describedby="tbl-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Event</th>
+<th style="text-align: right;"><span class="math inline">\(X\)</span></th>
+<th style="text-align: right;">(P(X))</th>
+<th style="text-align: right;">(XP(X))</th>
+<th style="text-align: right;">((X - E<span class="math display">\[X\]</span>)^2)</th>
+<th style="text-align: right;">((X - E<span class="math display">\[X\]</span>)^2P(X))</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">No baggage</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.54</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">246.49</td>
+<td style="text-align: right;">133.10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1 checked bag</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">0.34</td>
+<td style="text-align: right;">8.5</td>
+<td style="text-align: right;">86.49</td>
+<td style="text-align: right;">29.41</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2 checked bags</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">0.12</td>
+<td style="text-align: right;">7.2</td>
+<td style="text-align: right;">1962.49</td>
+<td style="text-align: right;">235.50</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<ul>
+<li><strong>Expected value:</strong> <span class="math display">\[(E(X) = 15.70)\]</span></li>
+<li><strong>Variance:</strong> <span class="math display">\[(V(X) = 398.01)\]</span></li>
+<li><strong>Standard deviation:</strong> <span class="math display">\[(SD(X) = 19.95)\]</span></li>
+</ul>
+<ol start="2" type="a">
+<li>Assume independence between individual fliers (a rough but helpful approximation).</li>
+</ol>
+<span class="math display">\[\begin{aligned}
+E\!\left[\textstyle\sum_{i=1}^{120} X_i\right]
+  &amp;= \sum_{i=1}^{120} E[X_i]
+  = 120 \times 15.70
+  = \$1{,}884 \\
+V\!\left[\textstyle\sum_{i=1}^{120} X_i\right]
+  &amp;= \sum_{i=1}^{120} V[X_i]
+  = 120 \times 398.01
+  = 47{,}761.20 \\
+SD\!\left[\textstyle\sum_{i=1}^{120} X_i\right]
+  &amp;= \sqrt{47{,}761.20}
+  = 218.54
+\end{aligned}\]</span>
+</section>
+<section id="question-3.44" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="question-3.44"><span class="header-section-number">2.4</span> Question 3.44</h3>
+<ol type="a">
+<li></li>
+</ol>
+<ul>
+<li><span class="math inline">\(E(X + Y_1 + Y_2 + Y_3) = E(X) + 3 \times E(Y) = 48 + 3 \times 2 = 54\)</span><br>
+</li>
+<li><span class="math inline">\(V(X + Y_1 + Y_2 + Y_3) = V(X) + 3 \times V(Y) = 1 + 3 \times 0.0625 = 1.1875\)</span><br>
+</li>
+<li><span class="math inline">\(SD(X + Y_1 + Y_2 + Y_3) = \sqrt{1.1875} = 1.09\)</span></li>
+</ul>
+<ol start="2" type="a">
+<li></li>
+</ol>
+<ul>
+<li><span class="math inline">\(E(X - Y) = E(X) - E(Y) = 48 - 2 = 46\)</span><br>
+</li>
+<li><span class="math inline">\(V(X - Y) = V(X) + V(Y) = 1 + 0.0625 = 1.0625\)</span><br>
+</li>
+<li><span class="math inline">\(SD(X - Y) = \sqrt{1.0625} = 1.03\)</span></li>
+</ul>
+<ol start="3" type="a">
+<li>Initially we do not know exactly how much ice cream is in the box. Then we scoop out an unknown amount. We should now be even more unsure about the amount of ice cream that is left in the box.</li>
+</ol>
+</section>
+<section id="question-4.4" class="level3" data-number="2.5">
+<h3 data-number="2.5" class="anchored" data-anchor-id="question-4.4"><span class="header-section-number">2.5</span> Question 4.4</h3>
+<ol type="a">
+<li>Problem setup</li>
+</ol>
+<p>Let <span class="math inline">\(X\)</span> denote the finishing times of Men (ages 30–34) and <span class="math inline">\(Y\)</span> denote the finishing times of Women (ages 25–29):</p>
+<p><span class="math display">\[
+X \sim N(\mu = 4313, \sigma = 583)
+\]</span> <span class="math display">\[
+Y \sim N(\mu = 5261, \sigma = 807)
+\]</span></p>
+<ol start="2" type="a">
+<li>Z-scores</li>
+</ol>
+<p>The Z-scores can be calculated as follows:</p>
+<p><span class="math display">\[
+Z_{Leo} = \frac{4948 - 4313}{583} = 1.09
+\]</span> <span class="math display">\[
+Z_{Mary} = \frac{5513 - 5261}{807} = 0.31
+\]</span></p>
+<ul>
+<li>Leo finished 1.09 standard deviations above the mean of his group.<br>
+</li>
+<li>Mary finished 0.31 standard deviations above the mean of hers.</li>
+</ul>
+<ol start="3" type="a">
+<li>Comparison</li>
+</ol>
+<p>Mary ranked better since her Z-score indicates a relatively shorter finishing time compared to her group.</p>
+<ol start="4" type="a">
+<li>Probability for Leo</li>
+</ol>
+<p><span class="math display">\[
+P(Z &gt; 1.09) = 1 - P(Z &lt; 1.09) = 1 - 0.8621 = 0.1379
+\]</span></p>
+<p>So, <strong>13.79%</strong> of men in Leo’s age group performed worse.</p>
+<ol start="5" type="a">
+<li>Probability for Mary</li>
+</ol>
+<p><span class="math display">\[
+P(Z &gt; 0.31) = 1 - P(Z &lt; 0.31) = 1 - 0.6217 = 0.3783
+\]</span></p>
+<p>So, <strong>37.83%</strong> of women in Mary’s age group performed worse.</p>
+<ol start="6" type="a">
+<li>Normal model consideration</li>
+</ol>
+<ul>
+<li>The answer to part (b) would not change since Z-scores can be calculated for non-normal distributions.<br>
+</li>
+<li>However, parts (c) through (e) rely on the <strong>normal model</strong> and cannot be answered without it.</li>
+</ul>
+</section>
+<section id="question-4.6" class="level3" data-number="2.6">
+<h3 data-number="2.6" class="anchored" data-anchor-id="question-4.6"><span class="header-section-number">2.6</span> Question 4.6</h3>
+<ol type="a">
+<li>Fastest 5%</li>
+</ol>
+<p>The fastest 5% are in the 5th percentile of the distribution.<br>
+The Z-score corresponding to the 5th percentile of a normal distribution is approximately <span class="math inline">\(-1.65\)</span>:</p>
+<p><span class="math display">\[
+Z = -1.65 = \frac{x - 4313}{583}
+\]</span></p>
+<p><span class="math display">\[
+x = -1.65 \times 583 + 4313 = 3351 \text{ seconds}
+\]</span></p>
+<p>The fastest 5% of males in this age group finished in <strong>less than 56 minutes</strong>.</p>
+<ol start="2" type="a">
+<li>Slowest 10%</li>
+</ol>
+<p>The slowest 10% are in the 90th percentile of the distribution.<br>
+The Z-score corresponding to the 90th percentile is approximately <span class="math inline">\(1.28\)</span>:</p>
+<p><span class="math display">\[
+Z = 1.28 = \frac{y - 5261}{807}
+\]</span></p>
+<p><span class="math display">\[
+y = 1.28 \times 807 + 5261 = 6294 \text{ seconds}
+\]</span></p>
+<p>The slowest 10% of females in this age group took <strong>1 hour, 45 minutes, or longer</strong> to finish.</p>
+</section>
+<section id="question-4.24" class="level3" data-number="2.7">
+<h3 data-number="2.7" class="anchored" data-anchor-id="question-4.24"><span class="header-section-number">2.7</span> Question 4.24</h3>
+<p>Let <span class="math inline">\(X \sim \text{Binomial}(n=3, p=0.25)\)</span> and for part (d) let <span class="math inline">\(X \sim \text{Geometric}(p=0.25)\)</span> (counting the trial of the first success).</p>
+<ol type="a">
+<li><span class="math inline">\(P(X=2)\)</span> with Binomial</li>
+</ol>
+<p><span class="math display">\[
+P(X=2) = \binom{3}{2}(0.25)^2(0.75)^1 = 0.1406
+\]</span></p>
+<ol start="2" type="a">
+<li><span class="math inline">\(P(X=0)\)</span> with Binomial</li>
+</ol>
+<p><span class="math display">\[
+P(X=0) = \binom{3}{0}(0.25)^0(0.75)^3 = 0.4219
+\]</span></p>
+<ol start="3" type="a">
+<li><span class="math inline">\(P(X \ge 1)\)</span> with Binomial</li>
+</ol>
+<p><span class="math display">\[
+P(X \ge 1) = 1 - P(X=0) = 1 - 0.4219 = 0.5781
+\]</span></p>
+<ol start="4" type="a">
+<li>First success on trial 3 (Geometric)</li>
+</ol>
+<p><span class="math display">\[
+P(X=3) = (1-p)^{3-1}p = (0.75)^2(0.25) = 0.1406
+\]</span></p>
+</section>
+<section id="question-4.28" class="level3" data-number="2.8">
+<h3 data-number="2.8" class="anchored" data-anchor-id="question-4.28"><span class="header-section-number">2.8</span> Question 4.28</h3>
+<ol type="a">
+<li>Negative Binomial Distribution</li>
+</ol>
+<p>Using the negative binomial distribution with <span class="math inline">\(n = 15\)</span> and <span class="math inline">\(p = 0.65\)</span>:</p>
+<p><span class="math display">\[
+P(X = 10) = \binom{14}{9}(0.65)^{10}(0.35)^{5} = 0.1416
+\]</span></p>
+<ol start="2" type="a">
+<li>Binomial Distribution</li>
+</ol>
+<p>Using the binomial distribution:</p>
+<p><span class="math display">\[
+P(X = 10) = \binom{15}{10}(0.65)^{10}(0.35)^{5} = 0.2123
+\]</span></p>
+<ol start="3" type="a">
+<li>Geometric Distribution</li>
+</ol>
+<p>Using the geometric distribution:</p>
+<p><span class="math display">\[
+P(X = 3) = (0.35)^{2}(0.65) = 0.0796
+\]</span></p>
+
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/danny2915\.github\.io\/2025StatTASession\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../homework/hw1_answer.html" class="pagination-link" aria-label="Homework 1 Answers">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Homework 1 Answers</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../quiz/Quiz_1.html" class="pagination-link" aria-label="Quiz 1">
+        <span class="nav-page-text">Quiz 1</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
