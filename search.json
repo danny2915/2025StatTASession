@@ -582,11 +582,22 @@
     ]
   },
   {
+    "objectID": "practices/wk6.html#download-data",
+    "href": "practices/wk6.html#download-data",
+    "title": "Week 6 Practices (1007)",
+    "section": "2 Download Data",
+    "text": "2 Download Data\nPlease download the datasets ames.csv here.",
+    "crumbs": [
+      "Practices",
+      "Week 6 Practices (1007)"
+    ]
+  },
+  {
     "objectID": "practices/wk6.html#housing-price-in-2025",
     "href": "practices/wk6.html#housing-price-in-2025",
     "title": "Week 6 Practices (1007)",
-    "section": "2 Housing Price in 2025",
-    "text": "2 Housing Price in 2025\n\nUse paste() and for-loop to create a character vector date_2025 that contains 365 days in 2025, and each date repeat 3 times. i.e., c(\"2025-01-01\", \"2025-01-01\", \"2025-01-01\", ..., \"2025-12-31\")\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse if (month %in% vec) to check if there are 28, 30 or 31 days in that month.\n\n\n\nUse as.Date() to convert the date_2025 as type date.\nCreate a numeric vector housing_price with length 1095 having the value generated from a normal distribution with mean = 10000, sd = 2000.\nCombine date_2025 and housing_price_2025 as a new dataframe housing_2025.\nUse geom_line() with linewidth = 0.3 to plot the average housing price for each date in 2025.",
+    "section": "3 Housing Price in 2025",
+    "text": "3 Housing Price in 2025\n\nUse paste() and for-loop to create a character vector date_2025 that contains 365 days in 2025, and each date repeat 3 times. i.e., c(\"2025-01-01\", \"2025-01-01\", \"2025-01-01\", ..., \"2025-12-31\")\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse if (month %in% vec) to check if there are 28, 30 or 31 days in that month.\n\n\n\nUse as.Date() to convert the date_2025 as type date.\nCreate a numeric vector housing_price with length 1095 having the value generated from a normal distribution with mean = 10000, sd = 2000.\nCombine date_2025 and housing_price_2025 as a new dataframe housing_2025.\nUse geom_line() with linewidth = 0.3 to plot the average housing price for each date in 2025.",
     "crumbs": [
       "Practices",
       "Week 6 Practices (1007)"
