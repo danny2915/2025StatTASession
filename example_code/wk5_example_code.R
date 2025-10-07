@@ -33,7 +33,7 @@
 
 # 2. random number draw from binomial distribution: "rbinom()"
   
-  ## draw 20 samples from binomial distribution, each sample expreienced 5 times bernoulli with probability = .5
+  ## draw 30 samples from binomial distribution, each sample expreienced 20 times bernoulli with probability = .5
   rdnum <- rbinom(n = 30, size = 20, prob = .5)
   print(rdnum)
   class(rdnum)
