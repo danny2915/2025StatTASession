@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Week 5 Example R Code (0930) – 2025Fall Statistics TA Session</title>
+<title>Week 6 Practices (1007) – 2025Fall Statistics TA Session</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,13 +20,48 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<link href="../example_code/Example_Code_wk6.html" rel="next">
-<link href="../example_code/Example_Code_wk4.html" rel="prev">
+<link href="../homework/hw1_answer.html" rel="next">
+<link href="../answers/wk5_answer.html" rel="prev">
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -97,7 +132,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../example_code/Example_Code_wk1.html">Example R code</a></li><li class="breadcrumb-item"><a href="../example_code/Example_Code_wk5.html">Week 5 Example R Code (0930)</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../answers/wk1_answer.html">Practice Answers</a></li><li class="breadcrumb-item"><a href="../answers/wk6_answer.html">Week 6 Practices (1007)</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -168,13 +203,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
  <span class="menu-text">Example R code</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../example_code/Example_Code_wk1.html" class="sidebar-item-text sidebar-link">
@@ -201,7 +236,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../example_code/Example_Code_wk5.html" class="sidebar-item-text sidebar-link active">
+  <a href="../example_code/Example_Code_wk5.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Week 5 Example R Code (0930)</span></a>
   </div>
 </li>
@@ -262,13 +297,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
  <span class="menu-text">Practice Answers</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../answers/wk1_answer.html" class="sidebar-item-text sidebar-link">
@@ -301,7 +336,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../answers/wk6_answer.html" class="sidebar-item-text sidebar-link">
+  <a href="../answers/wk6_answer.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Week 6 Practices (1007)</span></a>
   </div>
 </li>
@@ -367,7 +402,15 @@ window.Quarto = {
   </li>
     </ul>
     </div>
-    
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#reminders" id="toc-reminders" class="nav-link active" data-scroll-target="#reminders"><span class="header-section-number">1</span> Reminders</a></li>
+  <li><a href="#download-data" id="toc-download-data" class="nav-link" data-scroll-target="#download-data"><span class="header-section-number">2</span> Download Data</a></li>
+  <li><a href="#housing-price-in-2025" id="toc-housing-price-in-2025" class="nav-link" data-scroll-target="#housing-price-in-2025"><span class="header-section-number">3</span> Housing Price in 2025</a></li>
+  </ul>
+</nav>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
@@ -376,9 +419,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../example_code/Example_Code_wk1.html">Example R code</a></li><li class="breadcrumb-item"><a href="../example_code/Example_Code_wk5.html">Week 5 Example R Code (0930)</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../answers/wk1_answer.html">Practice Answers</a></li><li class="breadcrumb-item"><a href="../answers/wk6_answer.html">Week 6 Practices (1007)</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Week 5 Example R Code (0930)</h1>
+<h1 class="title">Week 6 Practices (1007)</h1>
 </div>
 
 
@@ -395,13 +438,102 @@ window.Quarto = {
 </header>
 
 
-<p>Right click to download:</p>
-<ul>
-<li><a href="wk5_example_code.R">wk5_example_code.R</a></li>
-</ul>
+<section id="reminders" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="reminders"><span class="header-section-number">1</span> Reminders</h2>
+<ol type="1">
+<li><p>Remember to use the project and create a new script in your script folder!</p></li>
+<li><p>Set the seed to be <code>2025</code>.</p></li>
+<li><p>Better to use only the functions taught in the course.</p></li>
+</ol>
+</section>
+<section id="download-data" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="download-data"><span class="header-section-number">2</span> Download Data</h2>
+<p>Please download the datasets <code>ames.csv</code> <a href="https://www.openintro.org/data/" target="_blank">here</a>.</p>
+</section>
+<section id="housing-price-in-2025" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="housing-price-in-2025"><span class="header-section-number">3</span> Housing Price in 2025</h2>
+<ol type="1">
+<li>Use <code>paste()</code> and for-loop to create a character vector <code>date_2025</code> that contains 365 days in 2025, and each date repeat 3 times. i.e., <code>c("2025-01-01", "2025-01-01", "2025-01-01", ..., "2025-12-31")</code></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Hint">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Hint
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use <code>if (month %in% vec)</code> to check if there are 28, 30 or 31 days in that month.</p>
+</div>
+</div>
+<ol start="2" type="1">
+<li><p>Use <code>as.Date()</code> to convert the <code>date_2025</code> as type <code>date</code>.</p></li>
+<li><p>Create a numeric vector <code>housing_price</code> with length 1095 having the value generated from a normal distribution with <code>mean = 10000</code>, <code>sd = 2000</code>.</p></li>
+<li><p>Combine <code>date_2025</code> and <code>housing_price_2025</code> as a new dataframe <code>housing_2025</code>.</p></li>
+<li><p>Use <code>geom_line()</code> with <code>linewidth = 0.3</code> to plot the average housing price for each date in 2025.</p></li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2025</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>date_2025 <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (month <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>){</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">12</span>)){</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (day <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">31</span>){</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>      temp <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="at">expr =</span> <span class="fu">paste</span>(<span class="st">"2025"</span>, month, day, </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">sep =</span> <span class="st">"-"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                        )</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>      date_2025 <span class="ot">&lt;-</span> <span class="fu">c</span>(date_2025, temp)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="cf">if</span> (month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">11</span>)){</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (day <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>){</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>      temp <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="at">expr =</span> <span class="fu">paste</span>(<span class="st">"2025"</span>, month, day, </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">sep =</span> <span class="st">"-"</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>                        )</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>      date_2025 <span class="ot">&lt;-</span> <span class="fu">c</span>(date_2025, temp)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    }    </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span>{</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (day <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">28</span>){</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>      temp <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="at">expr =</span> <span class="fu">paste</span>(<span class="st">"2025"</span>, <span class="st">"2"</span>, day, </span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">sep =</span> <span class="st">"-"</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>                        )</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>      date_2025 <span class="ot">&lt;-</span> <span class="fu">c</span>(date_2025, temp)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    }        </span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>date_2025 <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(date_2025)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>housing_price_2025 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">1095</span>, <span class="at">mean =</span> <span class="dv">10000</span>, <span class="at">sd =</span> <span class="dv">2000</span>)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>housing_2025 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">date =</span> date_2025,</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>                           <span class="at">price =</span> housing_price_2025</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>                           )</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_2025, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> price)) <span class="sc">+</span> </span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, </span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>              <span class="at">fun =</span> <span class="st">"mean"</span>, </span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>              <span class="at">linewidth =</span> <span class="fl">0.3</span>, </span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">"steelblue"</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>              )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="wk6_answer_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -805,13 +937,13 @@ window.Quarto = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../example_code/Example_Code_wk4.html" class="pagination-link" aria-label="Week 4 Example R Code (0923)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Week 4 Example R Code (0923)</span>
+      <a href="../answers/wk5_answer.html" class="pagination-link" aria-label="Week 5 Answers (0930)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Week 5 Answers (0930)</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../example_code/Example_Code_wk6.html" class="pagination-link" aria-label="Week 6 Example R Code (1007)">
-        <span class="nav-page-text">Week 6 Example R Code (1007)</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../homework/hw1_answer.html" class="pagination-link" aria-label="Homework 1 Answers">
+        <span class="nav-page-text">Homework 1 Answers</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
