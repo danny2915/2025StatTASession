@@ -37,12 +37,14 @@ print("H" != "I")
 # AND: & (element wise), && (first element only)
 x <- c(3, 5, 8)
 x > 4 & x < 7 # FALSE TRUE FALSE
-x > 4 && x < 7 # FALSE
+# Error: 'length = 3' in coercion to 'logical(1)'
+# x > 4 && x < 7
 
 # OR: | (element wise), || (first element only)
 x <- c(3, 5, 8)
 x > 4 | x < 7 # TRUE TRUE TRUE
-x > 4 || x < 7 # TRUE
+# Error: 'length = 3' in coercion to 'logical(1)'
+#x > 4 || x < 7
 
 # Use && if inside an if statement
 if (TRUE || FALSE){
@@ -88,7 +90,7 @@ x > 4 & x < 10 | x == 2 & x > 8 # TRUE
 num <- -3:3
 print(num)
 
-num_abs <- num %>% 
+num %>% 
   cumsum() %>%
   print()
 
@@ -106,7 +108,7 @@ print(babies_height_62_64)
 babies_bwt_gt120_smoke <- babies %>% 
   filter(bwt > 120 & smoke == 1)
 
-print(babies_weight_gt120_smoke)
+print(babies_bwt_gt120_smoke)
 
 # 3. Select variables: `select()`
 babies_age_bwt <- babies %>% 
@@ -117,15 +119,15 @@ print(babies_age_bwt)
 babies_wo_case_bwt <- babies %>% 
   select(-c(case, bwt))
 
-print(babies_age_bwt)
+print(babies_wo_case_bwt)
 
 # 4. Generate new column from existing variables: `mutate()`
 
 # example 1
-babies_ht_wt <- babies %>% 
-  mutate(ht_wt = height + weight)
+babies_ht_plus_wt <- babies %>% 
+  mutate(ht_plus_wt = height + weight)
 
-print(babies_ht_wt)
+print(babies_ht_plus_wt)
 
 # example 2
 babies_age_gt30 <- babies %>% 
@@ -158,10 +160,3 @@ babies_ht_asc <- babies %>%
   arrange(height) 
 
 print(babies_ht_asc)
-
-
-arrange(select(filter(babies, height >= 60), 
-               bwt, 
-               height),
-        desc(bwt)
-)
