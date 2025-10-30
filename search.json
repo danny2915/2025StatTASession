@@ -33,8 +33,8 @@
     ]
   },
   {
-    "objectID": "homework/hw3_answer.html",
-    "href": "homework/hw3_answer.html",
+    "objectID": "homework/hw4_answer.html",
+    "href": "homework/hw4_answer.html",
     "title": "Homework 3 Answers",
     "section": "",
     "text": "If you find any typos or errors, please feel free to contact me via email at r13323002@ntu.edu.tw. I would appreciate it and will correct the solution to prevent any misunderstandings.\nFor some R commands marked with ‘OPTIONAL,’ you don’t need to learn them. You will be completely fine on the computer quiz even if you choose to ignore them.\nIf you’re having trouble understanding the code, don’t hesitate to ask me for help. I’ll do my best to assist you during office hours or after the TA session.",
@@ -44,25 +44,1091 @@
     ]
   },
   {
-    "objectID": "homework/hw3_answer.html#computer-exercises",
-    "href": "homework/hw3_answer.html#computer-exercises",
+    "objectID": "homework/hw4_answer.html#computer-exercises",
+    "href": "homework/hw4_answer.html#computer-exercises",
     "title": "Homework 3 Answers",
     "section": "1 Computer Exercises",
-    "text": "1 Computer Exercises\n\n1.1 CLT Simulation with Uniform Distribution\n# 1. Define distribution parameters, draw size, and simulation size\nuniform_min &lt;- -2\nuniform_max &lt;- 2\ndraw_size &lt;- c(2, 5, 15, 30)\nsimulation_size &lt;- 200\n\n# 2. Define function to:\n# (1) draw uniform sample according to different draw size; \n# (2) compute sample mean and return the mean\nsample_mean_unif &lt;- function(n){\n  samples &lt;- runif(n, min = uniform_min, max = uniform_max)\n  mean &lt;- mean(samples)\n  return(mean)\n}\n\n# 3. Before simulation, create an empty DataFrame for storing the simulation result later\nresult &lt;- data.frame()\n\n# 4. Draw sample according to different draw sizes\nfor (n in draw_size){\n  \n  ## 4.1 Given the draw size, draw sample and compute mean for 200 times\n  simulated_sample_means &lt;- replicate(simulation_size, sample_mean_unif(n))\n  \n  ## 4.2 Store the sample means in temporary DataFrame `df`\n  ##     `df` is a 200 x 2 DataFrame. Check it by yourself\n  df &lt;- data.frame(\n    draw_size = n,\n    means = simulated_sample_means\n  )\n  \n  ## 4.3 We store the simulation result by appending the sample means `df` to `result`\n  ##     so 'result' now should have 200+200+200+200 = 800 rows. Check it by yourself\n  result &lt;- rbind(result, df)\n  \n}\n\n# 5. Draw histogram\nggplot(data = result, aes(x = means)) +\n  geom_histogram(binwidth = 0.1, fill = \"steelblue\", color = \"gray\", alpha = 0.8, boundary = 0.1) +\n  facet_wrap(~draw_size) +\n  labs(\n    x = \"Simulated Sample Mean\",\n    y = \"Simulation ount\",\n    title = paste0(\"Histogram of Uniform Sample Mean under Diffrent Sample Size for 200 Simulations.\")\n  ) +\n  theme(plot.title = element_text(hjust = 0.5))\n\n\n\n\n\n\n\n\n\nNote that the mean of these histogram are all zero. Besides, as the size of draws increases, the sample variation decreases since the histogram became more centered.\n\n\n1.2 CLT Simulation with Exponential Distribution\n# 1. Define distribution parameters, draw size, and simulation size\nlambda &lt;- 1.5\ndraw_size &lt;- c(2, 5, 15, 30)\nsimulation_size &lt;- 200\n\n# 2. Define function to:\n# (1) draw exponential sample according to different draw size; \n# (2) compute sample mean and return the mean\nsample_mean_exp &lt;- function(n){\n  samples &lt;- rexp(n, rate = lambda)\n  mean &lt;- mean(samples)\n  return(mean)\n}\n\n# 3. Before simulation, create an empty DataFrame for storing the simulation result later\nresult &lt;- data.frame()\n\n# 4. draw sample according to different draw sizes\nfor (n in draw_size){\n  \n  ## 4.1 Given the draw size, draw sample and compute mean for 200 times\n  simulated_sample_means &lt;- replicate(simulation_size, sample_mean_exp(n))\n  \n  ## 4.2 Store the sample means in temporary DataFrame `df`\n  ##     `df` is a 200 x 2 DataFrame. Check it by yourself\n  df &lt;- data.frame(\n    draw_size = n,\n    means = simulated_sample_means\n  )\n  \n  ## 4.3 We store the simulation result by appending the sample means `df` to `result`\n  ##     so 'result' now should have 200+200+200+200 = 800 rows. Check it by yourself\n  result &lt;- rbind(result, df)\n  \n}\n\n# 5. Draw histogram\nggplot(data = result, aes(x = means)) +\n  geom_histogram(binwidth = 0.1, fill = \"steelblue\", color = \"gray\", alpha = 0.8, boundary = 0.1) +\n  facet_wrap(~draw_size) +\n  labs(\n    x = \"Simulated Sample Mean\",\n    y = \"Simulation ount\",\n    title = paste0(\"Histogram of Exponential Sample Mean under Diffrent Sample Size for 200 Simulations.\")\n  ) +\n  theme(plot.title = element_text(hjust = 0.5))\n\n\n\n\n\n\n\n\n\nNote that the mean of these histogram are all 1/1.5. Besides, as the size of draws increases, the sample variation decreases since the histogram became more centered.",
+    "text": "1 Computer Exercises\n\n1.1 Null and Alternative Hypothesis\n\\[\n\\begin{cases}\nH_0&: \\text{Answers are independent of party affiliation.}\\\\\nH_1&: \\text{Answers are NOT independent of party affiliation.}\n\\end{cases}\n\\]\n\n\n1.2 Contingency Table and Chi-square Test\n# create two-way table (column percentage)\ncount_table &lt;- table(body$answer, body$party_affiliation,\n                     dnn = c(\"Asnwer\", \"Party Affiliation\"))\npct_table &lt;- prop.table(count_table, margin = 2)\nprint(pct_table)\n\n# chi-square test\nchi_test &lt;- chisq.test(pct_table)\nprint(chi_test)\n\n\n                         Party Affiliation\nAsnwer                      Democrat Independent Republican\n  do not know / no answer 0.04065041  0.04888889 0.05031447\n  should                  0.81029810  0.78000000 0.83018868\n  should not              0.14905149  0.17111111 0.11949686\n\n\n\n    Pearson's Chi-squared test\n\ndata:  pct_table\nX-squared = 0.011904, df = 4, p-value = 1\n\n\n\n\n1.3 Conclusion\nSince the p-value is 0.3598, which is larger than 0.05 , we do not reject the null hypothesis. That is, we don’t have strong evidence that shows an association between answers and party affiliations.",
     "crumbs": [
       "Homework Solutions",
       "Homework 3 Answers"
     ]
   },
   {
-    "objectID": "homework/hw3_answer.html#textbook-exercise",
-    "href": "homework/hw3_answer.html#textbook-exercise",
+    "objectID": "homework/hw4_answer.html#textbook-exercise",
+    "href": "homework/hw4_answer.html#textbook-exercise",
     "title": "Homework 3 Answers",
     "section": "2 Textbook Exercise",
-    "text": "2 Textbook Exercise\n\n2.1 Question 5.8\nRecall that the general formula is point estimate \\(\\pm z^* \\times \\text{SE}\\).\nFirst, identify the three values. The point estimate is 52%, \\(z^* = 2.58\\) for a 99% confidence level, and \\(\\text{SE} = 2.4\\).\n\\[\n52\\% \\;\\pm\\; 2.58 \\times 2.4\\% \\;\\;\\longrightarrow\\;\\; (45.8\\%,\\, 58.2\\%).\n\\]\nWe are 99% confident that 45.8% to 58.2% of U.S. adult Twitter users get some news on Twitter.\n\n\n2.2 Question 5.10\n\nFalse. 50% is included in the 99% confidence interval, hence a null hypothesis of \\(p = 0.50\\) would not be rejected at this level.\nFalse. The standard error measures the variability of the sample proportion and is unrelated to the proportion of the population included in the study.\nFalse. We need to increase the sample size to decrease the standard error.\nFalse. As the confidence level decreases, so does the margin of error, and hence the width of the confidence interval.\n\n\n\n2.3 Question 5.18\nFirst, the hypotheses should be about the population proportion (\\(p\\)), not the sample proportion.\nSecond, the null value should be what we are testing (0.25), not the observed value (0.24).\nThe correct way to set up these hypotheses is:\n\\[\n\\begin{cases}\nH_0: p = 0.25 \\\\\nH_A: p \\ne 0.25\n\\end{cases}\n\\]\n\n\n2.4 Question 5.26\n\nScenario I is higher. A sample mean based on less data tends to be less accurate and has a larger standard error.\nScenario I is higher. A higher confidence level \\(\\Rightarrow\\) a larger margin of error.\nThey are equal. For a given \\(Z\\)-score the p-value depends only on the \\(Z\\) value, not on the sample size.\nScenario I is higher. If the null is harder to reject (smaller \\(\\alpha\\)), we are more likely to make a Type II error when the alternative is true.\n\n\n\n\n2.5 Question 5.32\nPrepare — Hypotheses\n\\[\n\\begin{cases}\nH_0: p = 0.08,\\\\\nH_A: p \\ne 0.08 .\n\\end{cases}\n\\]\nUse significance level \\(\\alpha = 0.05\\).\nCheck\nSimple random sample \\(\\Rightarrow\\) independence.\nSuccess–failure condition: \\(21 \\ge 10\\) and \\(194-21=173 \\ge 10\\).\nCalculate\n\\[\n\\hat p = \\frac{21}{194} = 0.108\n\\]\n\\[\nSE = \\sqrt{\\frac{0.08(1-0.08)}{194}} = 0.0195\n\\]\n\\[\nZ=\\frac{0.108-0.08}{0.0195}=1.44\n\\]\nA one–tail area is about \\(0.075\\), so the two–sided p-value is \\(2\\times0.075 \\approx 0.15\\).\nConclude\nBecause the p-value (\\(0.15\\)) is greater than \\(\\alpha=0.05\\), we do not reject \\(H_0\\).\nThere is not convincing evidence that the fraction of children who are nearsighted differs from \\(0.08\\).\n\n\n\n2.6 Question 5.36\nAs the sample size increases, the standard error decreases.\nFor the same true effect, the test statistic (e.g., \\(Z\\)) increases, and the p-value decreases.",
+    "text": "2 Textbook Exercise\n\n2.1 Question 6.6\n\nWith a random sample from &lt; 10% of the population, independence is satisfied. The success–failure condition is also satisfied. Hence, the margin of error can be calculated as follows:\n\n\\[\nME \\;=\\; z^\\* \\sqrt{\\frac{p(1-p)}{n}}\n\\;=\\; 1.96 \\times \\sqrt{\\frac{0.66 \\times 0.34}{1018}}\n\\;=\\; 0.029 \\approx 3\\%.\n\\]\n\nA 95% confidence interval for the proportion of adults who think that licensed drivers should be required to re-take their road test once they reach 65 years of age is\n\n\\[\n0.66 \\pm 0.03 \\;=\\; (0.63,\\; 0.69).\n\\]\nSince 70% is not contained in the interval, we would reject a null hypothesis where (p=0.7). Therefore, the data do not provide evidence that more than 70% of the population think that drivers over the age of 65 should re-take their road test.\n\n\n2.2 Question 6.8\n\nThe population parameter of interest is the proportion of all Greeks who would rate their lives poorly enough to be considered “suffering”, (p). The point estimate for this parameter is the proportion of Greeks in this sample who would rate their lives as such, (p = 0.25).\nConditions:\n\n\nIndependence: The sample is random, and (1000 &lt; 10%) of all Greeks, therefore the life rating of one Greek in this sample is independent of another.\n\nSuccess–failure: (1000 = 250 &gt; 10) and (1000 = 750 &gt; 10).\nSince the observations are independent and the success–failure condition is met, (p) is expected to be approximately normal.\n\n\nA 95% confidence interval can be calculated as follows:\n\n\\[\n\\hat p \\pm z^\\* \\sqrt{\\frac{\\hat p(1-\\hat p)}{n}}\n= 0.25 \\pm 1.96 \\times \\sqrt{\\frac{0.25 \\times 0.75}{1000}}\n= 0.25 \\pm 0.0269\n= (0.2231,\\; 0.2769).\n\\]\nWe are 95% confident that approximately 22% to 28% of Greeks would rate their lives poorly enough to be considered “suffering”.\n\nIncreasing the confidence level would increase the margin of error, hence widen the interval.\nIncreasing the sample size would decrease the margin of error, hence make the interval narrower.\n\n\n\n2.3 Question 6.26\n\nThe hypotheses are\n\n\\[\n\\left\\{\n\\begin{aligned}\nH_0 &: \\; p_R = p_D \\; (\\text{Proportions of Republicans and Democrats who support the use of full-body scans are equal.}) \\\\\nH_A &: \\; p_R \\ne p_D \\; (\\text{Proportions of Republicans and Democrats who support the use of full-body scans are different.})\n\\end{aligned}\n\\right.\n\\]\nThe pooled proportion can be calculated as follows:\n\\[\n\\hat{p}_{\\text{pool}}\n= \\frac{\\text{success}_R + \\text{success}_D}{n_R + n_D}\n= \\frac{264 + 299}{318 + 369}\n= \\frac{563}{687}\n\\approx 0.82\n\\]\nNext we calculate the test statistic,\n\\[\n\\hat{p}_R=\\frac{264}{318}=0.83,\\qquad\n\\hat{p}_D=\\frac{299}{369}=0.81\n\\]\n\\[\nZ\n= \\frac{\\hat{p}_R-\\hat{p}_D}\n{\\sqrt{\\hat{p}_{\\text{pool}}\\,(1-\\hat{p}_{\\text{pool}})\\left(\\frac{1}{n_R}+\\frac{1}{n_D}\\right)}}\n= \\frac{0.83-0.81}{\\sqrt{0.82\\times 0.18\\left(\\frac{1}{318}+\\frac{1}{369}\\right)}}\n= \\frac{0.02}{0.0294}\n= 0.68\n\\]\nand the p-value:\n\\[\np-\\text{value}\n= P\\big(|\\hat{p}_R-\\hat{p}_D|&gt;0.02 \\mid H_0\\big)\n= P(|Z|&gt;0.68)\n= 2 \\times 0.2483\n= 0.4966\n\\]\nSince the p-value is high, we fail to reject \\(H_0\\). The data do not provide strong evidence that the proportions of Republicans and Democrats who support the use of full-body scans are different.\n\nWe may have made a Type II error, since we may have incorrectly failed to reject \\(H_0\\).\n\n\n\n2.4 Question 6.40\n\nMultiply each percent by 701:\n\n\n\n\n\nDownload\nNo Download\n\n\n\n\nPositions 1\n97\n128\n\n\nPositions 2\n102\n130\n\n\nPositions 3\n85\n159\n\n\n\n\nPrepare. It is convenient to construct the actual table we care about, which will represent the totals in the three experiment groups:\n\n\n\n\nGroup\nTotal\n\n\n\n\nPositions 1\n225\n\n\nPositions 2\n232\n\n\nPositions 3\n244\n\n\n\nThis now looks like a goodness of fit chi-square problem. As part of our Prepare step, we should also construct the hypotheses.\n\\[\n\\left\\{\n\\begin{aligned}\nH_0 &: \\text{ The chance a user is in any experiment group is equal among the three groups.}\\\\\nH_A &: \\text{ The chance of being in one group or another varies by the group.}\n\\end{aligned}\n\\right.\n\\]\nCheck. If \\(H_0\\) were true, then we’d expect \\(1/3\\) of the 701 visitors to be in each group, i.e. \\(233.67\\) in each group. The \\(233.67\\) is greater than 5 for all three groups, satisfying one of the required conditions. The independence condition is also satisfied since each visitor was randomly assigned to a group and only counted once in the table. With the conditions satisfied, we can move forward with conducting a goodness-of-fit chi-square test.\nCalculate. We can compute the test statistic and degrees of freedom:\n\\[\n\\chi^2\n= \\frac{(255-233.67)^2}{233.67}\n+ \\frac{(232-233.67)^2}{233.67}\n+ \\frac{(244-233.67)^2}{233.67}\n= 0.79\n\\]\n\\[\ndf = 3-1 = 2\n\\]\nUsing software, we can identify the tail area as \\(0.67\\).\nConclude. Because the p-value is larger than \\(0.05\\), we do not reject \\(H_0\\). That is, we do not see any evidence that visitor randomization to the groups is imbalanced / malfunctioning.\n\n\nPrepare.\n\n\\[\n\\left\\{\n\\begin{aligned}\nH_0 &: \\text{ No difference in download rate across the experiment groups.}\\\\\nH_A &: \\text{ There is some difference in download rate across the groups.}\n\\end{aligned}\n\\right.\n\\]\nCheck. Each visitor was randomly assigned to a group and only counted once in the table, so the observations are independent. The expected counts can also be computed by constructing row and column totals, then multiplying these (and dividing by the table total) to get the expected counts under \\(H_0\\). Those expected counts are (reading down the first column then down the second): 91.2, 94.0, 98.9, 133.8, 138.0, 145.2. All of these expected counts are at least 5. Therefore, we can use the chi-square test.\nCalculate. We can calculate the test statistic as\n\\[\n\\chi^2\n= \\frac{(97-91.2)^2}{91.2}\n+ \\cdots\n+ \\frac{(159-145.2)^2}{145.2}\n= 5.04\n\\]\nwith \\(df=(3-1)\\times(2-1)=2\\). This results in a p-value of \\(0.08\\), which we can find using software.\nConclude. Because the p-value is less than \\(0.05\\), we do not reject \\(H_0\\). That is, we have not found evidence that there is any difference in the download rate depending on the download link position.\n\n\n2.5 Question 6.42\n\nThe hypotheses are as follows:\n\n\\[\n\\left\\{\n\\begin{aligned}\nH_0 &: p = 0.5 \\ \\ (50\\% \\text{ of Americans think the Civil War is still relevant})\\\\\nH_A &: p \\ne 0.5 \\ \\ (\\text{A majority of Americans hold an opinion (for or against) that the Civil War is still relevant.})\n\\end{aligned}\n\\right.\n\\]\nBefore calculating the test statistic we should check that the conditions are satisfied:\n\nIndependence: The sample is random, and 1,507 \\(&lt;10\\%\\) of all Americans, therefore whether or not one American in the sample thinks the Civil War is still relevant is independent of another.\n\nSuccess-failure: \\(1,507 \\times 0.50 = 753.5 &gt; 10\\) and \\(1,507 \\times 0.50 = 753.5 &gt; 10\\). Since the observations are independent and the success-failure condition is met, \\(\\hat{p}\\) is expected to be approximately normal.\n\nThe test statistic and the p-value can be calculated as follows:\n\\[\nZ = \\frac{\\hat{p}-p_0}{\\sqrt{\\dfrac{p_0(1-p_0)}{n}}}\n= \\frac{0.56-0.5}{\\sqrt{\\dfrac{0.5\\times 0.5}{1{,}507}}}\n= \\frac{0.06}{0.0129}\n= 4.65\n\\]\n\\[\np\\text{–value} = P(\\hat{p} &gt; 0.56 \\mid p=0.5) = P(|Z|&gt;4.65) \\approx 0\n\\]\nSince the p-value is very small, we reject \\(H_0\\). Since the data show \\(\\hat{p} &gt; 0.5\\) and we’ve rejected \\(H_0\\), the data provide strong evidence that the majority of the Americans think the Civil War is still relevant.\n\nIf in fact only \\(50\\%\\) of Americans thought the Civil War is still relevant, the probability of obtaining a random sample of \\(1,507\\) Americans where \\(56\\%\\) or more think it is still relevant would be approximately \\(0\\).\nFirst we need to recheck the success-failure condition using the sample proportion:\n\\(1,507 \\times 0.56 = 843.92 &gt; 10\\) and \\(1,507 \\times 0.44 = 663.08 &gt; 10\\). A \\(90\\%\\) confidence interval can be calculated as follows:\n\n\\[\n\\hat{p} \\pm z^\\star \\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n}}\n= 0.56 \\pm 1.65 \\sqrt{\\frac{0.56\\times 0.44}{1{,}507}}\n\\]\n\\[\n= 0.56 \\pm 1.65 \\times 0.0128\n= 0.56 \\pm 0.02\n= (0.54,\\; 0.58)\n\\]\nWe are \\(90\\%\\) confident that \\(54\\%\\) to \\(58\\%\\) of all Americans think that the Civil War is still relevant. This agrees with the conclusion of the earlier hypothesis test since the interval lies above \\(50\\%\\).\n\n\n2.6 Question 6.50\n\nChi-squared test of independence.\nThe hypotheses are:\n\n\\[\n\\left\\{\n\\begin{aligned}\nH_0 &: \\text{Caffeinated coffee consumption and depression in women are independent.}\\\\\nH_A &: \\text{Caffeinated coffee consumption and depression in women are dependent/associated.}\n\\end{aligned}\n\\right.\n\\]\n\nDepression: \\(\\dfrac{2607}{50739}=0.0514\\)\n\nNo depression: \\(1-0.0514=0.9486\\)\n\nWe have:\n\n\\[\nE=\\frac{2607 \\times 6617}{50739}=339.9854 \\approx 340\n\\]\n\\[\n\\frac{(O-E)^2}{E}=\\frac{(373-340)^2}{340}=3.20\n\\]\n\n\\(\\text{df}=(R-1)\\times(C-1)=1\\times 4=4\\), and \\(p\\)-value \\(&lt;0.001\\).\nThe \\(p\\)-value is small and we reject \\(H_0\\). The data provide convincing evidence to suggest that caffeinated coffee consumption and depression in women are associated.\nYes, this is an observational study. Based on this study we can’t deduce that drinking more coffee leads to less depression. There may be other factors, lurking variables, that cause decreased depression in women who drink more coffee.",
     "crumbs": [
       "Homework Solutions",
       "Homework 3 Answers"
+    ]
+  },
+  {
+    "objectID": "homework/hw2_answer.html",
+    "href": "homework/hw2_answer.html",
+    "title": "Homework 2 Answers",
+    "section": "",
+    "text": "If you find any typos or errors, please feel free to contact me via email at r13323002@ntu.edu.tw. I would appreciate it and will correct the solution to prevent any misunderstandings.\nFor some R commands marked with ‘OPTIONAL,’ you don’t need to learn them. You will be completely fine on the computer quiz even if you choose to ignore them.\nIf you’re having trouble understanding the code, don’t hesitate to ask me for help. I’ll do my best to assist you during office hours or after the TA session.",
+    "crumbs": [
+      "Homework Solutions",
+      "Homework 2 Answers"
+    ]
+  },
+  {
+    "objectID": "homework/hw2_answer.html#computer-exercises",
+    "href": "homework/hw2_answer.html#computer-exercises",
+    "title": "Homework 2 Answers",
+    "section": "1 Computer Exercises",
+    "text": "1 Computer Exercises\n\n1.1 Bernoulli Simulation\n# simulate 1,000 coin flips by denoting head if value above 0.5, tail otherwise\ncoin_flips &lt;- runif(1000) &gt; 0.5\n\n# calculate cumulative number and fraction of heads for coin flips of 1, 2, 3, ..., 1000\ncum_heads &lt;- cumsum(coin_flips)\nfrac_heads &lt;- cum_heads / 1:1000\n\n# record the result of each flip in dataframe\ndf &lt;- data.frame(\n  flips = 1:1000,\n  coin_outcome = coin_flips,\n  cumulative_heads = cum_heads,\n  fraction_heads = frac_heads\n)\n\n# take a look at the fitst five records\nhead(df)\n\n\n  flips coin_outcome cumulative_heads fraction_heads\n1     1         TRUE                1      1.0000000\n2     2        FALSE                1      0.5000000\n3     3         TRUE                2      0.6666667\n4     4        FALSE                2      0.5000000\n5     5         TRUE                3      0.6000000\n6     6         TRUE                4      0.6666667\n\n\n# draw the fraction of head over each flip\nggplot(df, aes(x = flips, y = fraction_heads)) +\n  \n  ## draw the fraction of head\n  geom_line(color = \"steelblue\") +\n  \n  ## (OPTIONAL) baseline fraction is 0.5\n  geom_hline(aes(yintercept = 0.5), color = \"black\") +\n  \n  ## add label to make the graph more readable\n  labs(\n    title = \"Fraction of Heads in 1,000 Coin Flips\",\n    x = \"Number of Coin Flips\",\n    y = \"Fraction of Heads\"\n  ) +\n  \n  ## center the graph title\n  theme(plot.title = element_text(hjust = 0.5))\n\n\n\n\n\n\n\n\n\n\n\n1.2 Normal Simulation\n# define distribution parameters\nmu &lt;- 2\nsigma &lt;- 2.5\n\n# draw the random normal samples according to different sample size\ndraw_size20   &lt;- rnorm(20, mean = mu, sd = sigma)\ndraw_size100  &lt;- rnorm(100, mean = mu, sd = sigma)\ndraw_size500  &lt;- rnorm(500, mean = mu, sd = sigma)\ndraw_size1000 &lt;- rnorm(1000, mean = mu, sd = sigma)\n\n# compute the simulated mean and standard deviation according to different draw sizes\nsim_result &lt;- data.frame(\n  sample_size = c(20, 100, 500, 1000),\n  mean = c(mean(draw_size20), mean(draw_size100), mean(draw_size500), mean(draw_size1000)),\n  sd = c(sd(draw_size20), sd(draw_size100), sd(draw_size500), sd(draw_size1000))\n)\nprint(sim_result)\n\n\n  sample_size     mean       sd\n1          20 1.785653 2.632694\n2         100 2.363479 2.829786\n3         500 1.918210 2.483657\n4        1000 1.941324 2.556143\n\n\n# the histogram when draw size = 20\ndf_size20 &lt;- data.frame(\n  values = draw_size20\n)\nggplot(df_size20, aes(x = values)) +\n  geom_histogram()\n\n\n\n\n\n\n\n\n\n# the histogram when draw size = 100\ndf_size100 &lt;- data.frame(\n  values = draw_size100\n)\nggplot(df_size100, aes(x = values)) +\n  geom_histogram()\n\n\n\n\n\n\n\n\n\n# the histogram when draw size = 500\ndf_size500 &lt;- data.frame(\n  values = draw_size500\n)\nggplot(df_size500, aes(x = values)) +\n  geom_histogram()\n\n\n\n\n\n\n\n\n\n\n\n1.3 \n# the histogram when draw size = 1000\ndf_size1000 &lt;- data.frame(\n  values = draw_size1000\n)\nggplot(df_size1000, aes(x = values)) +\n  geom_histogram()\n\n\n\n\n\n\n\n\n\n\n\n1.4 Binomial Simulation\n# define distribution parameter and trial size\np &lt;- 0.1\nsample_num &lt;- 200\n\n# draw the random binomial samples according to different sample size\ndraw_size10   &lt;- rbinom(sample_num, size = 10,  prob = p)\ndraw_size50  &lt;- rbinom(sample_num, size = 50,  prob = p)\ndraw_size100  &lt;- rbinom(sample_num, size = 100, prob = p)\ndraw_size500 &lt;- rbinom(sample_num, size = 500, prob = p)\n\n# compute the simulated mean and standard deviation according to different draw sizes\nsim_result &lt;- data.frame(\n  sample_size = c(10, 50, 100, 500),\n  mean = c(mean(draw_size10), mean(draw_size50), mean(draw_size100), mean(draw_size500)),\n  sd = c(sd(draw_size10), sd(draw_size50), sd(draw_size100), sd(draw_size500))\n)\nprint(sim_result)\n\n\n  sample_size   mean        sd\n1          10  0.995 0.9999874\n2          50  4.900 2.0836767\n3         100 10.090 2.6603170\n4         500 50.025 6.5696405\n\n\n# the histogram when draw size = 10\ndf_size10 &lt;- data.frame(\n  values = draw_size10\n)\nggplot(df_size10, aes(x = values)) +\n  geom_histogram()\n\n\n\n\n\n\n\n\n\n# the histogram when draw size = 50\ndf_size50 &lt;- data.frame(\n  values = draw_size50\n)\nggplot(df_size50, aes(x = values)) +\n  geom_histogram()\n\n\n\n\n\n\n\n\n\n# the histogram when draw size = 100\ndf_size100 &lt;- data.frame(\n  values = draw_size100\n)\nggplot(df_size100, aes(x = values)) +\n  geom_histogram()\n\n\n\n\n\n\n\n\n\n# the histogram when draw size = 500\ndf_size500 &lt;- data.frame(\n  values = draw_size500\n)\nggplot(df_size500, aes(x = values)) +\n  geom_histogram()",
+    "crumbs": [
+      "Homework Solutions",
+      "Homework 2 Answers"
+    ]
+  },
+  {
+    "objectID": "homework/hw2_answer.html#textbook-exercise",
+    "href": "homework/hw2_answer.html#textbook-exercise",
+    "title": "Homework 2 Answers",
+    "section": "2 Textbook Exercise",
+    "text": "2 Textbook Exercise\n\n2.1 Question 3.8\nWe denote Poverty Line as PL, and Foreign Language as FL.\n\nNo, there are people who are both living below the poverty line and speak a language other than English at home.\nThe Venn diagram is shown below.\n\n\n\n\n\n\n\nEach person living below the poverty line either speaks only English at home or doesn’t.\nSince 14.6% of Americans live below the poverty line and 4.2% speak a language other than English at home, the other 10.4% only speak English at home.\nUsing the General Addition Rule:\n\n\\[\n\\begin{aligned}\nP(\\text{below PL or speak FL})\n&= P(\\text{below PL}) + P(\\text{FL}) - P(\\text{both}) \\\\\n&= 0.146 + 0.207 - 0.042 \\\\\n&= 0.311.\n\\end{aligned}\n\\]\n\nProbability of neither below PL nor speak FL:\n\n\\[\nP(\\text{neither below PL nor speak FL})\n= 1 - P(\\text{below PL or speak FL})\n= 1 - 0.311\n= 0.689.\n\\]\n\nTwo approaches to assess independence:\n\n\n\nMultiplication rule (if independent)\n\n\\[\nP(\\text{below PL}) \\times P(\\text{FL})\n= 0.146 \\times 0.207\n= 0.030.\n\\]\nThis does not equal ( P() = 0.042 ), therefore the events are dependent.\n\nBayes’ theorem\n\nIf the two events were independent, then ( P() = P() ).\nUsing Bayes’ theorem:\n\\[\nP(\\text{below PL} \\mid \\text{FL})\n= \\frac{P(\\text{below PL and FL})}{P(\\text{FL})}\n= \\frac{0.042}{0.207}\n\\approx 0.203.\n\\]\nSince this probability (()) is different from ( P() = 0.146 ), we determine that the two events are dependent.\n\n\n2.2 Question 3.16\n\nNo, there are individuals who are both in excellent health and have health coverage.\nOverall probability: \\[ P(\\text{excellent health}) = 0.2329 \\]\nConditional on having health coverage: \\[\nP(\\text{excellent health}\\mid \\text{coverage}) =\n\\frac{0.2099}{0.8738} \\approx 0.24 \\]\nConditional on not having health coverage: \\[\nP(\\text{excellent health}\\mid \\text{no coverage}) =\n\\frac{0.0230}{0.1262} \\approx 0.18 \\]\nConclusion: Since the probability of excellent health differs between coverage groups (24% vs 18%), the variables are not independent.\n\n\n\n2.3 Question 3.34\n\nThe probability model and the calculation of average revenue per passenger (expected value)\n\n\n\n\nTable 1: Probability model for baggage fee revenue per passenger\n\n\n\n\n\n\n\n\n\n\n\n\n\nEvent\n\\(X\\)\n(P(X))\n(XP(X))\n((X - E\\[X\\])^2)\n((X - E\\[X\\])^2P(X))\n\n\n\n\nNo baggage\n0\n0.54\n0.0\n246.49\n133.10\n\n\n1 checked bag\n25\n0.34\n8.5\n86.49\n29.41\n\n\n2 checked bags\n60\n0.12\n7.2\n1962.49\n235.50\n\n\n\n\n\n\n\nExpected value: \\[(E(X) = 15.70)\\]\nVariance: \\[(V(X) = 398.01)\\]\nStandard deviation: \\[(SD(X) = 19.95)\\]\n\n\nAssume independence between individual fliers (a rough but helpful approximation).\n\n\\[\\begin{aligned}\nE\\!\\left[\\textstyle\\sum_{i=1}^{120} X_i\\right]\n  &= \\sum_{i=1}^{120} E[X_i]\n  = 120 \\times 15.70\n  = \\$1{,}884 \\\\\nV\\!\\left[\\textstyle\\sum_{i=1}^{120} X_i\\right]\n  &= \\sum_{i=1}^{120} V[X_i]\n  = 120 \\times 398.01\n  = 47{,}761.20 \\\\\nSD\\!\\left[\\textstyle\\sum_{i=1}^{120} X_i\\right]\n  &= \\sqrt{47{,}761.20}\n  = 218.54\n\\end{aligned}\\]\n\n\n2.4 Question 3.44\n\n\n\n\n\\(E(X + Y_1 + Y_2 + Y_3) = E(X) + 3 \\times E(Y) = 48 + 3 \\times 2 = 54\\)\n\n\\(V(X + Y_1 + Y_2 + Y_3) = V(X) + 3 \\times V(Y) = 1 + 3 \\times 0.0625 = 1.1875\\)\n\n\\(SD(X + Y_1 + Y_2 + Y_3) = \\sqrt{1.1875} = 1.09\\)\n\n\n\n\n\n\\(E(X - Y) = E(X) - E(Y) = 48 - 2 = 46\\)\n\n\\(V(X - Y) = V(X) + V(Y) = 1 + 0.0625 = 1.0625\\)\n\n\\(SD(X - Y) = \\sqrt{1.0625} = 1.03\\)\n\n\nInitially we do not know exactly how much ice cream is in the box. Then we scoop out an unknown amount. We should now be even more unsure about the amount of ice cream that is left in the box.\n\n\n\n2.5 Question 4.4\n\nProblem setup\n\nLet \\(X\\) denote the finishing times of Men (ages 30–34) and \\(Y\\) denote the finishing times of Women (ages 25–29):\n\\[\nX \\sim N(\\mu = 4313, \\sigma = 583)\n\\] \\[\nY \\sim N(\\mu = 5261, \\sigma = 807)\n\\]\n\nZ-scores\n\nThe Z-scores can be calculated as follows:\n\\[\nZ_{Leo} = \\frac{4948 - 4313}{583} = 1.09\n\\] \\[\nZ_{Mary} = \\frac{5513 - 5261}{807} = 0.31\n\\]\n\nLeo finished 1.09 standard deviations above the mean of his group.\n\nMary finished 0.31 standard deviations above the mean of hers.\n\n\nComparison\n\nMary ranked better since her Z-score indicates a relatively shorter finishing time compared to her group.\n\nProbability for Leo\n\n\\[\nP(Z &gt; 1.09) = 1 - P(Z &lt; 1.09) = 1 - 0.8621 = 0.1379\n\\]\nSo, 13.79% of men in Leo’s age group performed worse.\n\nProbability for Mary\n\n\\[\nP(Z &gt; 0.31) = 1 - P(Z &lt; 0.31) = 1 - 0.6217 = 0.3783\n\\]\nSo, 37.83% of women in Mary’s age group performed worse.\n\nNormal model consideration\n\n\nThe answer to part (b) would not change since Z-scores can be calculated for non-normal distributions.\n\nHowever, parts (c) through (e) rely on the normal model and cannot be answered without it.\n\n\n\n2.6 Question 4.6\n\nFastest 5%\n\nThe fastest 5% are in the 5th percentile of the distribution.\nThe Z-score corresponding to the 5th percentile of a normal distribution is approximately \\(-1.65\\):\n\\[\nZ = -1.65 = \\frac{x - 4313}{583}\n\\]\n\\[\nx = -1.65 \\times 583 + 4313 = 3351 \\text{ seconds}\n\\]\nThe fastest 5% of males in this age group finished in less than 56 minutes.\n\nSlowest 10%\n\nThe slowest 10% are in the 90th percentile of the distribution.\nThe Z-score corresponding to the 90th percentile is approximately \\(1.28\\):\n\\[\nZ = 1.28 = \\frac{y - 5261}{807}\n\\]\n\\[\ny = 1.28 \\times 807 + 5261 = 6294 \\text{ seconds}\n\\]\nThe slowest 10% of females in this age group took 1 hour, 45 minutes, or longer to finish.\n\n\n2.7 Question 4.24\nLet \\(X \\sim \\text{Binomial}(n=3, p=0.25)\\) and for part (d) let \\(X \\sim \\text{Geometric}(p=0.25)\\) (counting the trial of the first success).\n\n\\(P(X=2)\\) with Binomial\n\n\\[\nP(X=2) = \\binom{3}{2}(0.25)^2(0.75)^1 = 0.1406\n\\]\n\n\\(P(X=0)\\) with Binomial\n\n\\[\nP(X=0) = \\binom{3}{0}(0.25)^0(0.75)^3 = 0.4219\n\\]\n\n\\(P(X \\ge 1)\\) with Binomial\n\n\\[\nP(X \\ge 1) = 1 - P(X=0) = 1 - 0.4219 = 0.5781\n\\]\n\nFirst success on trial 3 (Geometric)\n\n\\[\nP(X=3) = (1-p)^{3-1}p = (0.75)^2(0.25) = 0.1406\n\\]\n\n\n2.8 Question 4.28\n\nNegative Binomial Distribution\n\nUsing the negative binomial distribution with \\(n = 15\\) and \\(p = 0.65\\):\n\\[\nP(X = 10) = \\binom{14}{9}(0.65)^{10}(0.35)^{5} = 0.1416\n\\]\n\nBinomial Distribution\n\nUsing the binomial distribution:\n\\[\nP(X = 10) = \\binom{15}{10}(0.65)^{10}(0.35)^{5} = 0.2123\n\\]\n\nGeometric Distribution\n\nUsing the geometric distribution:\n\\[\nP(X = 3) = (0.35)^{2}(0.65) = 0.0796\n\\]",
+    "crumbs": [
+      "Homework Solutions",
+      "Homework 2 Answers"
+    ]
+  },
+  {
+    "objectID": "example_code/Example_Code_wk9.html",
+    "href": "example_code/Example_Code_wk9.html",
+    "title": "Week 9 Example R Code (1028)",
+    "section": "",
+    "text": "Right click to download:\n\nwk9_example_code.R",
+    "crumbs": [
+      "Example R code",
+      "Week 9 Example R Code (1028)"
+    ]
+  },
+  {
+    "objectID": "example_code/Example_Code_wk6.html",
+    "href": "example_code/Example_Code_wk6.html",
+    "title": "Week 6 Example R Code (1007)",
+    "section": "",
+    "text": "Right click to download:\n\nwk6_example_code.R",
+    "crumbs": [
+      "Example R code",
+      "Week 6 Example R Code (1007)"
+    ]
+  },
+  {
+    "objectID": "example_code/Example_Code_wk4.html",
+    "href": "example_code/Example_Code_wk4.html",
+    "title": "Week 4 Example R Code (0923)",
+    "section": "",
+    "text": "Right click to download:\n\nwk4_example_code.R",
+    "crumbs": [
+      "Example R code",
+      "Week 4 Example R Code (0923)"
+    ]
+  },
+  {
+    "objectID": "example_code/Example_Code_wk2.html",
+    "href": "example_code/Example_Code_wk2.html",
+    "title": "Week 2 Example R Code (0909)",
+    "section": "",
+    "text": "Right click to download:\n\nwk2_example_code.R",
+    "crumbs": [
+      "Example R code",
+      "Week 2 Example R Code (0909)"
+    ]
+  },
+  {
+    "objectID": "example_code/Example_Code_wk1.html",
+    "href": "example_code/Example_Code_wk1.html",
+    "title": "Week 1 Example R Code (0902)",
+    "section": "",
+    "text": "Right click to download:\n\nwk1_example_code.R",
+    "crumbs": [
+      "Example R code",
+      "Week 1 Example R Code (0902)"
+    ]
+  },
+  {
+    "objectID": "answers/wk07_answer.html",
+    "href": "answers/wk07_answer.html",
+    "title": "Week 7 Answers (1014)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 7 Answers (1014)"
+    ]
+  },
+  {
+    "objectID": "answers/wk07_answer.html#reminders",
+    "href": "answers/wk07_answer.html#reminders",
+    "title": "Week 7 Answers (1014)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 7 Answers (1014)"
+    ]
+  },
+  {
+    "objectID": "answers/wk07_answer.html#download-data",
+    "href": "answers/wk07_answer.html#download-data",
+    "title": "Week 7 Answers (1014)",
+    "section": "2 Download Data",
+    "text": "2 Download Data\nPlease download the datasets loan_full_schema.csv here.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 7 Answers (1014)"
+    ]
+  },
+  {
+    "objectID": "answers/wk07_answer.html#wrap-the-graph",
+    "href": "answers/wk07_answer.html#wrap-the-graph",
+    "title": "Week 7 Answers (1014)",
+    "section": "3 Wrap the graph",
+    "text": "3 Wrap the graph\nUse the dataset loans_full_schema.csv to create a histogram of the variable interest_rate. Set the bin width to 2.5, and facet the graph by the variable loan_purpose, and allow each sub-graph to have a different y-axis scale.\nlibrary(tidyverse)\n\nloan &lt;- read.csv(\"data/loans_full_schema.csv\")\ninterest_purpose_plot &lt;- ggplot(loan, aes(x = interest_rate)) +\n  geom_histogram(binwidth = 2.5) +\n  facet_wrap(~loan_purpose,\n             scales = \"free_y\"\n             )\n\nprint(interest_purpose_plot)",
+    "crumbs": [
+      "Practice Answers",
+      "Week 7 Answers (1014)"
+    ]
+  },
+  {
+    "objectID": "answers/wk07_answer.html#save-the-graph",
+    "href": "answers/wk07_answer.html#save-the-graph",
+    "title": "Week 7 Answers (1014)",
+    "section": "4 Save the graph",
+    "text": "4 Save the graph\n\nCreate a folder figures in your project folder.\nSave the graph in the last question to the figures folder with name wk7_default_plot without any customized setting.\nSave another graph with name wk7_sized_plot using height = 6, width = 4.\nAdd assignment dpi = 150 to the last graph, and named the new graph as wk7_sized_plot_150dpi.\nCompare the differences between wk7_default_plot, wk7_sized_plot and wk7_sized_plot_150dpi.\n\n\n# Without any customized setting\nggsave(filename = \"wk7_default_plot.png\",\n       path = \"figures\",\n       plot = interest_purpose_plot.\n       )\n\n# Set height = 6, width = 4\nggsave(filename = \"wk7_sized_plot.png\",\n       path = \"figures\",\n       plot = interest_purpose_plot,\n       width = 6,\n       height = 4\n       )\n\n# Set dpi = 150\nggsave(filename = \"wk7_sized_plot_150dpi.png\",\n       path = \"figures\",\n       plot = interest_purpose_plot,\n       width = 6,\n       height = 4,\n       dpi = 150\n       )",
+    "crumbs": [
+      "Practice Answers",
+      "Week 7 Answers (1014)"
+    ]
+  },
+  {
+    "objectID": "answers/wk05_answer.html",
+    "href": "answers/wk05_answer.html",
+    "title": "Week 5 Answers (0930)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 5 Answers (0930)"
+    ]
+  },
+  {
+    "objectID": "answers/wk05_answer.html#reminders",
+    "href": "answers/wk05_answer.html#reminders",
+    "title": "Week 5 Answers (0930)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 5 Answers (0930)"
+    ]
+  },
+  {
+    "objectID": "answers/wk05_answer.html#control-flow",
+    "href": "answers/wk05_answer.html#control-flow",
+    "title": "Week 5 Answers (0930)",
+    "section": "2 Control Flow",
+    "text": "2 Control Flow\nPrint out the characters \"NTU\" for four times, and then print out the characters \"National Taiwan University\" for six times.\n(There are multiple ways to accomplish this, but I encourage you to use a single for-loop and an if-else statement to complete the task so you can get familiar with these syntax.)\nfor (i in 1:10){\n  if (i &lt;= 4){\n    print(\"NTU\")\n  }else{\n    print(\"National Taiwan University\")\n  }\n}\n## [1] \"NTU\"\n## [1] \"NTU\"\n## [1] \"NTU\"\n## [1] \"NTU\"\n## [1] \"National Taiwan University\"\n## [1] \"National Taiwan University\"\n## [1] \"National Taiwan University\"\n## [1] \"National Taiwan University\"\n## [1] \"National Taiwan University\"\n## [1] \"National Taiwan University\"",
+    "crumbs": [
+      "Practice Answers",
+      "Week 5 Answers (0930)"
+    ]
+  },
+  {
+    "objectID": "answers/wk05_answer.html#binomial-random-sample",
+    "href": "answers/wk05_answer.html#binomial-random-sample",
+    "title": "Week 5 Answers (0930)",
+    "section": "3 Binomial Random Sample",
+    "text": "3 Binomial Random Sample\n\nDraw 400 observations from binomial distribution [size = 1000, prob = 0.5] and compute the mean of the observations.\n\nset.seed(2025)\nsample_size &lt;- 400\nrdn &lt;- rbinom(n = sample_size, size = 1000, prob = 0.5)\nmean &lt;- mean(rdn)\nprint(mean)\n## [1] 499.2225\n\nUsing the random sample you just generated, create a DataFrame to store the drawn values by using data.frame() function, and draw the histogram graph to see the distribution.\n\nlibrary(ggplot2)\n\ndf &lt;- data.frame(\n  values = rdn\n)\nggplot(df, aes(x = values)) +\n  geom_histogram()",
+    "crumbs": [
+      "Practice Answers",
+      "Week 5 Answers (0930)"
+    ]
+  },
+  {
+    "objectID": "answers/wk05_answer.html#certification-exam",
+    "href": "answers/wk05_answer.html#certification-exam",
+    "title": "Week 5 Answers (0930)",
+    "section": "4 Certification Exam",
+    "text": "4 Certification Exam\nA certification exam is organized for 10 students: Alice, Bob, Charlie, Diana, Ethan, Fiona, George, Hannah, Ivan, and Julia. Each student participates in 10 tests, named test_1, test_2, …, test_10. If the students pass certain amount of tests, they can claim the certificate.\n\nCreate a vector students that contains 10 students’ name.\nCreate a matrix scores that uses the rnorm() to generate students score in 10 tests (average score: 60, standard deviation: 15). Let the column name of the matrix be test_1, test_2, …, test_10.\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse replicate() function to create the matrix first, create a character vector test_names for column names, then use colnames() to assign test_names as the column names of the matrix.\n\n\n\nCreate a dataframe stu_scores that combines students and scores.\n\n\n\n\n\n\n\nTipHint\n\n\n\ndata.frame(name = students, scores) is our new dataframe.\n\n\n\nCreate a function certificate_winner containing three parameters: data, passing_score, min_passed such that a student\n\npasses the test if the his/her score of that test is greater than or equal passing_score\nwins the certificate if the number of passing test is greater than or equal min_passed\n\nFinally, the function should return the students who wins the certificate.\n\n\n\n\n\n\n\nTipHint\n\n\n\nYou can use seq_along in the for-loop, such as for(i in seq_along(data[, 1])){}\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nSet a counter that counts the number of tests the student passed in a for-loop. Remember to reset the counter to be 0 when the next loop begins.\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nCreate a vector passed_students in the function that saves the student’s name if his/her meets the requirements.\n\n\n\nAnswer the following questions:\n\nWho are the certificate winner if passing_score is 60, and the passing_score is 5?\nWho are the certificate winner if passing_score is 65, and the passing_score is 6?\n\n\n# Part 1: Create student vector\nstudents &lt;- c(\"Alice\", \"Bob\", \"Charlie\", \"Diana\", \"Ethan\",\n              \"Fiona\", \"George\", \"Hannah\", \"Ivan\", \"Julia\")\n\n# Part 2: Create score matrix\ntest_names &lt;- c(\"test_1\", \"test_2\", \"test_3\", \"test_4\", \"test_5\",\n              \"test_6\", \"test_7\", \"test_8\", \"test_9\", \"test_10\")\n\n\nscores &lt;- replicate(10, rnorm(10, mean = 60, sd = 15))\n\ncolnames(scores) &lt;- test_names\n\n# Part 3: Create the dataframe that combines students and scores\nstu_scores &lt;- data.frame(name = students, scores)\n\n# Part 4: Create the certificate_winner function\ncertificate_winner &lt;- function(data, passing_score, min_passed){\n  \n  # Students names are in the first column\n  stu_vec &lt;- data[, 1]\n  \n  # Test names are in 2~11th columns\n  test_cols &lt;- colnames(data[, 2:11])\n  \n  # Counter for the number of exam passed\n  pass_count &lt;- 0\n  \n  # Students that wins the certificate\n  passed_students &lt;- c()\n  \n  # for i in 1:10\n  for(i in seq_along(stu_vec)){\n    \n    # Remember the counter should be reset for each student\n    pass_count &lt;- 0\n    \n    # for j in 1:10\n    for (j in seq(test_cols)){\n      \n      # Passed if score larger than passing_score\n      if(data[i, j+1] &gt;= passing_score){\n        \n        # Count how many tests student i passed\n        pass_count &lt;- pass_count + 1\n      }\n      \n    }\n      # Claims the certificate if number of exam passed &gt; minimum requirements\n      if(pass_count &gt;= min_passed){\n        \n        passed_students &lt;- c(passed_students, data[i, 1])\n        \n      }\n  }\n  \n  # Return the winners\n  return(passed_students)\n}\n\n# Question 1\nquestion_1_winners &lt;- certificate_winner(stu_scores, 60, 5)\nprint(question_1_winners)\n\n# Question 2\nquestion_2_winners &lt;- certificate_winner(stu_scores, 70, 6)\nprint(question_2_winners)\n#### Question 1 Answers\n## [1] \"Bob\"     \"Charlie\" \"Diana\"   \"Ethan\"   \"Fiona\"   \"Hannah\" \n#### Question 2 Answers\n## [1] \"Ethan\"",
+    "crumbs": [
+      "Practice Answers",
+      "Week 5 Answers (0930)"
+    ]
+  },
+  {
+    "objectID": "answers/wk03_answer.html",
+    "href": "answers/wk03_answer.html",
+    "title": "Week 3 Answers (0916)",
+    "section": "",
+    "text": "Please download the datasets county.csv and loan_full_schema.csv here.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 3 Answers (0916)"
+    ]
+  },
+  {
+    "objectID": "answers/wk03_answer.html#download-data",
+    "href": "answers/wk03_answer.html#download-data",
+    "title": "Week 3 Answers (0916)",
+    "section": "",
+    "text": "Please download the datasets county.csv and loan_full_schema.csv here.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 3 Answers (0916)"
+    ]
+  },
+  {
+    "objectID": "answers/wk03_answer.html#coding-style",
+    "href": "answers/wk03_answer.html#coding-style",
+    "title": "Week 3 Answers (0916)",
+    "section": "2 Coding Style",
+    "text": "2 Coding Style\n\nCreate an RStudio project inside a folder with proper names (e.g. TA_Session).\nCreate folders for R scripts and data. (optional: put scripts for the first two weeks’ TA session in the script folder as well.)\nFor the following questions, your code should follow the coding styles in the slides.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 3 Answers (0916)"
+    ]
+  },
+  {
+    "objectID": "answers/wk03_answer.html#contingency-table",
+    "href": "answers/wk03_answer.html#contingency-table",
+    "title": "Week 3 Answers (0916)",
+    "section": "3 Contingency Table",
+    "text": "3 Contingency Table\nUsing the dataset loans_full_schema.csv, create a contingency table by loan_purpose (set as row) and application_type (set as column), and add the sum row and sum column.\nloan   &lt;- read.csv(\"data/loans_full_schema.csv\")\ntable &lt;- table(loan$loan_purpose, loan$application_type)\ntable_sum &lt;- addmargins(table)\nprint(table_sum)\n##                      individual joint   Sum\n##   car                       116    15   131\n##   credit_card              1971   278  2249\n##   debt_consolidation       4289   855  5144\n##   home_improvement          566   114   680\n##   house                     146     5   151\n##   major_purchase            273    30   303\n##   medical                   128    34   162\n##   moving                     59    10    69\n##   other                     793   121   914\n##   renewable_energy            9     1    10\n##   small_business            101    24   125\n##   vacation                   54     8    62\n##   Sum                      8505  1495 10000",
+    "crumbs": [
+      "Practice Answers",
+      "Week 3 Answers (0916)"
+    ]
+  },
+  {
+    "objectID": "answers/wk03_answer.html#bar-graph",
+    "href": "answers/wk03_answer.html#bar-graph",
+    "title": "Week 3 Answers (0916)",
+    "section": "4 Bar Graph",
+    "text": "4 Bar Graph\nUsing the dataset loans_full_schema.csv, draw the bar graph to show the numbers of applicant according to each credit grade by following procedures:\n\nSpecify sub_grade as the x-axis, and fill the bar with grade.\nAdd graph title and axis labels\n\nTitle: Number of Applicant by Credit Grade\n\nx-axis: Credit Grade\n\ny-axis: Number of Applicant\n\nCenter the graph title.\n\n\n\n\n\n\n\nTipHint\n\n\n\nHint: Add theme(plot.title = element_text(hjust = 0.5)) to the graph.\n\n\nAfter that, you should have a beautiful graph and share it with me! :)\nggplot(loan, aes(x = sub_grade, fill = grade)) +\n  geom_bar() +\n  labs(\n    x = \"Credit Grade\",\n    y = \"Number of Applicant\",\n    title = \"Number of Applicant by Credit Grade\"\n  ) +\n  theme(plot.title = element_text(hjust = 0.5))",
+    "crumbs": [
+      "Practice Answers",
+      "Week 3 Answers (0916)"
+    ]
+  },
+  {
+    "objectID": "answers/wk01_answer.html",
+    "href": "answers/wk01_answer.html",
+    "title": "Week 1 Answers (0902)",
+    "section": "",
+    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.\nx &lt;- 20250902\ny &lt;- 1031\nprint(x / y)",
+    "crumbs": [
+      "Practice Answers",
+      "Week 1 Answers (0902)"
+    ]
+  },
+  {
+    "objectID": "answers/wk01_answer.html#assign-values",
+    "href": "answers/wk01_answer.html#assign-values",
+    "title": "Week 1 Answers (0902)",
+    "section": "",
+    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.\nx &lt;- 20250902\ny &lt;- 1031\nprint(x / y)",
+    "crumbs": [
+      "Practice Answers",
+      "Week 1 Answers (0902)"
+    ]
+  },
+  {
+    "objectID": "answers/wk01_answer.html#help",
+    "href": "answers/wk01_answer.html#help",
+    "title": "Week 1 Answers (0902)",
+    "section": "2 Help",
+    "text": "2 Help\nUse the help() function to check docs, e.g. data.frame() or mean().\nhelp(data.frame)\nhelp(mean)",
+    "crumbs": [
+      "Practice Answers",
+      "Week 1 Answers (0902)"
+    ]
+  },
+  {
+    "objectID": "answers/wk01_answer.html#matrix",
+    "href": "answers/wk01_answer.html#matrix",
+    "title": "Week 1 Answers (0902)",
+    "section": "3 Matrix",
+    "text": "3 Matrix\nCreate the following vectors:\nname_vec &lt;- c(\"James\", \"Noc\", \"Monica\")\n\nage_vec &lt;- c(25, 30, 28)\nand create a 3 × 2 matrix with these two vectors.\nDo you encounter errors? Can you print the matrix out? What’s the data type of the matrix?\nname_vec &lt;- c(\"James\", \"Noc\", \"Monica\")\nage_vec &lt;- c(25, 30, 28)\nmat &lt;- matrix(c(name_vec, age_vec), nrow = 3)\nprint(mat)\nclass(mat)\n\n# `mat[,2]` only select the second column\n# note that the `age_vec` become character type after merging into matrix\nprint(mat[,2])\nclass(mat[,2])",
+    "crumbs": [
+      "Practice Answers",
+      "Week 1 Answers (0902)"
+    ]
+  },
+  {
+    "objectID": "practices/wk09.html",
+    "href": "practices/wk09.html",
+    "title": "Week 9 Practices (1028)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 9 Practices (1028)"
+    ]
+  },
+  {
+    "objectID": "practices/wk09.html#reminders",
+    "href": "practices/wk09.html#reminders",
+    "title": "Week 9 Practices (1028)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 9 Practices (1028)"
+    ]
+  },
+  {
+    "objectID": "practices/wk09.html#download-data",
+    "href": "practices/wk09.html#download-data",
+    "title": "Week 9 Practices (1028)",
+    "section": "2 Download Data",
+    "text": "2 Download Data\nPlease download the datasets restaurants.csv (right click here)",
+    "crumbs": [
+      "Practices",
+      "Week 9 Practices (1028)"
+    ]
+  },
+  {
+    "objectID": "practices/wk09.html#nohara-hiroshi-hiru-meshi-no-ryuugi-野原廣志-午餐的流派",
+    "href": "practices/wk09.html#nohara-hiroshi-hiru-meshi-no-ryuugi-野原廣志-午餐的流派",
+    "title": "Week 9 Practices (1028)",
+    "section": "3 Nohara Hiroshi: Hiru Meshi no Ryuugi (野原廣志 午餐的流派)",
+    "text": "3 Nohara Hiroshi: Hiru Meshi no Ryuugi (野原廣志 午餐的流派)\n“My name is Hiroshi Nohara (野原廣志). I’m an office worker and often eat lunch out. Based on the state of my body and my wallet, I quickly decide what to eat each day. You could say that while I’m a business expert, I’m also a lunch expert.”\nHiroshi keeps a list of restaurants in restaurants.csv. The file has five columns:\n\nname: The restaurant’s name.\ntype: The type of cuisine.\nclosed: The restaurant’s closed day; some restaurants are permanently closed.\nlunch_set: Whether the restaurant offers lunch sets at noon.\nrating: Hiroshi’s personal rating for the restaurant.\n\nToday is Thursday. Hiroshi feels like seafood, but curry or noodles would also be fine. Since he had fast food yesterday, he’d rather avoid it today. It’s close to the end of the month, so it would be better if the restaurant offers lunch sets.\nFollow the instructions below to help Hiroshi choose the restaurants that best fit his needs:\n\n\n\n\n\n\nTipHint\n\n\n\nIn this practice, filter(), select(), mutate(), arrange() will all be used.\n\n\n\nUse the pipe %&gt;% in the steps below.\nFilter the restaurants that are open today.\nAdd a column lunch_set_score that is 1.5 if the restaurant offers lunch sets and 0 otherwise.\nAdd a column preference_score that takes value 1.5 for seafood, 1 for curry and noodle, -2 for fastfood, and 0 otherwise.\nAdd a column total_score that sums up the columns rating, lunch_set_score and preference_score.\nRemove the lunch_set_score and preference_score columns.\nArrange the rows in descending order of total_score.\nPrint the top 5 rows with the highest total_score.",
+    "crumbs": [
+      "Practices",
+      "Week 9 Practices (1028)"
+    ]
+  },
+  {
+    "objectID": "practices/wk06.html",
+    "href": "practices/wk06.html",
+    "title": "Week 6 Practices (1007)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 6 Practices (1007)"
+    ]
+  },
+  {
+    "objectID": "practices/wk06.html#reminders",
+    "href": "practices/wk06.html#reminders",
+    "title": "Week 6 Practices (1007)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 6 Practices (1007)"
+    ]
+  },
+  {
+    "objectID": "practices/wk06.html#download-data",
+    "href": "practices/wk06.html#download-data",
+    "title": "Week 6 Practices (1007)",
+    "section": "2 Download Data",
+    "text": "2 Download Data\nPlease download the datasets ames.csv here.",
+    "crumbs": [
+      "Practices",
+      "Week 6 Practices (1007)"
+    ]
+  },
+  {
+    "objectID": "practices/wk06.html#housing-price-in-2025",
+    "href": "practices/wk06.html#housing-price-in-2025",
+    "title": "Week 6 Practices (1007)",
+    "section": "3 Housing Price in 2025",
+    "text": "3 Housing Price in 2025\n\nUse paste() and for-loop to create a character vector date_2025 that contains 365 days in 2025, and each date repeat 3 times. i.e., c(\"2025-01-01\", \"2025-01-01\", \"2025-01-01\", ..., \"2025-12-31\")\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse if (month %in% vec) to check if there are 28, 30 or 31 days in that month.\n\n\n\nUse as.Date() to convert the date_2025 as type date.\nCreate a numeric vector housing_price with length 1095 having the value generated from a normal distribution with mean = 10000, sd = 2000.\nCombine date_2025 and housing_price_2025 as a new dataframe housing_2025.\nUse geom_line() with linewidth = 0.3 to plot the average housing price for each date in 2025.",
+    "crumbs": [
+      "Practices",
+      "Week 6 Practices (1007)"
+    ]
+  },
+  {
+    "objectID": "practices/wk04.html",
+    "href": "practices/wk04.html",
+    "title": "Week 4 Practices (0923)",
+    "section": "",
+    "text": "Remember to use the project you create last week!",
+    "crumbs": [
+      "Practices",
+      "Week 4 Practices (0923)"
+    ]
+  },
+  {
+    "objectID": "practices/wk04.html#project",
+    "href": "practices/wk04.html#project",
+    "title": "Week 4 Practices (0923)",
+    "section": "",
+    "text": "Remember to use the project you create last week!",
+    "crumbs": [
+      "Practices",
+      "Week 4 Practices (0923)"
+    ]
+  },
+  {
+    "objectID": "practices/wk04.html#draw-uniform-random-sample",
+    "href": "practices/wk04.html#draw-uniform-random-sample",
+    "title": "Week 4 Practices (0923)",
+    "section": "2 Draw Uniform Random Sample",
+    "text": "2 Draw Uniform Random Sample\nSet random seed as 2025. Draw 200 observations from uniform distribution [0, 100] and compute the mean of the observations.\n\n\n\n\n\n\nTipHint\n\n\n\nHint: Use mean() function.",
+    "crumbs": [
+      "Practices",
+      "Week 4 Practices (0923)"
+    ]
+  },
+  {
+    "objectID": "practices/wk04.html#histogram",
+    "href": "practices/wk04.html#histogram",
+    "title": "Week 4 Practices (0923)",
+    "section": "3 Histogram",
+    "text": "3 Histogram\n\nUsing the random sample you just generated, create a DataFrame to store the drawn values by using data.frame() function, and draw the histogram graph to see the distribution.\nNow, draw another 10,000 observations from uniform distribution [0, 100], and draw the histogram graph to see the distribution.",
+    "crumbs": [
+      "Practices",
+      "Week 4 Practices (0923)"
+    ]
+  },
+  {
+    "objectID": "practices/wk02.html",
+    "href": "practices/wk02.html",
+    "title": "Week 2 Practices (0909)",
+    "section": "",
+    "text": "Please download the datasets county.csv and loan50.csv here.",
+    "crumbs": [
+      "Practices",
+      "Week 2 Practices (0909)"
+    ]
+  },
+  {
+    "objectID": "practices/wk02.html#download-data",
+    "href": "practices/wk02.html#download-data",
+    "title": "Week 2 Practices (0909)",
+    "section": "",
+    "text": "Please download the datasets county.csv and loan50.csv here.",
+    "crumbs": [
+      "Practices",
+      "Week 2 Practices (0909)"
+    ]
+  },
+  {
+    "objectID": "practices/wk02.html#import-data",
+    "href": "practices/wk02.html#import-data",
+    "title": "Week 2 Practices (0909)",
+    "section": "2 Import Data",
+    "text": "2 Import Data\n\nImport the package tidyverse, which contains several useful functions for data wrangling and visualization.\nCreate a folder on your computer to store the dataset downloaded from NTU COOL or OpenIntro website.\nSet your working directory as that folder and import the datasets county.csv and loan50.csv.",
+    "crumbs": [
+      "Practices",
+      "Week 2 Practices (0909)"
+    ]
+  },
+  {
+    "objectID": "practices/wk02.html#scatter-plot",
+    "href": "practices/wk02.html#scatter-plot",
+    "title": "Week 2 Practices (0909)",
+    "section": "3 Scatter Plot",
+    "text": "3 Scatter Plot\n\nUse county.csv to draw the scatter plot of unemployment_rate (x-axis) and per_capita_income (y-axis).\n\n\n\n\n\n\n\nTipHint\n\n\n\nHint: You don’t need to specify any parameter in geom_point().\n\n\n\nDraw the same graph again, but this time make the following adjustments:\n\nadjust the point color to lightcoral\nadjust the point size to 0.5",
+    "crumbs": [
+      "Practices",
+      "Week 2 Practices (0909)"
+    ]
+  },
+  {
+    "objectID": "practices/wk02.html#histogram",
+    "href": "practices/wk02.html#histogram",
+    "title": "Week 2 Practices (0909)",
+    "section": "4 Histogram",
+    "text": "4 Histogram\nUse loan50.csv data to draw the histogram of loan_amount (set as x-axis), and adjust the parameter binwidth in geom_histogram() to 5000.",
+    "crumbs": [
+      "Practices",
+      "Week 2 Practices (0909)"
+    ]
+  },
+  {
+    "objectID": "slides/Slides_wk9.html",
+    "href": "slides/Slides_wk9.html",
+    "title": "Week 9 Slides (1028)",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Slides",
+      "Week 9 Slides (1028)"
+    ]
+  },
+  {
+    "objectID": "slides/Slides_wk6.html",
+    "href": "slides/Slides_wk6.html",
+    "title": "Week 6 Slides (1007)",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Slides",
+      "Week 6 Slides (1007)"
+    ]
+  },
+  {
+    "objectID": "slides/Slides_wk4.html",
+    "href": "slides/Slides_wk4.html",
+    "title": "Week 4 Slides (0923)",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Slides",
+      "Week 4 Slides (0923)"
+    ]
+  },
+  {
+    "objectID": "slides/Slides_wk2.html",
+    "href": "slides/Slides_wk2.html",
+    "title": "Week 2 Slides (0909)",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Slides",
+      "Week 2 Slides (0909)"
+    ]
+  },
+  {
+    "objectID": "slides/Slides_wk1.html",
+    "href": "slides/Slides_wk1.html",
+    "title": "Week 1 Slides (0902)",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Slides",
+      "Week 1 Slides (0902)"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "2025Fall Statistics TA Session",
+    "section": "",
+    "text": "Welcome! Use the sidebar to open weekly Slides, Practices and Answers\nAnswers to the practice will be published after each TA Session.\nSending email: r13323002@ntu.edu.tw (mail title including [Statistics TA])\nTA Office hours: Tuesday, 4:30-5:20 p.m. at SSB. (社會科學院) Room 645.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "slides/Slides_wk10.html",
+    "href": "slides/Slides_wk10.html",
+    "title": "Week 10 Slides (1104)",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Slides",
+      "Week 10 Slides (1104)"
+    ]
+  },
+  {
+    "objectID": "slides/Slides_wk3.html",
+    "href": "slides/Slides_wk3.html",
+    "title": "Week 3 Slides (0916)",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Slides",
+      "Week 3 Slides (0916)"
+    ]
+  },
+  {
+    "objectID": "slides/Slides_wk5.html",
+    "href": "slides/Slides_wk5.html",
+    "title": "Week 5 Slides (0930)",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Slides",
+      "Week 5 Slides (0930)"
+    ]
+  },
+  {
+    "objectID": "slides/Slides_wk7.html",
+    "href": "slides/Slides_wk7.html",
+    "title": "Week 7 Slides (1014)",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Slides",
+      "Week 7 Slides (1014)"
+    ]
+  },
+  {
+    "objectID": "practices/wk01.html",
+    "href": "practices/wk01.html",
+    "title": "Week 1 Practices (0902)",
+    "section": "",
+    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.",
+    "crumbs": [
+      "Practices",
+      "Week 1 Practices (0902)"
+    ]
+  },
+  {
+    "objectID": "practices/wk01.html#assign-values",
+    "href": "practices/wk01.html#assign-values",
+    "title": "Week 1 Practices (0902)",
+    "section": "",
+    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.",
+    "crumbs": [
+      "Practices",
+      "Week 1 Practices (0902)"
+    ]
+  },
+  {
+    "objectID": "practices/wk01.html#help",
+    "href": "practices/wk01.html#help",
+    "title": "Week 1 Practices (0902)",
+    "section": "2 Help",
+    "text": "2 Help\nUse the help() function to check docs, e.g. data.frame() or mean().",
+    "crumbs": [
+      "Practices",
+      "Week 1 Practices (0902)"
+    ]
+  },
+  {
+    "objectID": "practices/wk01.html#matrix",
+    "href": "practices/wk01.html#matrix",
+    "title": "Week 1 Practices (0902)",
+    "section": "3 Matrix",
+    "text": "3 Matrix\nCreate the following vectors:\nname_vec &lt;- c(\"James\", \"Noc\", \"Monica\")\n\nage_vec &lt;- c(25, 30, 28)\nand create a 3 × 2 matrix with these two vectors.\nDo you encounter errors? Can you print the matrix out? What’s the data type of the matrix?",
+    "crumbs": [
+      "Practices",
+      "Week 1 Practices (0902)"
+    ]
+  },
+  {
+    "objectID": "practices/wk03.html",
+    "href": "practices/wk03.html",
+    "title": "Week 3 Practices (0916)",
+    "section": "",
+    "text": "Please download the datasets county.csv and loan_full_schema.csv here.",
+    "crumbs": [
+      "Practices",
+      "Week 3 Practices (0916)"
+    ]
+  },
+  {
+    "objectID": "practices/wk03.html#download-data",
+    "href": "practices/wk03.html#download-data",
+    "title": "Week 3 Practices (0916)",
+    "section": "",
+    "text": "Please download the datasets county.csv and loan_full_schema.csv here.",
+    "crumbs": [
+      "Practices",
+      "Week 3 Practices (0916)"
+    ]
+  },
+  {
+    "objectID": "practices/wk03.html#coding-style",
+    "href": "practices/wk03.html#coding-style",
+    "title": "Week 3 Practices (0916)",
+    "section": "2 Coding Style",
+    "text": "2 Coding Style\n\nCreate an RStudio project inside a folder with proper names (e.g. TA_Session).\nCreate folders for R scripts and data. (optional: put scripts for the first two weeks’ TA session in the script folder as well.)\nFor the following questions, your code should follow the coding styles in the slides.",
+    "crumbs": [
+      "Practices",
+      "Week 3 Practices (0916)"
+    ]
+  },
+  {
+    "objectID": "practices/wk03.html#contingency-table",
+    "href": "practices/wk03.html#contingency-table",
+    "title": "Week 3 Practices (0916)",
+    "section": "3 Contingency Table",
+    "text": "3 Contingency Table\nUsing the dataset loans_full_schema.csv, create a contingency table by loan_purpose (set as row) and application_type (set as column), and add the sum row and sum column.",
+    "crumbs": [
+      "Practices",
+      "Week 3 Practices (0916)"
+    ]
+  },
+  {
+    "objectID": "practices/wk03.html#bar-graph",
+    "href": "practices/wk03.html#bar-graph",
+    "title": "Week 3 Practices (0916)",
+    "section": "4 Bar Graph",
+    "text": "4 Bar Graph\nUsing the dataset loans_full_schema.csv, draw the bar graph to show the numbers of applicant according to each credit grade by following procedures:\n\nSpecify sub_grade as the x-axis, and fill the bar with grade.\nAdd graph title and axis labels\n\nTitle: Number of Applicant by Credit Grade\n\nx-axis: Credit Grade\n\ny-axis: Number of Applicant\n\nCenter the graph title.\n\n\n\n\n\n\n\nTipHint\n\n\n\nHint: Add theme(plot.title = element_text(hjust = 0.5)) to the graph.\n\n\nAfter that, you should have a beautiful graph and share it with me! :)",
+    "crumbs": [
+      "Practices",
+      "Week 3 Practices (0916)"
+    ]
+  },
+  {
+    "objectID": "practices/wk05.html",
+    "href": "practices/wk05.html",
+    "title": "Week 5 Practices (0930)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 5 Practices (0930)"
+    ]
+  },
+  {
+    "objectID": "practices/wk05.html#reminders",
+    "href": "practices/wk05.html#reminders",
+    "title": "Week 5 Practices (0930)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 5 Practices (0930)"
+    ]
+  },
+  {
+    "objectID": "practices/wk05.html#control-flow",
+    "href": "practices/wk05.html#control-flow",
+    "title": "Week 5 Practices (0930)",
+    "section": "2 Control Flow",
+    "text": "2 Control Flow\nPrint out the characters \"NTU\" for four times, and then print out the characters \"National Taiwan University\" for six times.\n(There are multiple ways to accomplish this, but I encourage you to use a single for-loop and an if-else statement to complete the task so you can get familiar with these syntax.)",
+    "crumbs": [
+      "Practices",
+      "Week 5 Practices (0930)"
+    ]
+  },
+  {
+    "objectID": "practices/wk05.html#binomial-random-sample",
+    "href": "practices/wk05.html#binomial-random-sample",
+    "title": "Week 5 Practices (0930)",
+    "section": "3 Binomial Random Sample",
+    "text": "3 Binomial Random Sample\n\nDraw 400 observations from binomial distribution [size = 1000, prob = 0.5] and compute the mean of the observations.\nUsing the random sample you just generated, create a DataFrame to store the drawn values by using data.frame() function, and draw the histogram graph to see the distribution.",
+    "crumbs": [
+      "Practices",
+      "Week 5 Practices (0930)"
+    ]
+  },
+  {
+    "objectID": "practices/wk05.html#certification-exam",
+    "href": "practices/wk05.html#certification-exam",
+    "title": "Week 5 Practices (0930)",
+    "section": "4 Certification Exam",
+    "text": "4 Certification Exam\nA certification exam is organized for 10 students: Alice, Bob, Charlie, Diana, Ethan, Fiona, George, Hannah, Ivan, and Julia. Each student participates in 10 tests, named test_1, test_2, …, test_10. If the students pass certain amount of tests, they can claim the certificate.\n\nCreate a vector students that contains 10 students’ name.\nCreate a matrix scores that uses the rnorm() to generate students score in 10 tests (average score: 60, standard deviation: 15). Let the column name of the matrix be test_1, test_2, …, test_10.\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse replicate() function to create the matrix first, create a character vector test_names for column names, then use colnames() to assign test_names as the column names of the matrix.\n\n\n\nCreate a dataframe stu_scores that combines students and scores.\n\n\n\n\n\n\n\nTipHint\n\n\n\ndata.frame(name = students, scores) is our new dataframe.\n\n\n\nCreate a function certificate_winner containing three parameters: data, passing_score, min_passed such that a student\n\npasses the test if the his/her score of that test is greater than or equal passing_score\nwins the certificate if the number of passing test is greater than or equal min_passed\n\nFinally, the function should return the students who wins the certificate.\n\n\n\n\n\n\n\nTipHint\n\n\n\nYou can use seq_along in the for-loop, such as for(i in seq_along(data[, 1])){}\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nSet a counter that counts the number of tests the student passed in a for-loop. Remember to reset the counter to be 0 when the next loop begins.\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nCreate a vector passed_students in the function that saves the student’s name if his/her meets the requirements.\n\n\n\nAnswer the following questions:\n\nWho are the certificate winner if passing_score is 60, and the passing_score is 5?\nWho are the certificate winner if passing_score is 65, and the passing_score is 6?",
+    "crumbs": [
+      "Practices",
+      "Week 5 Practices (0930)"
+    ]
+  },
+  {
+    "objectID": "practices/wk07.html",
+    "href": "practices/wk07.html",
+    "title": "Week 7 Practices (1014)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 7 Practices (1014)"
+    ]
+  },
+  {
+    "objectID": "practices/wk07.html#reminders",
+    "href": "practices/wk07.html#reminders",
+    "title": "Week 7 Practices (1014)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 7 Practices (1014)"
+    ]
+  },
+  {
+    "objectID": "practices/wk07.html#download-data",
+    "href": "practices/wk07.html#download-data",
+    "title": "Week 7 Practices (1014)",
+    "section": "2 Download Data",
+    "text": "2 Download Data\nPlease download the datasets loan_full_schema.csv here.",
+    "crumbs": [
+      "Practices",
+      "Week 7 Practices (1014)"
+    ]
+  },
+  {
+    "objectID": "practices/wk07.html#wrap-the-graph",
+    "href": "practices/wk07.html#wrap-the-graph",
+    "title": "Week 7 Practices (1014)",
+    "section": "3 Wrap the graph",
+    "text": "3 Wrap the graph\nUse the dataset loans_full_schema.csv to create a histogram of the variable interest_rate. Set the bin width to 2.5, and facet the graph by the variable loan_purpose, and allow each sub-graph to have a different y-axis scale.",
+    "crumbs": [
+      "Practices",
+      "Week 7 Practices (1014)"
+    ]
+  },
+  {
+    "objectID": "practices/wk07.html#save-the-graph",
+    "href": "practices/wk07.html#save-the-graph",
+    "title": "Week 7 Practices (1014)",
+    "section": "4 Save the graph",
+    "text": "4 Save the graph\n\nCreate a folder figures in your project folder.\nSave the graph in the last question to the figures folder with name wk7_default_plot without any customized setting.\nSave another graph with name wk7_sized_plot using height = 6, width = 4.\nAdd assignment dpi = 150 to the last graph, and named the new graph as wk7_sized_plot_150dpi.\nCompare the differences between wk7_default_plot, wk7_sized_plot and wk7_sized_plot_150dpi.",
+    "crumbs": [
+      "Practices",
+      "Week 7 Practices (1014)"
+    ]
+  },
+  {
+    "objectID": "practices/wk10.html",
+    "href": "practices/wk10.html",
+    "title": "Week 10 Answers (1104)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 10 Answers (1104)"
+    ]
+  },
+  {
+    "objectID": "practices/wk10.html#reminders",
+    "href": "practices/wk10.html#reminders",
+    "title": "Week 10 Answers (1104)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 10 Answers (1104)"
+    ]
+  },
+  {
+    "objectID": "practices/wk10.html#clt-simulation",
+    "href": "practices/wk10.html#clt-simulation",
+    "title": "Week 10 Answers (1104)",
+    "section": "2 CLT Simulation",
+    "text": "2 CLT Simulation\n\n2.1 Draw Poisson Sample\nWrite a function called sample_mean_pois(n) with the following specification:\n\nDraw \\(n\\) random samples from a Poisson distribution \\(\\lambda = 5\\).\n\n2.Compute the sample mean.\n\nReturn the sample mean.\n\nThis function allows you to draw \\(n\\) random samples from a Poisson distribution (\\(\\lambda=5\\)) and compute the sample mean.\n\n\n2.2 Build Sample Mean DataFrame\nNow, we’re going to utilize the function to help us compute the sample mean multiple times. Please follow the instructions step-by-step:\n\nSet the random seed to 2025.\nGiven \\(n=500\\), use the function replicate() to execute the function sample_mean_pois(n) we just defined for 1,000 times.\nAfter that, you should obtain 1,000 sample means. Assign the 1,000 sample means to a variable called rdmean and build a DataFrame from it.\n\nSo far, we have obtained \\(1,000\\) sample means, each calculated from \\(500\\) Poisson samples.\n\n\n2.3 Histogram\nUsing the DataFrame we just built, draw a histogram to examine the distribution of the sample means.",
+    "crumbs": [
+      "Practices",
+      "Week 10 Answers (1104)"
+    ]
+  },
+  {
+    "objectID": "answers/wk02_answer.html",
+    "href": "answers/wk02_answer.html",
+    "title": "Week 2 Answers (0909)",
+    "section": "",
+    "text": "Please download the datasets county.csv and loan50.csv here.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 2 Answers (0909)"
+    ]
+  },
+  {
+    "objectID": "answers/wk02_answer.html#download-data",
+    "href": "answers/wk02_answer.html#download-data",
+    "title": "Week 2 Answers (0909)",
+    "section": "",
+    "text": "Please download the datasets county.csv and loan50.csv here.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 2 Answers (0909)"
+    ]
+  },
+  {
+    "objectID": "answers/wk02_answer.html#import-data",
+    "href": "answers/wk02_answer.html#import-data",
+    "title": "Week 2 Answers (0909)",
+    "section": "2 Import Data",
+    "text": "2 Import Data\n\nImport the package tidyverse, which contains several useful functions for data wrangling and visualization.\nCreate a folder on your computer to store the dataset downloaded from NTU COOL or OpenIntro website.\nSet your working directory as that folder and import the datasets county.csv and loan50.csv.\n\nlibrary(tidyverse)\nsetwd(\"/your/working/directory\")\ncounty &lt;- read.csv(\"county.csv\")\nloan &lt;- read.csv(\"loan50.csv\")",
+    "crumbs": [
+      "Practice Answers",
+      "Week 2 Answers (0909)"
+    ]
+  },
+  {
+    "objectID": "answers/wk02_answer.html#scatter-plot",
+    "href": "answers/wk02_answer.html#scatter-plot",
+    "title": "Week 2 Answers (0909)",
+    "section": "3 Scatter Plot",
+    "text": "3 Scatter Plot\n\nUse county.csv to draw the scatter plot of unemployment_rate (x-axis) and per_capita_income (y-axis).\n\n\n\n\n\n\n\nTipHint\n\n\n\nHint: You don’t need to specify any parameter in geom_point().\n\n\nggplot(county, aes(x = unemployment_rate, y = per_capita_income)) + \n  geom_point()\n\n\n\n\n\n\n\n\n\n\nDraw the same graph again, but this time make the following adjustments:\n\nadjust the point color to lightcoral\nadjust the point size to 0.5\n\n\nggplot(county, aes(x = unemployment_rate, y = per_capita_income)) +\n  geom_point(color = \"lightcoral\", size = 0.5)",
+    "crumbs": [
+      "Practice Answers",
+      "Week 2 Answers (0909)"
+    ]
+  },
+  {
+    "objectID": "answers/wk02_answer.html#histogram",
+    "href": "answers/wk02_answer.html#histogram",
+    "title": "Week 2 Answers (0909)",
+    "section": "4 Histogram",
+    "text": "4 Histogram\nUse loan50.csv data to draw the histogram of loan_amount (set as x-axis), and adjust the parameter binwidth in geom_histogram() to 5000.\nggplot(loan, aes(x = loan_amount)) +\n  geom_histogram(binwidth = 5000)",
+    "crumbs": [
+      "Practice Answers",
+      "Week 2 Answers (0909)"
+    ]
+  },
+  {
+    "objectID": "answers/wk04_answer.html",
+    "href": "answers/wk04_answer.html",
+    "title": "Week 4 Answers (0923)",
+    "section": "",
+    "text": "Remember to use the project you create last week!",
+    "crumbs": [
+      "Practice Answers",
+      "Week 4 Answers (0923)"
+    ]
+  },
+  {
+    "objectID": "answers/wk04_answer.html#project",
+    "href": "answers/wk04_answer.html#project",
+    "title": "Week 4 Answers (0923)",
+    "section": "",
+    "text": "Remember to use the project you create last week!",
+    "crumbs": [
+      "Practice Answers",
+      "Week 4 Answers (0923)"
+    ]
+  },
+  {
+    "objectID": "answers/wk04_answer.html#draw-uniform-random-sample",
+    "href": "answers/wk04_answer.html#draw-uniform-random-sample",
+    "title": "Week 4 Answers (0923)",
+    "section": "2 Draw Uniform Random Sample",
+    "text": "2 Draw Uniform Random Sample\nSet random seed as 2025. Draw 200 observations from uniform distribution [0, 100] and compute the mean of the observations.\n\n\n\n\n\n\nTipHint\n\n\n\nHint: Use mean() function.\n\n\nset.seed(2025)\nsample_size &lt;- 200\nrdn &lt;- runif(n = sample_size, min = 0, max = 100)\nmean &lt;- mean(rdn)\nprint(mean)\n## [1] 52.17858",
+    "crumbs": [
+      "Practice Answers",
+      "Week 4 Answers (0923)"
+    ]
+  },
+  {
+    "objectID": "answers/wk04_answer.html#histogram",
+    "href": "answers/wk04_answer.html#histogram",
+    "title": "Week 4 Answers (0923)",
+    "section": "3 Histogram",
+    "text": "3 Histogram\n\nUsing the random sample you just generated, create a DataFrame to store the drawn values by using data.frame() function, and draw the histogram graph to see the distribution.\n\ndf_1 &lt;- data.frame(\n  values = rdn\n)\nggplot(df_1, aes(x = values)) +\n  geom_histogram()\n\n\n\n\n\n\n\n\n\n\nNow, draw another 10,000 observations from uniform distribution [0, 100], and draw the histogram graph to see the distribution.\n\nrdn_2 &lt;- runif(n = 10000, min = 0, max = 100)\ndf_2 &lt;- data.frame(\n  values = rdn_2\n)\nggplot(df_2, aes(x = values)) +\n  geom_histogram()",
+    "crumbs": [
+      "Practice Answers",
+      "Week 4 Answers (0923)"
+    ]
+  },
+  {
+    "objectID": "answers/wk06_answer.html",
+    "href": "answers/wk06_answer.html",
+    "title": "Week 6 Practices (1007)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 6 Practices (1007)"
+    ]
+  },
+  {
+    "objectID": "answers/wk06_answer.html#reminders",
+    "href": "answers/wk06_answer.html#reminders",
+    "title": "Week 6 Practices (1007)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 6 Practices (1007)"
+    ]
+  },
+  {
+    "objectID": "answers/wk06_answer.html#download-data",
+    "href": "answers/wk06_answer.html#download-data",
+    "title": "Week 6 Practices (1007)",
+    "section": "2 Download Data",
+    "text": "2 Download Data\nPlease download the datasets ames.csv here.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 6 Practices (1007)"
+    ]
+  },
+  {
+    "objectID": "answers/wk06_answer.html#housing-price-in-2025",
+    "href": "answers/wk06_answer.html#housing-price-in-2025",
+    "title": "Week 6 Practices (1007)",
+    "section": "3 Housing Price in 2025",
+    "text": "3 Housing Price in 2025\n\nUse paste() and for-loop to create a character vector date_2025 that contains 365 days in 2025, and each date repeat 3 times. i.e., c(\"2025-01-01\", \"2025-01-01\", \"2025-01-01\", ..., \"2025-12-31\")\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse if (month %in% vec) to check if there are 28, 30 or 31 days in that month.\n\n\n\nUse as.Date() to convert the date_2025 as type date.\nCreate a numeric vector housing_price with length 1095 having the value generated from a normal distribution with mean = 10000, sd = 2000.\nCombine date_2025 and housing_price_2025 as a new dataframe housing_2025.\nUse geom_line() with linewidth = 0.3 to plot the average housing price for each date in 2025.\n\nset.seed(2025)\n\nlibrary(tidyverse)\n\ndate_2025 &lt;- c()\n\nfor (month in 1:12){\n  if (month %in% c(1, 3, 5, 7, 8, 10, 12)){\n    for (day in 1:31){\n      temp &lt;- replicate(n = 3, expr = paste(\"2025\", month, day, \n                                            sep = \"-\")\n                        )\n      date_2025 &lt;- c(date_2025, temp)\n    }\n  }\n  else if (month %in% c(4, 6, 9, 11)){\n    for (day in 1:30){\n      temp &lt;- replicate(n = 3, expr = paste(\"2025\", month, day, \n                                            sep = \"-\")\n                        )\n      date_2025 &lt;- c(date_2025, temp)\n    }    \n  }\n  else{\n    for (day in 1:28){\n      temp &lt;- replicate(n = 3, expr = paste(\"2025\", \"2\", day, \n                                            sep = \"-\")\n                        )\n      date_2025 &lt;- c(date_2025, temp)\n    }        \n  }\n}\n\ndate_2025 &lt;- as.Date(date_2025)\n\nhousing_price_2025 &lt;- rnorm(n = 1095, mean = 10000, sd = 2000)\n\nhousing_2025 &lt;- data.frame(date = date_2025,\n                           price = housing_price_2025\n                           )\n\nggplot(housing_2025, aes(x = date, y = price)) + \n    geom_line(stat = \"summary\", \n              fun = \"mean\", \n              linewidth = 0.3, \n              color = \"steelblue\"\n              )",
+    "crumbs": [
+      "Practice Answers",
+      "Week 6 Practices (1007)"
+    ]
+  },
+  {
+    "objectID": "answers/wk09_answer.html",
+    "href": "answers/wk09_answer.html",
+    "title": "Week 9 Answers (1028)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 9 Answers (1028)"
+    ]
+  },
+  {
+    "objectID": "answers/wk09_answer.html#reminders",
+    "href": "answers/wk09_answer.html#reminders",
+    "title": "Week 9 Answers (1028)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 9 Answers (1028)"
+    ]
+  },
+  {
+    "objectID": "answers/wk09_answer.html#download-data",
+    "href": "answers/wk09_answer.html#download-data",
+    "title": "Week 9 Answers (1028)",
+    "section": "2 Download Data",
+    "text": "2 Download Data\nPlease download the datasets restaurants.csv (right click here)",
+    "crumbs": [
+      "Practice Answers",
+      "Week 9 Answers (1028)"
+    ]
+  },
+  {
+    "objectID": "answers/wk09_answer.html#nohara-hiroshi-hiru-meshi-no-ryuugi-野原廣志-午餐的流派",
+    "href": "answers/wk09_answer.html#nohara-hiroshi-hiru-meshi-no-ryuugi-野原廣志-午餐的流派",
+    "title": "Week 9 Answers (1028)",
+    "section": "3 Nohara Hiroshi: Hiru Meshi no Ryuugi (野原廣志 午餐的流派)",
+    "text": "3 Nohara Hiroshi: Hiru Meshi no Ryuugi (野原廣志 午餐的流派)\n“My name is Hiroshi Nohara (野原廣志). I’m an office worker and often eat lunch out. Based on the state of my body and my wallet, I quickly decide what to eat each day. You could say that while I’m a business expert, I’m also a lunch expert.”\nHiroshi keeps a list of restaurants in restaurants.csv. The file has five columns:\n\nname: The restaurant’s name.\ntype: The type of cuisine.\nclosed: The restaurant’s closed day; some restaurants are permanently closed.\nlunch_set: Whether the restaurant offers lunch sets at noon.\nrating: Hiroshi’s personal rating for the restaurant.\n\nToday is Thursday. Hiroshi feels like seafood, but curry or noodles would also be fine. Since he had fast food yesterday, he’d rather avoid it today. It’s close to the end of the month, so it would be better if the restaurant offers lunch sets.\nFollow the instructions below to help Hiroshi choose the restaurants that best fit his needs:\n\n\n\n\n\n\nTipHint\n\n\n\nIn this practice, filter(), select(), mutate(), arrange() will all be used.\n\n\n\nUse the pipe %&gt;% in the steps below.\nFilter the restaurants that are open today.\nAdd a column lunch_set_score that is 1.5 if the restaurant offers lunch sets and 0 otherwise.\nAdd a column preference_score that takes value 1.5 for seafood, 1 for curry and noodle, -2 for fastfood, and 0 otherwise.\nAdd a column total_score that sums up the columns rating, lunch_set_score and preference_score.\nRemove the lunch_set_score and preference_score columns.\nArrange the rows in descending order of total_score.\nPrint the top 5 rows with the highest total_score.\n\nlibrary(tidyverse)\n\nrestaurants &lt;- read.csv(\"data/restaurants.csv\")\n\nrestaurants_cleaned &lt;- restaurants %&gt;% \n  filter(closed != \"Thu\" & closed != \"close down\") %&gt;%\n  mutate(lunch_set_score = ifelse(lunch_set == \"Yes\", 1.5, 0)) %&gt;%\n  mutate(preference_score = case_when(\n    type == \"seafood\" ~ 1.5,\n    type == \"curry\" | type == \"noodle\" ~ 1,\n    type == \"fastfood\" ~ -2,\n    TRUE ~ 0\n    )) %&gt;%\n  mutate(total_score = rating + lunch_set_score + preference_score) %&gt;%\n  select(-c(lunch_set_score, preference_score)) %&gt;%\n  arrange(desc(total_score))\n  \nprint(restaurants_cleaned[1:5, ])\n#### Answers\n##               name    type closed lunch_set rating total_score\n## 1       Curry Spot   curry    Fri       Yes    4.4         6.9\n## 2    Curry Delight   curry    Sun       Yes    3.9         6.4\n## 3 Blue Ocean Grill seafood    Fri        No    4.2         5.7\n## 4   Mama’s Kitchen   other    Fri       Yes    4.1         5.6\n## 5      Urban Pizza   pizza    Sun       Yes    4.0         5.5",
+    "crumbs": [
+      "Practice Answers",
+      "Week 9 Answers (1028)"
+    ]
+  },
+  {
+    "objectID": "example_code/Example_Code_wk10.html",
+    "href": "example_code/Example_Code_wk10.html",
+    "title": "Week 10 Example R Code (1104)",
+    "section": "",
+    "text": "Right click to download:\n\nwk10_example_code.R",
+    "crumbs": [
+      "Example R code",
+      "Week 10 Example R Code (1104)"
+    ]
+  },
+  {
+    "objectID": "example_code/Example_Code_wk3.html",
+    "href": "example_code/Example_Code_wk3.html",
+    "title": "Week 3 Example R Code (0916)",
+    "section": "",
+    "text": "Right click to download:\n\nwk3_example_code.R",
+    "crumbs": [
+      "Example R code",
+      "Week 3 Example R Code (0916)"
+    ]
+  },
+  {
+    "objectID": "example_code/Example_Code_wk5.html",
+    "href": "example_code/Example_Code_wk5.html",
+    "title": "Week 5 Example R Code (0930)",
+    "section": "",
+    "text": "Right click to download:\n\nwk5_example_code.R",
+    "crumbs": [
+      "Example R code",
+      "Week 5 Example R Code (0930)"
+    ]
+  },
+  {
+    "objectID": "example_code/Example_Code_wk7.html",
+    "href": "example_code/Example_Code_wk7.html",
+    "title": "Week 7 Example R Code (1014)",
+    "section": "",
+    "text": "Right click to download:\n\nwk7_example_code.R",
+    "crumbs": [
+      "Example R code",
+      "Week 7 Example R Code (1014)"
     ]
   },
   {
@@ -99,1014 +1165,36 @@
     ]
   },
   {
-    "objectID": "example_code/Example_Code_wk7.html",
-    "href": "example_code/Example_Code_wk7.html",
-    "title": "Week 7 Example R Code (1014)",
-    "section": "",
-    "text": "Right click to download:\n\nwk7_example_code.R",
-    "crumbs": [
-      "Example R code",
-      "Week 7 Example R Code (1014)"
-    ]
-  },
-  {
-    "objectID": "example_code/Example_Code_wk5.html",
-    "href": "example_code/Example_Code_wk5.html",
-    "title": "Week 5 Example R Code (0930)",
-    "section": "",
-    "text": "Right click to download:\n\nwk5_example_code.R",
-    "crumbs": [
-      "Example R code",
-      "Week 5 Example R Code (0930)"
-    ]
-  },
-  {
-    "objectID": "example_code/Example_Code_wk3.html",
-    "href": "example_code/Example_Code_wk3.html",
-    "title": "Week 3 Example R Code (0916)",
-    "section": "",
-    "text": "Right click to download:\n\nwk3_example_code.R",
-    "crumbs": [
-      "Example R code",
-      "Week 3 Example R Code (0916)"
-    ]
-  },
-  {
-    "objectID": "example_code/Example_Code_wk1.html",
-    "href": "example_code/Example_Code_wk1.html",
-    "title": "Week 1 Example R Code (0902)",
-    "section": "",
-    "text": "Right click to download:\n\nwk1_example_code.R",
-    "crumbs": [
-      "Example R code",
-      "Week 1 Example R Code (0902)"
-    ]
-  },
-  {
-    "objectID": "answers/wk7_answer.html",
-    "href": "answers/wk7_answer.html",
-    "title": "Week 7 Practices (1014)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 7 Practices (1014)"
-    ]
-  },
-  {
-    "objectID": "answers/wk7_answer.html#reminders",
-    "href": "answers/wk7_answer.html#reminders",
-    "title": "Week 7 Practices (1014)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 7 Practices (1014)"
-    ]
-  },
-  {
-    "objectID": "answers/wk7_answer.html#download-data",
-    "href": "answers/wk7_answer.html#download-data",
-    "title": "Week 7 Practices (1014)",
-    "section": "2 Download Data",
-    "text": "2 Download Data\nPlease download the datasets loan_full_schema.csv here.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 7 Practices (1014)"
-    ]
-  },
-  {
-    "objectID": "answers/wk7_answer.html#wrap-the-graph",
-    "href": "answers/wk7_answer.html#wrap-the-graph",
-    "title": "Week 7 Practices (1014)",
-    "section": "3 Wrap the graph",
-    "text": "3 Wrap the graph\nUse the dataset loans_full_schema.csv to create a histogram of the variable interest_rate. Set the bin width to 2.5, and facet the graph by the variable loan_purpose, and allow each sub-graph to have a different y-axis scale.\nlibrary(tidyverse)\n\nloan &lt;- read.csv(\"data/loans_full_schema.csv\")\ninterest_purpose_plot &lt;- ggplot(loan, aes(x = interest_rate)) +\n  geom_histogram(binwidth = 2.5) +\n  facet_wrap(~loan_purpose,\n             scales = \"free_y\"\n             )\n\nprint(interest_purpose_plot)",
-    "crumbs": [
-      "Practice Answers",
-      "Week 7 Practices (1014)"
-    ]
-  },
-  {
-    "objectID": "answers/wk7_answer.html#save-the-graph",
-    "href": "answers/wk7_answer.html#save-the-graph",
-    "title": "Week 7 Practices (1014)",
-    "section": "4 Save the graph",
-    "text": "4 Save the graph\n\nCreate a folder figures in your project folder.\nSave the graph in the last question to the figures folder with name wk7_default_plot without any customized setting.\nSave another graph with name wk7_sized_plot using height = 6, width = 4.\nAdd assignment dpi = 150 to the last graph, and named the new graph as wk7_sized_plot_150dpi.\nCompare the differences between wk7_default_plot, wk7_sized_plot and wk7_sized_plot_150dpi.\n\n\n# Without any customized setting\nggsave(filename = \"wk7_default_plot.png\",\n       path = \"figures\",\n       plot = interest_purpose_plot.\n       )\n\n# Set height = 6, width = 4\nggsave(filename = \"wk7_sized_plot.png\",\n       path = \"figures\",\n       plot = interest_purpose_plot,\n       width = 6,\n       height = 4\n       )\n\n# Set dpi = 150\nggsave(filename = \"wk7_sized_plot_150dpi.png\",\n       path = \"figures\",\n       plot = interest_purpose_plot,\n       width = 6,\n       height = 4,\n       dpi = 150\n       )",
-    "crumbs": [
-      "Practice Answers",
-      "Week 7 Practices (1014)"
-    ]
-  },
-  {
-    "objectID": "answers/wk5_answer.html",
-    "href": "answers/wk5_answer.html",
-    "title": "Week 5 Answers (0930)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 5 Answers (0930)"
-    ]
-  },
-  {
-    "objectID": "answers/wk5_answer.html#reminders",
-    "href": "answers/wk5_answer.html#reminders",
-    "title": "Week 5 Answers (0930)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 5 Answers (0930)"
-    ]
-  },
-  {
-    "objectID": "answers/wk5_answer.html#control-flow",
-    "href": "answers/wk5_answer.html#control-flow",
-    "title": "Week 5 Answers (0930)",
-    "section": "2 Control Flow",
-    "text": "2 Control Flow\nPrint out the characters \"NTU\" for four times, and then print out the characters \"National Taiwan University\" for six times.\n(There are multiple ways to accomplish this, but I encourage you to use a single for-loop and an if-else statement to complete the task so you can get familiar with these syntax.)\nfor (i in 1:10){\n  if (i &lt;= 4){\n    print(\"NTU\")\n  }else{\n    print(\"National Taiwan University\")\n  }\n}\n## [1] \"NTU\"\n## [1] \"NTU\"\n## [1] \"NTU\"\n## [1] \"NTU\"\n## [1] \"National Taiwan University\"\n## [1] \"National Taiwan University\"\n## [1] \"National Taiwan University\"\n## [1] \"National Taiwan University\"\n## [1] \"National Taiwan University\"\n## [1] \"National Taiwan University\"",
-    "crumbs": [
-      "Practice Answers",
-      "Week 5 Answers (0930)"
-    ]
-  },
-  {
-    "objectID": "answers/wk5_answer.html#binomial-random-sample",
-    "href": "answers/wk5_answer.html#binomial-random-sample",
-    "title": "Week 5 Answers (0930)",
-    "section": "3 Binomial Random Sample",
-    "text": "3 Binomial Random Sample\n\nDraw 400 observations from binomial distribution [size = 1000, prob = 0.5] and compute the mean of the observations.\n\nset.seed(2025)\nsample_size &lt;- 400\nrdn &lt;- rbinom(n = sample_size, size = 1000, prob = 0.5)\nmean &lt;- mean(rdn)\nprint(mean)\n## [1] 499.2225\n\nUsing the random sample you just generated, create a DataFrame to store the drawn values by using data.frame() function, and draw the histogram graph to see the distribution.\n\nlibrary(ggplot2)\n\ndf &lt;- data.frame(\n  values = rdn\n)\nggplot(df, aes(x = values)) +\n  geom_histogram()",
-    "crumbs": [
-      "Practice Answers",
-      "Week 5 Answers (0930)"
-    ]
-  },
-  {
-    "objectID": "answers/wk5_answer.html#certification-exam",
-    "href": "answers/wk5_answer.html#certification-exam",
-    "title": "Week 5 Answers (0930)",
-    "section": "4 Certification Exam",
-    "text": "4 Certification Exam\nA certification exam is organized for 10 students: Alice, Bob, Charlie, Diana, Ethan, Fiona, George, Hannah, Ivan, and Julia. Each student participates in 10 tests, named test_1, test_2, …, test_10. If the students pass certain amount of tests, they can claim the certificate.\n\nCreate a vector students that contains 10 students’ name.\nCreate a matrix scores that uses the rnorm() to generate students score in 10 tests (average score: 60, standard deviation: 15). Let the column name of the matrix be test_1, test_2, …, test_10.\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse replicate() function to create the matrix first, create a character vector test_names for column names, then use colnames() to assign test_names as the column names of the matrix.\n\n\n\nCreate a dataframe stu_scores that combines students and scores.\n\n\n\n\n\n\n\nTipHint\n\n\n\ndata.frame(name = students, scores) is our new dataframe.\n\n\n\nCreate a function certificate_winner containing three parameters: data, passing_score, min_passed such that a student\n\npasses the test if the his/her score of that test is greater than or equal passing_score\nwins the certificate if the number of passing test is greater than or equal min_passed\n\nFinally, the function should return the students who wins the certificate.\n\n\n\n\n\n\n\nTipHint\n\n\n\nYou can use seq_along in the for-loop, such as for(i in seq_along(data[, 1])){}\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nSet a counter that counts the number of tests the student passed in a for-loop. Remember to reset the counter to be 0 when the next loop begins.\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nCreate a vector passed_students in the function that saves the student’s name if his/her meets the requirements.\n\n\n\nAnswer the following questions:\n\nWho are the certificate winner if passing_score is 60, and the passing_score is 5?\nWho are the certificate winner if passing_score is 65, and the passing_score is 6?\n\n\n# Part 1: Create student vector\nstudents &lt;- c(\"Alice\", \"Bob\", \"Charlie\", \"Diana\", \"Ethan\",\n              \"Fiona\", \"George\", \"Hannah\", \"Ivan\", \"Julia\")\n\n# Part 2: Create score matrix\ntest_names &lt;- c(\"test_1\", \"test_2\", \"test_3\", \"test_4\", \"test_5\",\n              \"test_6\", \"test_7\", \"test_8\", \"test_9\", \"test_10\")\n\n\nscores &lt;- replicate(10, rnorm(10, mean = 60, sd = 15))\n\ncolnames(scores) &lt;- test_names\n\n# Part 3: Create the dataframe that combines students and scores\nstu_scores &lt;- data.frame(name = students, scores)\n\n# Part 4: Create the certificate_winner function\ncertificate_winner &lt;- function(data, passing_score, min_passed){\n  \n  # Students names are in the first column\n  stu_vec &lt;- data[, 1]\n  \n  # Test names are in 2~11th columns\n  test_cols &lt;- colnames(data[, 2:11])\n  \n  # Counter for the number of exam passed\n  pass_count &lt;- 0\n  \n  # Students that wins the certificate\n  passed_students &lt;- c()\n  \n  # for i in 1:10\n  for(i in seq_along(stu_vec)){\n    \n    # Remember the counter should be reset for each student\n    pass_count &lt;- 0\n    \n    # for j in 1:10\n    for (j in seq(test_cols)){\n      \n      # Passed if score larger than passing_score\n      if(data[i, j+1] &gt;= passing_score){\n        \n        # Count how many tests student i passed\n        pass_count &lt;- pass_count + 1\n      }\n      \n    }\n      # Claims the certificate if number of exam passed &gt; minimum requirements\n      if(pass_count &gt;= min_passed){\n        \n        passed_students &lt;- c(passed_students, data[i, 1])\n        \n      }\n  }\n  \n  # Return the winners\n  return(passed_students)\n}\n\n# Question 1\nquestion_1_winners &lt;- certificate_winner(stu_scores, 60, 5)\nprint(question_1_winners)\n\n# Question 2\nquestion_2_winners &lt;- certificate_winner(stu_scores, 70, 6)\nprint(question_2_winners)\n#### Question 1 Answers\n## [1] \"Bob\"     \"Charlie\" \"Diana\"   \"Ethan\"   \"Fiona\"   \"Hannah\" \n#### Question 2 Answers\n## [1] \"Ethan\"",
-    "crumbs": [
-      "Practice Answers",
-      "Week 5 Answers (0930)"
-    ]
-  },
-  {
-    "objectID": "answers/wk3_answer.html",
-    "href": "answers/wk3_answer.html",
-    "title": "Week 3 Answers (0916)",
-    "section": "",
-    "text": "Please download the datasets county.csv and loan_full_schema.csv here.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 3 Answers (0916)"
-    ]
-  },
-  {
-    "objectID": "answers/wk3_answer.html#download-data",
-    "href": "answers/wk3_answer.html#download-data",
-    "title": "Week 3 Answers (0916)",
-    "section": "",
-    "text": "Please download the datasets county.csv and loan_full_schema.csv here.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 3 Answers (0916)"
-    ]
-  },
-  {
-    "objectID": "answers/wk3_answer.html#coding-style",
-    "href": "answers/wk3_answer.html#coding-style",
-    "title": "Week 3 Answers (0916)",
-    "section": "2 Coding Style",
-    "text": "2 Coding Style\n\nCreate an RStudio project inside a folder with proper names (e.g. TA_Session).\nCreate folders for R scripts and data. (optional: put scripts for the first two weeks’ TA session in the script folder as well.)\nFor the following questions, your code should follow the coding styles in the slides.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 3 Answers (0916)"
-    ]
-  },
-  {
-    "objectID": "answers/wk3_answer.html#contingency-table",
-    "href": "answers/wk3_answer.html#contingency-table",
-    "title": "Week 3 Answers (0916)",
-    "section": "3 Contingency Table",
-    "text": "3 Contingency Table\nUsing the dataset loans_full_schema.csv, create a contingency table by loan_purpose (set as row) and application_type (set as column), and add the sum row and sum column.\nloan   &lt;- read.csv(\"data/loans_full_schema.csv\")\ntable &lt;- table(loan$loan_purpose, loan$application_type)\ntable_sum &lt;- addmargins(table)\nprint(table_sum)\n##                      individual joint   Sum\n##   car                       116    15   131\n##   credit_card              1971   278  2249\n##   debt_consolidation       4289   855  5144\n##   home_improvement          566   114   680\n##   house                     146     5   151\n##   major_purchase            273    30   303\n##   medical                   128    34   162\n##   moving                     59    10    69\n##   other                     793   121   914\n##   renewable_energy            9     1    10\n##   small_business            101    24   125\n##   vacation                   54     8    62\n##   Sum                      8505  1495 10000",
-    "crumbs": [
-      "Practice Answers",
-      "Week 3 Answers (0916)"
-    ]
-  },
-  {
-    "objectID": "answers/wk3_answer.html#bar-graph",
-    "href": "answers/wk3_answer.html#bar-graph",
-    "title": "Week 3 Answers (0916)",
-    "section": "4 Bar Graph",
-    "text": "4 Bar Graph\nUsing the dataset loans_full_schema.csv, draw the bar graph to show the numbers of applicant according to each credit grade by following procedures:\n\nSpecify sub_grade as the x-axis, and fill the bar with grade.\nAdd graph title and axis labels\n\nTitle: Number of Applicant by Credit Grade\n\nx-axis: Credit Grade\n\ny-axis: Number of Applicant\n\nCenter the graph title.\n\n\n\n\n\n\n\nTipHint\n\n\n\nHint: Add theme(plot.title = element_text(hjust = 0.5)) to the graph.\n\n\nAfter that, you should have a beautiful graph and share it with me! :)\nggplot(loan, aes(x = sub_grade, fill = grade)) +\n  geom_bar() +\n  labs(\n    x = \"Credit Grade\",\n    y = \"Number of Applicant\",\n    title = \"Number of Applicant by Credit Grade\"\n  ) +\n  theme(plot.title = element_text(hjust = 0.5))",
-    "crumbs": [
-      "Practice Answers",
-      "Week 3 Answers (0916)"
-    ]
-  },
-  {
-    "objectID": "answers/wk1_answer.html",
-    "href": "answers/wk1_answer.html",
-    "title": "Week 1 Answers (0902)",
-    "section": "",
-    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.\nx &lt;- 20250902\ny &lt;- 1031\nprint(x / y)",
-    "crumbs": [
-      "Practice Answers",
-      "Week 1 Answers (0902)"
-    ]
-  },
-  {
-    "objectID": "answers/wk1_answer.html#assign-values",
-    "href": "answers/wk1_answer.html#assign-values",
-    "title": "Week 1 Answers (0902)",
-    "section": "",
-    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.\nx &lt;- 20250902\ny &lt;- 1031\nprint(x / y)",
-    "crumbs": [
-      "Practice Answers",
-      "Week 1 Answers (0902)"
-    ]
-  },
-  {
-    "objectID": "answers/wk1_answer.html#help",
-    "href": "answers/wk1_answer.html#help",
-    "title": "Week 1 Answers (0902)",
-    "section": "2 Help",
-    "text": "2 Help\nUse the help() function to check docs, e.g. data.frame() or mean().\nhelp(data.frame)\nhelp(mean)",
-    "crumbs": [
-      "Practice Answers",
-      "Week 1 Answers (0902)"
-    ]
-  },
-  {
-    "objectID": "answers/wk1_answer.html#matrix",
-    "href": "answers/wk1_answer.html#matrix",
-    "title": "Week 1 Answers (0902)",
-    "section": "3 Matrix",
-    "text": "3 Matrix\nCreate the following vectors:\nname_vec &lt;- c(\"James\", \"Noc\", \"Monica\")\n\nage_vec &lt;- c(25, 30, 28)\nand create a 3 × 2 matrix with these two vectors.\nDo you encounter errors? Can you print the matrix out? What’s the data type of the matrix?\nname_vec &lt;- c(\"James\", \"Noc\", \"Monica\")\nage_vec &lt;- c(25, 30, 28)\nmat &lt;- matrix(c(name_vec, age_vec), nrow = 3)\nprint(mat)\nclass(mat)\n\n# `mat[,2]` only select the second column\n# note that the `age_vec` become character type after merging into matrix\nprint(mat[,2])\nclass(mat[,2])",
-    "crumbs": [
-      "Practice Answers",
-      "Week 1 Answers (0902)"
-    ]
-  },
-  {
-    "objectID": "practices/wk7.html",
-    "href": "practices/wk7.html",
-    "title": "Week 7 Practices (1014)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 7 Practices (1014)"
-    ]
-  },
-  {
-    "objectID": "practices/wk7.html#reminders",
-    "href": "practices/wk7.html#reminders",
-    "title": "Week 7 Practices (1014)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 7 Practices (1014)"
-    ]
-  },
-  {
-    "objectID": "practices/wk7.html#download-data",
-    "href": "practices/wk7.html#download-data",
-    "title": "Week 7 Practices (1014)",
-    "section": "2 Download Data",
-    "text": "2 Download Data\nPlease download the datasets loan_full_schema.csv here.",
-    "crumbs": [
-      "Practices",
-      "Week 7 Practices (1014)"
-    ]
-  },
-  {
-    "objectID": "practices/wk7.html#wrap-the-graph",
-    "href": "practices/wk7.html#wrap-the-graph",
-    "title": "Week 7 Practices (1014)",
-    "section": "3 Wrap the graph",
-    "text": "3 Wrap the graph\nUse the dataset loans_full_schema.csv to create a histogram of the variable interest_rate. Set the bin width to 2.5, and facet the graph by the variable loan_purpose, and allow each sub-graph to have a different y-axis scale.",
-    "crumbs": [
-      "Practices",
-      "Week 7 Practices (1014)"
-    ]
-  },
-  {
-    "objectID": "practices/wk7.html#save-the-graph",
-    "href": "practices/wk7.html#save-the-graph",
-    "title": "Week 7 Practices (1014)",
-    "section": "4 Save the graph",
-    "text": "4 Save the graph\n\nCreate a folder figures in your project folder.\nSave the graph in the last question to the figures folder with name wk7_default_plot without any customized setting.\nSave another graph with name wk7_sized_plot using height = 6, width = 4.\nAdd assignment dpi = 150 to the last graph, and named the new graph as wk7_sized_plot_150dpi.\nCompare the differences between wk7_default_plot, wk7_sized_plot and wk7_sized_plot_150dpi.",
-    "crumbs": [
-      "Practices",
-      "Week 7 Practices (1014)"
-    ]
-  },
-  {
-    "objectID": "practices/wk5.html",
-    "href": "practices/wk5.html",
-    "title": "Week 5 Practices (0930)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 5 Practices (0930)"
-    ]
-  },
-  {
-    "objectID": "practices/wk5.html#reminders",
-    "href": "practices/wk5.html#reminders",
-    "title": "Week 5 Practices (0930)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 5 Practices (0930)"
-    ]
-  },
-  {
-    "objectID": "practices/wk5.html#control-flow",
-    "href": "practices/wk5.html#control-flow",
-    "title": "Week 5 Practices (0930)",
-    "section": "2 Control Flow",
-    "text": "2 Control Flow\nPrint out the characters \"NTU\" for four times, and then print out the characters \"National Taiwan University\" for six times.\n(There are multiple ways to accomplish this, but I encourage you to use a single for-loop and an if-else statement to complete the task so you can get familiar with these syntax.)",
-    "crumbs": [
-      "Practices",
-      "Week 5 Practices (0930)"
-    ]
-  },
-  {
-    "objectID": "practices/wk5.html#binomial-random-sample",
-    "href": "practices/wk5.html#binomial-random-sample",
-    "title": "Week 5 Practices (0930)",
-    "section": "3 Binomial Random Sample",
-    "text": "3 Binomial Random Sample\n\nDraw 400 observations from binomial distribution [size = 1000, prob = 0.5] and compute the mean of the observations.\nUsing the random sample you just generated, create a DataFrame to store the drawn values by using data.frame() function, and draw the histogram graph to see the distribution.",
-    "crumbs": [
-      "Practices",
-      "Week 5 Practices (0930)"
-    ]
-  },
-  {
-    "objectID": "practices/wk5.html#certification-exam",
-    "href": "practices/wk5.html#certification-exam",
-    "title": "Week 5 Practices (0930)",
-    "section": "4 Certification Exam",
-    "text": "4 Certification Exam\nA certification exam is organized for 10 students: Alice, Bob, Charlie, Diana, Ethan, Fiona, George, Hannah, Ivan, and Julia. Each student participates in 10 tests, named test_1, test_2, …, test_10. If the students pass certain amount of tests, they can claim the certificate.\n\nCreate a vector students that contains 10 students’ name.\nCreate a matrix scores that uses the rnorm() to generate students score in 10 tests (average score: 60, standard deviation: 15). Let the column name of the matrix be test_1, test_2, …, test_10.\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse replicate() function to create the matrix first, create a character vector test_names for column names, then use colnames() to assign test_names as the column names of the matrix.\n\n\n\nCreate a dataframe stu_scores that combines students and scores.\n\n\n\n\n\n\n\nTipHint\n\n\n\ndata.frame(name = students, scores) is our new dataframe.\n\n\n\nCreate a function certificate_winner containing three parameters: data, passing_score, min_passed such that a student\n\npasses the test if the his/her score of that test is greater than or equal passing_score\nwins the certificate if the number of passing test is greater than or equal min_passed\n\nFinally, the function should return the students who wins the certificate.\n\n\n\n\n\n\n\nTipHint\n\n\n\nYou can use seq_along in the for-loop, such as for(i in seq_along(data[, 1])){}\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nSet a counter that counts the number of tests the student passed in a for-loop. Remember to reset the counter to be 0 when the next loop begins.\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nCreate a vector passed_students in the function that saves the student’s name if his/her meets the requirements.\n\n\n\nAnswer the following questions:\n\nWho are the certificate winner if passing_score is 60, and the passing_score is 5?\nWho are the certificate winner if passing_score is 65, and the passing_score is 6?",
-    "crumbs": [
-      "Practices",
-      "Week 5 Practices (0930)"
-    ]
-  },
-  {
-    "objectID": "practices/wk3.html",
-    "href": "practices/wk3.html",
-    "title": "Week 3 Practices (0916)",
-    "section": "",
-    "text": "Please download the datasets county.csv and loan_full_schema.csv here.",
-    "crumbs": [
-      "Practices",
-      "Week 3 Practices (0916)"
-    ]
-  },
-  {
-    "objectID": "practices/wk3.html#download-data",
-    "href": "practices/wk3.html#download-data",
-    "title": "Week 3 Practices (0916)",
-    "section": "",
-    "text": "Please download the datasets county.csv and loan_full_schema.csv here.",
-    "crumbs": [
-      "Practices",
-      "Week 3 Practices (0916)"
-    ]
-  },
-  {
-    "objectID": "practices/wk3.html#coding-style",
-    "href": "practices/wk3.html#coding-style",
-    "title": "Week 3 Practices (0916)",
-    "section": "2 Coding Style",
-    "text": "2 Coding Style\n\nCreate an RStudio project inside a folder with proper names (e.g. TA_Session).\nCreate folders for R scripts and data. (optional: put scripts for the first two weeks’ TA session in the script folder as well.)\nFor the following questions, your code should follow the coding styles in the slides.",
-    "crumbs": [
-      "Practices",
-      "Week 3 Practices (0916)"
-    ]
-  },
-  {
-    "objectID": "practices/wk3.html#contingency-table",
-    "href": "practices/wk3.html#contingency-table",
-    "title": "Week 3 Practices (0916)",
-    "section": "3 Contingency Table",
-    "text": "3 Contingency Table\nUsing the dataset loans_full_schema.csv, create a contingency table by loan_purpose (set as row) and application_type (set as column), and add the sum row and sum column.",
-    "crumbs": [
-      "Practices",
-      "Week 3 Practices (0916)"
-    ]
-  },
-  {
-    "objectID": "practices/wk3.html#bar-graph",
-    "href": "practices/wk3.html#bar-graph",
-    "title": "Week 3 Practices (0916)",
-    "section": "4 Bar Graph",
-    "text": "4 Bar Graph\nUsing the dataset loans_full_schema.csv, draw the bar graph to show the numbers of applicant according to each credit grade by following procedures:\n\nSpecify sub_grade as the x-axis, and fill the bar with grade.\nAdd graph title and axis labels\n\nTitle: Number of Applicant by Credit Grade\n\nx-axis: Credit Grade\n\ny-axis: Number of Applicant\n\nCenter the graph title.\n\n\n\n\n\n\n\nTipHint\n\n\n\nHint: Add theme(plot.title = element_text(hjust = 0.5)) to the graph.\n\n\nAfter that, you should have a beautiful graph and share it with me! :)",
-    "crumbs": [
-      "Practices",
-      "Week 3 Practices (0916)"
-    ]
-  },
-  {
-    "objectID": "practices/wk1.html",
-    "href": "practices/wk1.html",
-    "title": "Week 1 Practices (0902)",
-    "section": "",
-    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.",
-    "crumbs": [
-      "Practices",
-      "Week 1 Practices (0902)"
-    ]
-  },
-  {
-    "objectID": "practices/wk1.html#assign-values",
-    "href": "practices/wk1.html#assign-values",
-    "title": "Week 1 Practices (0902)",
-    "section": "",
-    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.",
-    "crumbs": [
-      "Practices",
-      "Week 1 Practices (0902)"
-    ]
-  },
-  {
-    "objectID": "practices/wk1.html#help",
-    "href": "practices/wk1.html#help",
-    "title": "Week 1 Practices (0902)",
-    "section": "2 Help",
-    "text": "2 Help\nUse the help() function to check docs, e.g. data.frame() or mean().",
-    "crumbs": [
-      "Practices",
-      "Week 1 Practices (0902)"
-    ]
-  },
-  {
-    "objectID": "practices/wk1.html#matrix",
-    "href": "practices/wk1.html#matrix",
-    "title": "Week 1 Practices (0902)",
-    "section": "3 Matrix",
-    "text": "3 Matrix\nCreate the following vectors:\nname_vec &lt;- c(\"James\", \"Noc\", \"Monica\")\n\nage_vec &lt;- c(25, 30, 28)\nand create a 3 × 2 matrix with these two vectors.\nDo you encounter errors? Can you print the matrix out? What’s the data type of the matrix?",
-    "crumbs": [
-      "Practices",
-      "Week 1 Practices (0902)"
-    ]
-  },
-  {
-    "objectID": "slides/Slides_wk7.html",
-    "href": "slides/Slides_wk7.html",
-    "title": "Week 7 Slides (1014)",
-    "section": "",
-    "text": "Open in new tab · Download PDF",
-    "crumbs": [
-      "Slides",
-      "Week 7 Slides (1014)"
-    ]
-  },
-  {
-    "objectID": "slides/Slides_wk5.html",
-    "href": "slides/Slides_wk5.html",
-    "title": "Week 5 Slides (0930)",
-    "section": "",
-    "text": "Open in new tab · Download PDF",
-    "crumbs": [
-      "Slides",
-      "Week 5 Slides (0930)"
-    ]
-  },
-  {
-    "objectID": "slides/Slides_wk3.html",
-    "href": "slides/Slides_wk3.html",
-    "title": "Week 3 Slides (0916)",
-    "section": "",
-    "text": "Open in new tab · Download PDF",
-    "crumbs": [
-      "Slides",
-      "Week 3 Slides (0916)"
-    ]
-  },
-  {
-    "objectID": "slides/Slides_wk1.html",
-    "href": "slides/Slides_wk1.html",
-    "title": "Week 1 Slides (0902)",
-    "section": "",
-    "text": "Open in new tab · Download PDF",
-    "crumbs": [
-      "Slides",
-      "Week 1 Slides (0902)"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "2025Fall Statistics TA Session",
-    "section": "",
-    "text": "Welcome! Use the sidebar to open weekly Slides, Practices and Answers\nAnswers to the practice will be published after each TA Session.\nSending email: r13323002@ntu.edu.tw (mail title including [Statistics TA])\nTA Office hours: Tuesday, 4:30-5:20 p.m. at SSB. (社會科學院) Room 645.",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "slides/Slides_wk2.html",
-    "href": "slides/Slides_wk2.html",
-    "title": "Week 2 Slides (0909)",
-    "section": "",
-    "text": "Open in new tab · Download PDF",
-    "crumbs": [
-      "Slides",
-      "Week 2 Slides (0909)"
-    ]
-  },
-  {
-    "objectID": "slides/Slides_wk4.html",
-    "href": "slides/Slides_wk4.html",
-    "title": "Week 4 Slides (0923)",
-    "section": "",
-    "text": "Open in new tab · Download PDF",
-    "crumbs": [
-      "Slides",
-      "Week 4 Slides (0923)"
-    ]
-  },
-  {
-    "objectID": "slides/Slides_wk6.html",
-    "href": "slides/Slides_wk6.html",
-    "title": "Week 6 Slides (1007)",
-    "section": "",
-    "text": "Open in new tab · Download PDF",
-    "crumbs": [
-      "Slides",
-      "Week 6 Slides (1007)"
-    ]
-  },
-  {
-    "objectID": "slides/Slides_wk9.html",
-    "href": "slides/Slides_wk9.html",
-    "title": "Week 9 Slides (1028)",
-    "section": "",
-    "text": "Open in new tab · Download PDF",
-    "crumbs": [
-      "Slides",
-      "Week 9 Slides (1028)"
-    ]
-  },
-  {
-    "objectID": "practices/wk2.html",
-    "href": "practices/wk2.html",
-    "title": "Week 2 Practices (0909)",
-    "section": "",
-    "text": "Please download the datasets county.csv and loan50.csv here.",
-    "crumbs": [
-      "Practices",
-      "Week 2 Practices (0909)"
-    ]
-  },
-  {
-    "objectID": "practices/wk2.html#download-data",
-    "href": "practices/wk2.html#download-data",
-    "title": "Week 2 Practices (0909)",
-    "section": "",
-    "text": "Please download the datasets county.csv and loan50.csv here.",
-    "crumbs": [
-      "Practices",
-      "Week 2 Practices (0909)"
-    ]
-  },
-  {
-    "objectID": "practices/wk2.html#import-data",
-    "href": "practices/wk2.html#import-data",
-    "title": "Week 2 Practices (0909)",
-    "section": "2 Import Data",
-    "text": "2 Import Data\n\nImport the package tidyverse, which contains several useful functions for data wrangling and visualization.\nCreate a folder on your computer to store the dataset downloaded from NTU COOL or OpenIntro website.\nSet your working directory as that folder and import the datasets county.csv and loan50.csv.",
-    "crumbs": [
-      "Practices",
-      "Week 2 Practices (0909)"
-    ]
-  },
-  {
-    "objectID": "practices/wk2.html#scatter-plot",
-    "href": "practices/wk2.html#scatter-plot",
-    "title": "Week 2 Practices (0909)",
-    "section": "3 Scatter Plot",
-    "text": "3 Scatter Plot\n\nUse county.csv to draw the scatter plot of unemployment_rate (x-axis) and per_capita_income (y-axis).\n\n\n\n\n\n\n\nTipHint\n\n\n\nHint: You don’t need to specify any parameter in geom_point().\n\n\n\nDraw the same graph again, but this time make the following adjustments:\n\nadjust the point color to lightcoral\nadjust the point size to 0.5",
-    "crumbs": [
-      "Practices",
-      "Week 2 Practices (0909)"
-    ]
-  },
-  {
-    "objectID": "practices/wk2.html#histogram",
-    "href": "practices/wk2.html#histogram",
-    "title": "Week 2 Practices (0909)",
-    "section": "4 Histogram",
-    "text": "4 Histogram\nUse loan50.csv data to draw the histogram of loan_amount (set as x-axis), and adjust the parameter binwidth in geom_histogram() to 5000.",
-    "crumbs": [
-      "Practices",
-      "Week 2 Practices (0909)"
-    ]
-  },
-  {
-    "objectID": "practices/wk4.html",
-    "href": "practices/wk4.html",
-    "title": "Week 4 Practices (0923)",
-    "section": "",
-    "text": "Remember to use the project you create last week!",
-    "crumbs": [
-      "Practices",
-      "Week 4 Practices (0923)"
-    ]
-  },
-  {
-    "objectID": "practices/wk4.html#project",
-    "href": "practices/wk4.html#project",
-    "title": "Week 4 Practices (0923)",
-    "section": "",
-    "text": "Remember to use the project you create last week!",
-    "crumbs": [
-      "Practices",
-      "Week 4 Practices (0923)"
-    ]
-  },
-  {
-    "objectID": "practices/wk4.html#draw-uniform-random-sample",
-    "href": "practices/wk4.html#draw-uniform-random-sample",
-    "title": "Week 4 Practices (0923)",
-    "section": "2 Draw Uniform Random Sample",
-    "text": "2 Draw Uniform Random Sample\nSet random seed as 2025. Draw 200 observations from uniform distribution [0, 100] and compute the mean of the observations.\n\n\n\n\n\n\nTipHint\n\n\n\nHint: Use mean() function.",
-    "crumbs": [
-      "Practices",
-      "Week 4 Practices (0923)"
-    ]
-  },
-  {
-    "objectID": "practices/wk4.html#histogram",
-    "href": "practices/wk4.html#histogram",
-    "title": "Week 4 Practices (0923)",
-    "section": "3 Histogram",
-    "text": "3 Histogram\n\nUsing the random sample you just generated, create a DataFrame to store the drawn values by using data.frame() function, and draw the histogram graph to see the distribution.\nNow, draw another 10,000 observations from uniform distribution [0, 100], and draw the histogram graph to see the distribution.",
-    "crumbs": [
-      "Practices",
-      "Week 4 Practices (0923)"
-    ]
-  },
-  {
-    "objectID": "practices/wk6.html",
-    "href": "practices/wk6.html",
-    "title": "Week 6 Practices (1007)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 6 Practices (1007)"
-    ]
-  },
-  {
-    "objectID": "practices/wk6.html#reminders",
-    "href": "practices/wk6.html#reminders",
-    "title": "Week 6 Practices (1007)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 6 Practices (1007)"
-    ]
-  },
-  {
-    "objectID": "practices/wk6.html#download-data",
-    "href": "practices/wk6.html#download-data",
-    "title": "Week 6 Practices (1007)",
-    "section": "2 Download Data",
-    "text": "2 Download Data\nPlease download the datasets ames.csv here.",
-    "crumbs": [
-      "Practices",
-      "Week 6 Practices (1007)"
-    ]
-  },
-  {
-    "objectID": "practices/wk6.html#housing-price-in-2025",
-    "href": "practices/wk6.html#housing-price-in-2025",
-    "title": "Week 6 Practices (1007)",
-    "section": "3 Housing Price in 2025",
-    "text": "3 Housing Price in 2025\n\nUse paste() and for-loop to create a character vector date_2025 that contains 365 days in 2025, and each date repeat 3 times. i.e., c(\"2025-01-01\", \"2025-01-01\", \"2025-01-01\", ..., \"2025-12-31\")\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse if (month %in% vec) to check if there are 28, 30 or 31 days in that month.\n\n\n\nUse as.Date() to convert the date_2025 as type date.\nCreate a numeric vector housing_price with length 1095 having the value generated from a normal distribution with mean = 10000, sd = 2000.\nCombine date_2025 and housing_price_2025 as a new dataframe housing_2025.\nUse geom_line() with linewidth = 0.3 to plot the average housing price for each date in 2025.",
-    "crumbs": [
-      "Practices",
-      "Week 6 Practices (1007)"
-    ]
-  },
-  {
-    "objectID": "practices/wk9.html",
-    "href": "practices/wk9.html",
-    "title": "Week 9 Practices (1028)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 9 Practices (1028)"
-    ]
-  },
-  {
-    "objectID": "practices/wk9.html#reminders",
-    "href": "practices/wk9.html#reminders",
-    "title": "Week 9 Practices (1028)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 9 Practices (1028)"
-    ]
-  },
-  {
-    "objectID": "practices/wk9.html#download-data",
-    "href": "practices/wk9.html#download-data",
-    "title": "Week 9 Practices (1028)",
-    "section": "2 Download Data",
-    "text": "2 Download Data\nPlease download the datasets restaurants.csv (right click here)",
-    "crumbs": [
-      "Practices",
-      "Week 9 Practices (1028)"
-    ]
-  },
-  {
-    "objectID": "practices/wk9.html#nohara-hiroshi-hiru-meshi-no-ryuugi-野原廣志-午餐的流派",
-    "href": "practices/wk9.html#nohara-hiroshi-hiru-meshi-no-ryuugi-野原廣志-午餐的流派",
-    "title": "Week 9 Practices (1028)",
-    "section": "3 Nohara Hiroshi: Hiru Meshi no Ryuugi (野原廣志 午餐的流派)",
-    "text": "3 Nohara Hiroshi: Hiru Meshi no Ryuugi (野原廣志 午餐的流派)\n“My name is Hiroshi Nohara (野原廣志). I’m an office worker and often eat lunch out. Based on the state of my body and my wallet, I quickly decide what to eat each day. You could say that while I’m a business expert, I’m also a lunch expert.”\nHiroshi keeps a list of restaurants in restaurants.csv. The file has five columns:\n\nname: The restaurant’s name.\ntype: The type of cuisine.\nclosed: The restaurant’s closed day; some restaurants are permanently closed.\nlunch_set: Whether the restaurant offers lunch sets at noon.\nrating: Hiroshi’s personal rating for the restaurant.\n\nToday is Thursday. Hiroshi feels like seafood, but curry or noodles would also be fine. Since he had fast food yesterday, he’d rather avoid it today. It’s close to the end of the month, so it would be better if the restaurant offers lunch sets.\nFollow the instructions below to help Hiroshi choose the restaurants that best fit his needs:\n\n\n\n\n\n\nTipHint\n\n\n\nIn this practice, filter(), select(), mutate(), arrange() will all be used.\n\n\n\nUse the pipe %&gt;% in the steps below.\nFilter the restaurants that are open today.\nAdd a column lunch_set_score that is 1.5 if the restaurant offers lunch sets and 0 otherwise.\nAdd a column preference_score that takes value 1.5 for seafood, 1 for curry and noodle, -2 for fastfood, and 0 otherwise.\nAdd a column total_score that sums up the columns rating, lunch_set_score and preference_score.\nRemove the lunch_set_score and preference_score columns.\nArrange the rows in descending order of total_score.\nPrint the top 5 rows with the highest total_score.",
-    "crumbs": [
-      "Practices",
-      "Week 9 Practices (1028)"
-    ]
-  },
-  {
-    "objectID": "answers/wk2_answer.html",
-    "href": "answers/wk2_answer.html",
-    "title": "Week 2 Answers (0909)",
-    "section": "",
-    "text": "Please download the datasets county.csv and loan50.csv here.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 2 Answers (0909)"
-    ]
-  },
-  {
-    "objectID": "answers/wk2_answer.html#download-data",
-    "href": "answers/wk2_answer.html#download-data",
-    "title": "Week 2 Answers (0909)",
-    "section": "",
-    "text": "Please download the datasets county.csv and loan50.csv here.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 2 Answers (0909)"
-    ]
-  },
-  {
-    "objectID": "answers/wk2_answer.html#import-data",
-    "href": "answers/wk2_answer.html#import-data",
-    "title": "Week 2 Answers (0909)",
-    "section": "2 Import Data",
-    "text": "2 Import Data\n\nImport the package tidyverse, which contains several useful functions for data wrangling and visualization.\nCreate a folder on your computer to store the dataset downloaded from NTU COOL or OpenIntro website.\nSet your working directory as that folder and import the datasets county.csv and loan50.csv.\n\nlibrary(tidyverse)\nsetwd(\"/your/working/directory\")\ncounty &lt;- read.csv(\"county.csv\")\nloan &lt;- read.csv(\"loan50.csv\")",
-    "crumbs": [
-      "Practice Answers",
-      "Week 2 Answers (0909)"
-    ]
-  },
-  {
-    "objectID": "answers/wk2_answer.html#scatter-plot",
-    "href": "answers/wk2_answer.html#scatter-plot",
-    "title": "Week 2 Answers (0909)",
-    "section": "3 Scatter Plot",
-    "text": "3 Scatter Plot\n\nUse county.csv to draw the scatter plot of unemployment_rate (x-axis) and per_capita_income (y-axis).\n\n\n\n\n\n\n\nTipHint\n\n\n\nHint: You don’t need to specify any parameter in geom_point().\n\n\nggplot(county, aes(x = unemployment_rate, y = per_capita_income)) + \n  geom_point()\n\n\n\n\n\n\n\n\n\n\nDraw the same graph again, but this time make the following adjustments:\n\nadjust the point color to lightcoral\nadjust the point size to 0.5\n\n\nggplot(county, aes(x = unemployment_rate, y = per_capita_income)) +\n  geom_point(color = \"lightcoral\", size = 0.5)",
-    "crumbs": [
-      "Practice Answers",
-      "Week 2 Answers (0909)"
-    ]
-  },
-  {
-    "objectID": "answers/wk2_answer.html#histogram",
-    "href": "answers/wk2_answer.html#histogram",
-    "title": "Week 2 Answers (0909)",
-    "section": "4 Histogram",
-    "text": "4 Histogram\nUse loan50.csv data to draw the histogram of loan_amount (set as x-axis), and adjust the parameter binwidth in geom_histogram() to 5000.\nggplot(loan, aes(x = loan_amount)) +\n  geom_histogram(binwidth = 5000)",
-    "crumbs": [
-      "Practice Answers",
-      "Week 2 Answers (0909)"
-    ]
-  },
-  {
-    "objectID": "answers/wk4_answer.html",
-    "href": "answers/wk4_answer.html",
-    "title": "Week 4 Answers (0923)",
-    "section": "",
-    "text": "Remember to use the project you create last week!",
-    "crumbs": [
-      "Practice Answers",
-      "Week 4 Answers (0923)"
-    ]
-  },
-  {
-    "objectID": "answers/wk4_answer.html#project",
-    "href": "answers/wk4_answer.html#project",
-    "title": "Week 4 Answers (0923)",
-    "section": "",
-    "text": "Remember to use the project you create last week!",
-    "crumbs": [
-      "Practice Answers",
-      "Week 4 Answers (0923)"
-    ]
-  },
-  {
-    "objectID": "answers/wk4_answer.html#draw-uniform-random-sample",
-    "href": "answers/wk4_answer.html#draw-uniform-random-sample",
-    "title": "Week 4 Answers (0923)",
-    "section": "2 Draw Uniform Random Sample",
-    "text": "2 Draw Uniform Random Sample\nSet random seed as 2025. Draw 200 observations from uniform distribution [0, 100] and compute the mean of the observations.\n\n\n\n\n\n\nTipHint\n\n\n\nHint: Use mean() function.\n\n\nset.seed(2025)\nsample_size &lt;- 200\nrdn &lt;- runif(n = sample_size, min = 0, max = 100)\nmean &lt;- mean(rdn)\nprint(mean)\n## [1] 52.17858",
-    "crumbs": [
-      "Practice Answers",
-      "Week 4 Answers (0923)"
-    ]
-  },
-  {
-    "objectID": "answers/wk4_answer.html#histogram",
-    "href": "answers/wk4_answer.html#histogram",
-    "title": "Week 4 Answers (0923)",
-    "section": "3 Histogram",
-    "text": "3 Histogram\n\nUsing the random sample you just generated, create a DataFrame to store the drawn values by using data.frame() function, and draw the histogram graph to see the distribution.\n\ndf_1 &lt;- data.frame(\n  values = rdn\n)\nggplot(df_1, aes(x = values)) +\n  geom_histogram()\n\n\n\n\n\n\n\n\n\n\nNow, draw another 10,000 observations from uniform distribution [0, 100], and draw the histogram graph to see the distribution.\n\nrdn_2 &lt;- runif(n = 10000, min = 0, max = 100)\ndf_2 &lt;- data.frame(\n  values = rdn_2\n)\nggplot(df_2, aes(x = values)) +\n  geom_histogram()",
-    "crumbs": [
-      "Practice Answers",
-      "Week 4 Answers (0923)"
-    ]
-  },
-  {
-    "objectID": "answers/wk6_answer.html",
-    "href": "answers/wk6_answer.html",
-    "title": "Week 6 Practices (1007)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 6 Practices (1007)"
-    ]
-  },
-  {
-    "objectID": "answers/wk6_answer.html#reminders",
-    "href": "answers/wk6_answer.html#reminders",
-    "title": "Week 6 Practices (1007)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 6 Practices (1007)"
-    ]
-  },
-  {
-    "objectID": "answers/wk6_answer.html#download-data",
-    "href": "answers/wk6_answer.html#download-data",
-    "title": "Week 6 Practices (1007)",
-    "section": "2 Download Data",
-    "text": "2 Download Data\nPlease download the datasets ames.csv here.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 6 Practices (1007)"
-    ]
-  },
-  {
-    "objectID": "answers/wk6_answer.html#housing-price-in-2025",
-    "href": "answers/wk6_answer.html#housing-price-in-2025",
-    "title": "Week 6 Practices (1007)",
-    "section": "3 Housing Price in 2025",
-    "text": "3 Housing Price in 2025\n\nUse paste() and for-loop to create a character vector date_2025 that contains 365 days in 2025, and each date repeat 3 times. i.e., c(\"2025-01-01\", \"2025-01-01\", \"2025-01-01\", ..., \"2025-12-31\")\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse if (month %in% vec) to check if there are 28, 30 or 31 days in that month.\n\n\n\nUse as.Date() to convert the date_2025 as type date.\nCreate a numeric vector housing_price with length 1095 having the value generated from a normal distribution with mean = 10000, sd = 2000.\nCombine date_2025 and housing_price_2025 as a new dataframe housing_2025.\nUse geom_line() with linewidth = 0.3 to plot the average housing price for each date in 2025.\n\nset.seed(2025)\n\nlibrary(tidyverse)\n\ndate_2025 &lt;- c()\n\nfor (month in 1:12){\n  if (month %in% c(1, 3, 5, 7, 8, 10, 12)){\n    for (day in 1:31){\n      temp &lt;- replicate(n = 3, expr = paste(\"2025\", month, day, \n                                            sep = \"-\")\n                        )\n      date_2025 &lt;- c(date_2025, temp)\n    }\n  }\n  else if (month %in% c(4, 6, 9, 11)){\n    for (day in 1:30){\n      temp &lt;- replicate(n = 3, expr = paste(\"2025\", month, day, \n                                            sep = \"-\")\n                        )\n      date_2025 &lt;- c(date_2025, temp)\n    }    \n  }\n  else{\n    for (day in 1:28){\n      temp &lt;- replicate(n = 3, expr = paste(\"2025\", \"2\", day, \n                                            sep = \"-\")\n                        )\n      date_2025 &lt;- c(date_2025, temp)\n    }        \n  }\n}\n\ndate_2025 &lt;- as.Date(date_2025)\n\nhousing_price_2025 &lt;- rnorm(n = 1095, mean = 10000, sd = 2000)\n\nhousing_2025 &lt;- data.frame(date = date_2025,\n                           price = housing_price_2025\n                           )\n\nggplot(housing_2025, aes(x = date, y = price)) + \n    geom_line(stat = \"summary\", \n              fun = \"mean\", \n              linewidth = 0.3, \n              color = \"steelblue\"\n              )",
-    "crumbs": [
-      "Practice Answers",
-      "Week 6 Practices (1007)"
-    ]
-  },
-  {
-    "objectID": "answers/wk9_answer.html",
-    "href": "answers/wk9_answer.html",
-    "title": "Week 9 Practices (1028)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 9 Practices (1028)"
-    ]
-  },
-  {
-    "objectID": "answers/wk9_answer.html#reminders",
-    "href": "answers/wk9_answer.html#reminders",
-    "title": "Week 9 Practices (1028)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 9 Practices (1028)"
-    ]
-  },
-  {
-    "objectID": "answers/wk9_answer.html#download-data",
-    "href": "answers/wk9_answer.html#download-data",
-    "title": "Week 9 Practices (1028)",
-    "section": "2 Download Data",
-    "text": "2 Download Data\nPlease download the datasets restaurants.csv (right click here)",
-    "crumbs": [
-      "Practice Answers",
-      "Week 9 Practices (1028)"
-    ]
-  },
-  {
-    "objectID": "answers/wk9_answer.html#nohara-hiroshi-hiru-meshi-no-ryuugi-野原廣志-午餐的流派",
-    "href": "answers/wk9_answer.html#nohara-hiroshi-hiru-meshi-no-ryuugi-野原廣志-午餐的流派",
-    "title": "Week 9 Practices (1028)",
-    "section": "3 Nohara Hiroshi: Hiru Meshi no Ryuugi (野原廣志 午餐的流派)",
-    "text": "3 Nohara Hiroshi: Hiru Meshi no Ryuugi (野原廣志 午餐的流派)\n“My name is Hiroshi Nohara (野原廣志). I’m an office worker and often eat lunch out. Based on the state of my body and my wallet, I quickly decide what to eat each day. You could say that while I’m a business expert, I’m also a lunch expert.”\nHiroshi keeps a list of restaurants in restaurants.csv. The file has five columns:\n\nname: The restaurant’s name.\ntype: The type of cuisine.\nclosed: The restaurant’s closed day; some restaurants are permanently closed.\nlunch_set: Whether the restaurant offers lunch sets at noon.\nrating: Hiroshi’s personal rating for the restaurant.\n\nToday is Thursday. Hiroshi feels like seafood, but curry or noodles would also be fine. Since he had fast food yesterday, he’d rather avoid it today. It’s close to the end of the month, so it would be better if the restaurant offers lunch sets.\nFollow the instructions below to help Hiroshi choose the restaurants that best fit his needs:\n\n\n\n\n\n\nTipHint\n\n\n\nIn this practice, filter(), select(), mutate(), arrange() will all be used.\n\n\n\nUse the pipe %&gt;% in the steps below.\nFilter the restaurants that are open today.\nAdd a column lunch_set_score that is 1.5 if the restaurant offers lunch sets and 0 otherwise.\nAdd a column preference_score that takes value 1.5 for seafood, 1 for curry and noodle, -2 for fastfood, and 0 otherwise.\nAdd a column total_score that sums up the columns rating, lunch_set_score and preference_score.\nRemove the lunch_set_score and preference_score columns.\nArrange the rows in descending order of total_score.\nPrint the top 5 rows with the highest total_score.\n\nlibrary(tidyverse)\n\nrestaurants &lt;- read.csv(\"data/restaurants.csv\")\n\nrestaurants_cleaned &lt;- restaurants %&gt;% \n  filter(closed != \"Thu\" & closed != \"close down\") %&gt;%\n  mutate(lunch_set_score = ifelse(lunch_set == \"Yes\", 1.5, 0)) %&gt;%\n  mutate(preference_score = case_when(\n    type == \"seafood\" ~ 1.5,\n    type == \"curry\" | type == \"noodle\" ~ 1,\n    type == \"fastfood\" ~ -2,\n    TRUE ~ 0\n    )) %&gt;%\n  mutate(total_score = rating + lunch_set_score + preference_score) %&gt;%\n  select(-c(lunch_set_score, preference_score)) %&gt;%\n  arrange(desc(total_score))\n  \nprint(restaurants_cleaned[1:5, ])\n#### Answers\n##               name    type closed lunch_set rating total_score\n## 1       Curry Spot   curry    Fri       Yes    4.4         6.9\n## 2    Curry Delight   curry    Sun       Yes    3.9         6.4\n## 3 Blue Ocean Grill seafood    Fri        No    4.2         5.7\n## 4   Mama’s Kitchen   other    Fri       Yes    4.1         5.6\n## 5      Urban Pizza   pizza    Sun       Yes    4.0         5.5",
-    "crumbs": [
-      "Practice Answers",
-      "Week 9 Practices (1028)"
-    ]
-  },
-  {
-    "objectID": "example_code/Example_Code_wk2.html",
-    "href": "example_code/Example_Code_wk2.html",
-    "title": "Week 2 Example R Code (0909)",
-    "section": "",
-    "text": "Right click to download:\n\nwk2_example_code.R",
-    "crumbs": [
-      "Example R code",
-      "Week 2 Example R Code (0909)"
-    ]
-  },
-  {
-    "objectID": "example_code/Example_Code_wk4.html",
-    "href": "example_code/Example_Code_wk4.html",
-    "title": "Week 4 Example R Code (0923)",
-    "section": "",
-    "text": "Right click to download:\n\nwk4_example_code.R",
-    "crumbs": [
-      "Example R code",
-      "Week 4 Example R Code (0923)"
-    ]
-  },
-  {
-    "objectID": "example_code/Example_Code_wk6.html",
-    "href": "example_code/Example_Code_wk6.html",
-    "title": "Week 6 Example R Code (1007)",
-    "section": "",
-    "text": "Right click to download:\n\nwk6_example_code.R",
-    "crumbs": [
-      "Example R code",
-      "Week 6 Example R Code (1007)"
-    ]
-  },
-  {
-    "objectID": "example_code/Example_Code_wk9.html",
-    "href": "example_code/Example_Code_wk9.html",
-    "title": "Week 9 Example R Code (1028)",
-    "section": "",
-    "text": "Right click to download:\n\nwk9_example_code.R",
-    "crumbs": [
-      "Example R code",
-      "Week 9 Example R Code (1028)"
-    ]
-  },
-  {
-    "objectID": "homework/hw2_answer.html",
-    "href": "homework/hw2_answer.html",
-    "title": "Homework 2 Answers",
+    "objectID": "homework/hw3_answer.html",
+    "href": "homework/hw3_answer.html",
+    "title": "Homework 3 Answers",
     "section": "",
     "text": "If you find any typos or errors, please feel free to contact me via email at r13323002@ntu.edu.tw. I would appreciate it and will correct the solution to prevent any misunderstandings.\nFor some R commands marked with ‘OPTIONAL,’ you don’t need to learn them. You will be completely fine on the computer quiz even if you choose to ignore them.\nIf you’re having trouble understanding the code, don’t hesitate to ask me for help. I’ll do my best to assist you during office hours or after the TA session.",
     "crumbs": [
       "Homework Solutions",
-      "Homework 2 Answers"
+      "Homework 3 Answers"
     ]
   },
   {
-    "objectID": "homework/hw2_answer.html#computer-exercises",
-    "href": "homework/hw2_answer.html#computer-exercises",
-    "title": "Homework 2 Answers",
+    "objectID": "homework/hw3_answer.html#computer-exercises",
+    "href": "homework/hw3_answer.html#computer-exercises",
+    "title": "Homework 3 Answers",
     "section": "1 Computer Exercises",
-    "text": "1 Computer Exercises\n\n1.1 Bernoulli Simulation\n# simulate 1,000 coin flips by denoting head if value above 0.5, tail otherwise\ncoin_flips &lt;- runif(1000) &gt; 0.5\n\n# calculate cumulative number and fraction of heads for coin flips of 1, 2, 3, ..., 1000\ncum_heads &lt;- cumsum(coin_flips)\nfrac_heads &lt;- cum_heads / 1:1000\n\n# record the result of each flip in dataframe\ndf &lt;- data.frame(\n  flips = 1:1000,\n  coin_outcome = coin_flips,\n  cumulative_heads = cum_heads,\n  fraction_heads = frac_heads\n)\n\n# take a look at the fitst five records\nhead(df)\n\n\n  flips coin_outcome cumulative_heads fraction_heads\n1     1         TRUE                1      1.0000000\n2     2        FALSE                1      0.5000000\n3     3         TRUE                2      0.6666667\n4     4        FALSE                2      0.5000000\n5     5         TRUE                3      0.6000000\n6     6         TRUE                4      0.6666667\n\n\n# draw the fraction of head over each flip\nggplot(df, aes(x = flips, y = fraction_heads)) +\n  \n  ## draw the fraction of head\n  geom_line(color = \"steelblue\") +\n  \n  ## (OPTIONAL) baseline fraction is 0.5\n  geom_hline(aes(yintercept = 0.5), color = \"black\") +\n  \n  ## add label to make the graph more readable\n  labs(\n    title = \"Fraction of Heads in 1,000 Coin Flips\",\n    x = \"Number of Coin Flips\",\n    y = \"Fraction of Heads\"\n  ) +\n  \n  ## center the graph title\n  theme(plot.title = element_text(hjust = 0.5))\n\n\n\n\n\n\n\n\n\n\n\n1.2 Normal Simulation\n# define distribution parameters\nmu &lt;- 2\nsigma &lt;- 2.5\n\n# draw the random normal samples according to different sample size\ndraw_size20   &lt;- rnorm(20, mean = mu, sd = sigma)\ndraw_size100  &lt;- rnorm(100, mean = mu, sd = sigma)\ndraw_size500  &lt;- rnorm(500, mean = mu, sd = sigma)\ndraw_size1000 &lt;- rnorm(1000, mean = mu, sd = sigma)\n\n# compute the simulated mean and standard deviation according to different draw sizes\nsim_result &lt;- data.frame(\n  sample_size = c(20, 100, 500, 1000),\n  mean = c(mean(draw_size20), mean(draw_size100), mean(draw_size500), mean(draw_size1000)),\n  sd = c(sd(draw_size20), sd(draw_size100), sd(draw_size500), sd(draw_size1000))\n)\nprint(sim_result)\n\n\n  sample_size     mean       sd\n1          20 1.785653 2.632694\n2         100 2.363479 2.829786\n3         500 1.918210 2.483657\n4        1000 1.941324 2.556143\n\n\n# the histogram when draw size = 20\ndf_size20 &lt;- data.frame(\n  values = draw_size20\n)\nggplot(df_size20, aes(x = values)) +\n  geom_histogram()\n\n\n\n\n\n\n\n\n\n# the histogram when draw size = 100\ndf_size100 &lt;- data.frame(\n  values = draw_size100\n)\nggplot(df_size100, aes(x = values)) +\n  geom_histogram()\n\n\n\n\n\n\n\n\n\n# the histogram when draw size = 500\ndf_size500 &lt;- data.frame(\n  values = draw_size500\n)\nggplot(df_size500, aes(x = values)) +\n  geom_histogram()\n\n\n\n\n\n\n\n\n\n\n\n1.3 \n# the histogram when draw size = 1000\ndf_size1000 &lt;- data.frame(\n  values = draw_size1000\n)\nggplot(df_size1000, aes(x = values)) +\n  geom_histogram()\n\n\n\n\n\n\n\n\n\n\n\n1.4 Binomial Simulation\n# define distribution parameter and trial size\np &lt;- 0.1\nsample_num &lt;- 200\n\n# draw the random binomial samples according to different sample size\ndraw_size10   &lt;- rbinom(sample_num, size = 10,  prob = p)\ndraw_size50  &lt;- rbinom(sample_num, size = 50,  prob = p)\ndraw_size100  &lt;- rbinom(sample_num, size = 100, prob = p)\ndraw_size500 &lt;- rbinom(sample_num, size = 500, prob = p)\n\n# compute the simulated mean and standard deviation according to different draw sizes\nsim_result &lt;- data.frame(\n  sample_size = c(10, 50, 100, 500),\n  mean = c(mean(draw_size10), mean(draw_size50), mean(draw_size100), mean(draw_size500)),\n  sd = c(sd(draw_size10), sd(draw_size50), sd(draw_size100), sd(draw_size500))\n)\nprint(sim_result)\n\n\n  sample_size   mean        sd\n1          10  0.995 0.9999874\n2          50  4.900 2.0836767\n3         100 10.090 2.6603170\n4         500 50.025 6.5696405\n\n\n# the histogram when draw size = 10\ndf_size10 &lt;- data.frame(\n  values = draw_size10\n)\nggplot(df_size10, aes(x = values)) +\n  geom_histogram()\n\n\n\n\n\n\n\n\n\n# the histogram when draw size = 50\ndf_size50 &lt;- data.frame(\n  values = draw_size50\n)\nggplot(df_size50, aes(x = values)) +\n  geom_histogram()\n\n\n\n\n\n\n\n\n\n# the histogram when draw size = 100\ndf_size100 &lt;- data.frame(\n  values = draw_size100\n)\nggplot(df_size100, aes(x = values)) +\n  geom_histogram()\n\n\n\n\n\n\n\n\n\n# the histogram when draw size = 500\ndf_size500 &lt;- data.frame(\n  values = draw_size500\n)\nggplot(df_size500, aes(x = values)) +\n  geom_histogram()",
+    "text": "1 Computer Exercises\n\n1.1 CLT Simulation with Uniform Distribution\n# 1. Define distribution parameters, draw size, and simulation size\nuniform_min &lt;- -2\nuniform_max &lt;- 2\ndraw_size &lt;- c(2, 5, 15, 30)\nsimulation_size &lt;- 200\n\n# 2. Define function to:\n# (1) draw uniform sample according to different draw size; \n# (2) compute sample mean and return the mean\nsample_mean_unif &lt;- function(n){\n  samples &lt;- runif(n, min = uniform_min, max = uniform_max)\n  mean &lt;- mean(samples)\n  return(mean)\n}\n\n# 3. Before simulation, create an empty DataFrame for storing the simulation result later\nresult &lt;- data.frame()\n\n# 4. Draw sample according to different draw sizes\nfor (n in draw_size){\n  \n  ## 4.1 Given the draw size, draw sample and compute mean for 200 times\n  simulated_sample_means &lt;- replicate(simulation_size, sample_mean_unif(n))\n  \n  ## 4.2 Store the sample means in temporary DataFrame `df`\n  ##     `df` is a 200 x 2 DataFrame. Check it by yourself\n  df &lt;- data.frame(\n    draw_size = n,\n    means = simulated_sample_means\n  )\n  \n  ## 4.3 We store the simulation result by appending the sample means `df` to `result`\n  ##     so 'result' now should have 200+200+200+200 = 800 rows. Check it by yourself\n  result &lt;- rbind(result, df)\n  \n}\n\n# 5. Draw histogram\nggplot(data = result, aes(x = means)) +\n  geom_histogram(binwidth = 0.1, fill = \"steelblue\", color = \"gray\", alpha = 0.8, boundary = 0.1) +\n  facet_wrap(~draw_size) +\n  labs(\n    x = \"Simulated Sample Mean\",\n    y = \"Simulation ount\",\n    title = paste0(\"Histogram of Uniform Sample Mean under Diffrent Sample Size for 200 Simulations.\")\n  ) +\n  theme(plot.title = element_text(hjust = 0.5))\n\n\n\n\n\n\n\n\n\nNote that the mean of these histogram are all zero. Besides, as the size of draws increases, the sample variation decreases since the histogram became more centered.\n\n\n1.2 CLT Simulation with Exponential Distribution\n# 1. Define distribution parameters, draw size, and simulation size\nlambda &lt;- 1.5\ndraw_size &lt;- c(2, 5, 15, 30)\nsimulation_size &lt;- 200\n\n# 2. Define function to:\n# (1) draw exponential sample according to different draw size; \n# (2) compute sample mean and return the mean\nsample_mean_exp &lt;- function(n){\n  samples &lt;- rexp(n, rate = lambda)\n  mean &lt;- mean(samples)\n  return(mean)\n}\n\n# 3. Before simulation, create an empty DataFrame for storing the simulation result later\nresult &lt;- data.frame()\n\n# 4. draw sample according to different draw sizes\nfor (n in draw_size){\n  \n  ## 4.1 Given the draw size, draw sample and compute mean for 200 times\n  simulated_sample_means &lt;- replicate(simulation_size, sample_mean_exp(n))\n  \n  ## 4.2 Store the sample means in temporary DataFrame `df`\n  ##     `df` is a 200 x 2 DataFrame. Check it by yourself\n  df &lt;- data.frame(\n    draw_size = n,\n    means = simulated_sample_means\n  )\n  \n  ## 4.3 We store the simulation result by appending the sample means `df` to `result`\n  ##     so 'result' now should have 200+200+200+200 = 800 rows. Check it by yourself\n  result &lt;- rbind(result, df)\n  \n}\n\n# 5. Draw histogram\nggplot(data = result, aes(x = means)) +\n  geom_histogram(binwidth = 0.1, fill = \"steelblue\", color = \"gray\", alpha = 0.8, boundary = 0.1) +\n  facet_wrap(~draw_size) +\n  labs(\n    x = \"Simulated Sample Mean\",\n    y = \"Simulation ount\",\n    title = paste0(\"Histogram of Exponential Sample Mean under Diffrent Sample Size for 200 Simulations.\")\n  ) +\n  theme(plot.title = element_text(hjust = 0.5))\n\n\n\n\n\n\n\n\n\nNote that the mean of these histogram are all 1/1.5. Besides, as the size of draws increases, the sample variation decreases since the histogram became more centered.",
     "crumbs": [
       "Homework Solutions",
-      "Homework 2 Answers"
+      "Homework 3 Answers"
     ]
   },
   {
-    "objectID": "homework/hw2_answer.html#textbook-exercise",
-    "href": "homework/hw2_answer.html#textbook-exercise",
-    "title": "Homework 2 Answers",
+    "objectID": "homework/hw3_answer.html#textbook-exercise",
+    "href": "homework/hw3_answer.html#textbook-exercise",
+    "title": "Homework 3 Answers",
     "section": "2 Textbook Exercise",
-    "text": "2 Textbook Exercise\n\n2.1 Question 3.8\nWe denote Poverty Line as PL, and Foreign Language as FL.\n\nNo, there are people who are both living below the poverty line and speak a language other than English at home.\nThe Venn diagram is shown below.\n\n\n\n\n\n\n\nEach person living below the poverty line either speaks only English at home or doesn’t.\nSince 14.6% of Americans live below the poverty line and 4.2% speak a language other than English at home, the other 10.4% only speak English at home.\nUsing the General Addition Rule:\n\n\\[\n\\begin{aligned}\nP(\\text{below PL or speak FL})\n&= P(\\text{below PL}) + P(\\text{FL}) - P(\\text{both}) \\\\\n&= 0.146 + 0.207 - 0.042 \\\\\n&= 0.311.\n\\end{aligned}\n\\]\n\nProbability of neither below PL nor speak FL:\n\n\\[\nP(\\text{neither below PL nor speak FL})\n= 1 - P(\\text{below PL or speak FL})\n= 1 - 0.311\n= 0.689.\n\\]\n\nTwo approaches to assess independence:\n\n\n\nMultiplication rule (if independent)\n\n\\[\nP(\\text{below PL}) \\times P(\\text{FL})\n= 0.146 \\times 0.207\n= 0.030.\n\\]\nThis does not equal ( P() = 0.042 ), therefore the events are dependent.\n\nBayes’ theorem\n\nIf the two events were independent, then ( P() = P() ).\nUsing Bayes’ theorem:\n\\[\nP(\\text{below PL} \\mid \\text{FL})\n= \\frac{P(\\text{below PL and FL})}{P(\\text{FL})}\n= \\frac{0.042}{0.207}\n\\approx 0.203.\n\\]\nSince this probability (()) is different from ( P() = 0.146 ), we determine that the two events are dependent.\n\n\n2.2 Question 3.16\n\nNo, there are individuals who are both in excellent health and have health coverage.\nOverall probability: \\[ P(\\text{excellent health}) = 0.2329 \\]\nConditional on having health coverage: \\[\nP(\\text{excellent health}\\mid \\text{coverage}) =\n\\frac{0.2099}{0.8738} \\approx 0.24 \\]\nConditional on not having health coverage: \\[\nP(\\text{excellent health}\\mid \\text{no coverage}) =\n\\frac{0.0230}{0.1262} \\approx 0.18 \\]\nConclusion: Since the probability of excellent health differs between coverage groups (24% vs 18%), the variables are not independent.\n\n\n\n2.3 Question 3.34\n\nThe probability model and the calculation of average revenue per passenger (expected value)\n\n\n\n\nTable 1: Probability model for baggage fee revenue per passenger\n\n\n\n\n\n\n\n\n\n\n\n\n\nEvent\n\\(X\\)\n(P(X))\n(XP(X))\n((X - E\\[X\\])^2)\n((X - E\\[X\\])^2P(X))\n\n\n\n\nNo baggage\n0\n0.54\n0.0\n246.49\n133.10\n\n\n1 checked bag\n25\n0.34\n8.5\n86.49\n29.41\n\n\n2 checked bags\n60\n0.12\n7.2\n1962.49\n235.50\n\n\n\n\n\n\n\nExpected value: \\[(E(X) = 15.70)\\]\nVariance: \\[(V(X) = 398.01)\\]\nStandard deviation: \\[(SD(X) = 19.95)\\]\n\n\nAssume independence between individual fliers (a rough but helpful approximation).\n\n\\[\\begin{aligned}\nE\\!\\left[\\textstyle\\sum_{i=1}^{120} X_i\\right]\n  &= \\sum_{i=1}^{120} E[X_i]\n  = 120 \\times 15.70\n  = \\$1{,}884 \\\\\nV\\!\\left[\\textstyle\\sum_{i=1}^{120} X_i\\right]\n  &= \\sum_{i=1}^{120} V[X_i]\n  = 120 \\times 398.01\n  = 47{,}761.20 \\\\\nSD\\!\\left[\\textstyle\\sum_{i=1}^{120} X_i\\right]\n  &= \\sqrt{47{,}761.20}\n  = 218.54\n\\end{aligned}\\]\n\n\n2.4 Question 3.44\n\n\n\n\n\\(E(X + Y_1 + Y_2 + Y_3) = E(X) + 3 \\times E(Y) = 48 + 3 \\times 2 = 54\\)\n\n\\(V(X + Y_1 + Y_2 + Y_3) = V(X) + 3 \\times V(Y) = 1 + 3 \\times 0.0625 = 1.1875\\)\n\n\\(SD(X + Y_1 + Y_2 + Y_3) = \\sqrt{1.1875} = 1.09\\)\n\n\n\n\n\n\\(E(X - Y) = E(X) - E(Y) = 48 - 2 = 46\\)\n\n\\(V(X - Y) = V(X) + V(Y) = 1 + 0.0625 = 1.0625\\)\n\n\\(SD(X - Y) = \\sqrt{1.0625} = 1.03\\)\n\n\nInitially we do not know exactly how much ice cream is in the box. Then we scoop out an unknown amount. We should now be even more unsure about the amount of ice cream that is left in the box.\n\n\n\n2.5 Question 4.4\n\nProblem setup\n\nLet \\(X\\) denote the finishing times of Men (ages 30–34) and \\(Y\\) denote the finishing times of Women (ages 25–29):\n\\[\nX \\sim N(\\mu = 4313, \\sigma = 583)\n\\] \\[\nY \\sim N(\\mu = 5261, \\sigma = 807)\n\\]\n\nZ-scores\n\nThe Z-scores can be calculated as follows:\n\\[\nZ_{Leo} = \\frac{4948 - 4313}{583} = 1.09\n\\] \\[\nZ_{Mary} = \\frac{5513 - 5261}{807} = 0.31\n\\]\n\nLeo finished 1.09 standard deviations above the mean of his group.\n\nMary finished 0.31 standard deviations above the mean of hers.\n\n\nComparison\n\nMary ranked better since her Z-score indicates a relatively shorter finishing time compared to her group.\n\nProbability for Leo\n\n\\[\nP(Z &gt; 1.09) = 1 - P(Z &lt; 1.09) = 1 - 0.8621 = 0.1379\n\\]\nSo, 13.79% of men in Leo’s age group performed worse.\n\nProbability for Mary\n\n\\[\nP(Z &gt; 0.31) = 1 - P(Z &lt; 0.31) = 1 - 0.6217 = 0.3783\n\\]\nSo, 37.83% of women in Mary’s age group performed worse.\n\nNormal model consideration\n\n\nThe answer to part (b) would not change since Z-scores can be calculated for non-normal distributions.\n\nHowever, parts (c) through (e) rely on the normal model and cannot be answered without it.\n\n\n\n2.6 Question 4.6\n\nFastest 5%\n\nThe fastest 5% are in the 5th percentile of the distribution.\nThe Z-score corresponding to the 5th percentile of a normal distribution is approximately \\(-1.65\\):\n\\[\nZ = -1.65 = \\frac{x - 4313}{583}\n\\]\n\\[\nx = -1.65 \\times 583 + 4313 = 3351 \\text{ seconds}\n\\]\nThe fastest 5% of males in this age group finished in less than 56 minutes.\n\nSlowest 10%\n\nThe slowest 10% are in the 90th percentile of the distribution.\nThe Z-score corresponding to the 90th percentile is approximately \\(1.28\\):\n\\[\nZ = 1.28 = \\frac{y - 5261}{807}\n\\]\n\\[\ny = 1.28 \\times 807 + 5261 = 6294 \\text{ seconds}\n\\]\nThe slowest 10% of females in this age group took 1 hour, 45 minutes, or longer to finish.\n\n\n2.7 Question 4.24\nLet \\(X \\sim \\text{Binomial}(n=3, p=0.25)\\) and for part (d) let \\(X \\sim \\text{Geometric}(p=0.25)\\) (counting the trial of the first success).\n\n\\(P(X=2)\\) with Binomial\n\n\\[\nP(X=2) = \\binom{3}{2}(0.25)^2(0.75)^1 = 0.1406\n\\]\n\n\\(P(X=0)\\) with Binomial\n\n\\[\nP(X=0) = \\binom{3}{0}(0.25)^0(0.75)^3 = 0.4219\n\\]\n\n\\(P(X \\ge 1)\\) with Binomial\n\n\\[\nP(X \\ge 1) = 1 - P(X=0) = 1 - 0.4219 = 0.5781\n\\]\n\nFirst success on trial 3 (Geometric)\n\n\\[\nP(X=3) = (1-p)^{3-1}p = (0.75)^2(0.25) = 0.1406\n\\]\n\n\n2.8 Question 4.28\n\nNegative Binomial Distribution\n\nUsing the negative binomial distribution with \\(n = 15\\) and \\(p = 0.65\\):\n\\[\nP(X = 10) = \\binom{14}{9}(0.65)^{10}(0.35)^{5} = 0.1416\n\\]\n\nBinomial Distribution\n\nUsing the binomial distribution:\n\\[\nP(X = 10) = \\binom{15}{10}(0.65)^{10}(0.35)^{5} = 0.2123\n\\]\n\nGeometric Distribution\n\nUsing the geometric distribution:\n\\[\nP(X = 3) = (0.35)^{2}(0.65) = 0.0796\n\\]",
+    "text": "2 Textbook Exercise\n\n2.1 Question 5.8\nRecall that the general formula is point estimate \\(\\pm z^* \\times \\text{SE}\\).\nFirst, identify the three values. The point estimate is 52%, \\(z^* = 2.58\\) for a 99% confidence level, and \\(\\text{SE} = 2.4\\).\n\\[\n52\\% \\;\\pm\\; 2.58 \\times 2.4\\% \\;\\;\\longrightarrow\\;\\; (45.8\\%,\\, 58.2\\%).\n\\]\nWe are 99% confident that 45.8% to 58.2% of U.S. adult Twitter users get some news on Twitter.\n\n\n2.2 Question 5.10\n\nFalse. 50% is included in the 99% confidence interval, hence a null hypothesis of \\(p = 0.50\\) would not be rejected at this level.\nFalse. The standard error measures the variability of the sample proportion and is unrelated to the proportion of the population included in the study.\nFalse. We need to increase the sample size to decrease the standard error.\nFalse. As the confidence level decreases, so does the margin of error, and hence the width of the confidence interval.\n\n\n\n2.3 Question 5.18\nFirst, the hypotheses should be about the population proportion (\\(p\\)), not the sample proportion.\nSecond, the null value should be what we are testing (0.25), not the observed value (0.24).\nThe correct way to set up these hypotheses is:\n\\[\n\\begin{cases}\nH_0: p = 0.25 \\\\\nH_A: p \\ne 0.25\n\\end{cases}\n\\]\n\n\n2.4 Question 5.26\n\nScenario I is higher. A sample mean based on less data tends to be less accurate and has a larger standard error.\nScenario I is higher. A higher confidence level \\(\\Rightarrow\\) a larger margin of error.\nThey are equal. For a given \\(Z\\)-score the p-value depends only on the \\(Z\\) value, not on the sample size.\nScenario I is higher. If the null is harder to reject (smaller \\(\\alpha\\)), we are more likely to make a Type II error when the alternative is true.\n\n\n\n\n2.5 Question 5.32\nPrepare — Hypotheses\n\\[\n\\begin{cases}\nH_0: p = 0.08,\\\\\nH_A: p \\ne 0.08 .\n\\end{cases}\n\\]\nUse significance level \\(\\alpha = 0.05\\).\nCheck\nSimple random sample \\(\\Rightarrow\\) independence.\nSuccess–failure condition: \\(21 \\ge 10\\) and \\(194-21=173 \\ge 10\\).\nCalculate\n\\[\n\\hat p = \\frac{21}{194} = 0.108\n\\]\n\\[\nSE = \\sqrt{\\frac{0.08(1-0.08)}{194}} = 0.0195\n\\]\n\\[\nZ=\\frac{0.108-0.08}{0.0195}=1.44\n\\]\nA one–tail area is about \\(0.075\\), so the two–sided p-value is \\(2\\times0.075 \\approx 0.15\\).\nConclude\nBecause the p-value (\\(0.15\\)) is greater than \\(\\alpha=0.05\\), we do not reject \\(H_0\\).\nThere is not convincing evidence that the fraction of children who are nearsighted differs from \\(0.08\\).\n\n\n\n2.6 Question 5.36\nAs the sample size increases, the standard error decreases.\nFor the same true effect, the test statistic (e.g., \\(Z\\)) increases, and the p-value decreases.",
     "crumbs": [
       "Homework Solutions",
-      "Homework 2 Answers"
+      "Homework 3 Answers"
     ]
   },
   {
