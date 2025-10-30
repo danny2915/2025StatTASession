@@ -35,34 +35,34 @@
   {
     "objectID": "homework/hw4_answer.html",
     "href": "homework/hw4_answer.html",
-    "title": "Homework 3 Answers",
+    "title": "Homework 4 Answers",
     "section": "",
     "text": "If you find any typos or errors, please feel free to contact me via email at r13323002@ntu.edu.tw. I would appreciate it and will correct the solution to prevent any misunderstandings.\nFor some R commands marked with ‘OPTIONAL,’ you don’t need to learn them. You will be completely fine on the computer quiz even if you choose to ignore them.\nIf you’re having trouble understanding the code, don’t hesitate to ask me for help. I’ll do my best to assist you during office hours or after the TA session.",
     "crumbs": [
       "Homework Solutions",
-      "Homework 3 Answers"
+      "Homework 4 Answers"
     ]
   },
   {
     "objectID": "homework/hw4_answer.html#computer-exercises",
     "href": "homework/hw4_answer.html#computer-exercises",
-    "title": "Homework 3 Answers",
+    "title": "Homework 4 Answers",
     "section": "1 Computer Exercises",
     "text": "1 Computer Exercises\n\n1.1 Null and Alternative Hypothesis\n\\[\n\\begin{cases}\nH_0&: \\text{Answers are independent of party affiliation.}\\\\\nH_1&: \\text{Answers are NOT independent of party affiliation.}\n\\end{cases}\n\\]\n\n\n1.2 Contingency Table and Chi-square Test\n# create two-way table (column percentage)\ncount_table &lt;- table(body$answer, body$party_affiliation,\n                     dnn = c(\"Asnwer\", \"Party Affiliation\"))\npct_table &lt;- prop.table(count_table, margin = 2)\nprint(pct_table)\n\n# chi-square test\nchi_test &lt;- chisq.test(pct_table)\nprint(chi_test)\n\n\n                         Party Affiliation\nAsnwer                      Democrat Independent Republican\n  do not know / no answer 0.04065041  0.04888889 0.05031447\n  should                  0.81029810  0.78000000 0.83018868\n  should not              0.14905149  0.17111111 0.11949686\n\n\n\n    Pearson's Chi-squared test\n\ndata:  pct_table\nX-squared = 0.011904, df = 4, p-value = 1\n\n\n\n\n1.3 Conclusion\nSince the p-value is 0.3598, which is larger than 0.05 , we do not reject the null hypothesis. That is, we don’t have strong evidence that shows an association between answers and party affiliations.",
     "crumbs": [
       "Homework Solutions",
-      "Homework 3 Answers"
+      "Homework 4 Answers"
     ]
   },
   {
     "objectID": "homework/hw4_answer.html#textbook-exercise",
     "href": "homework/hw4_answer.html#textbook-exercise",
-    "title": "Homework 3 Answers",
+    "title": "Homework 4 Answers",
     "section": "2 Textbook Exercise",
-    "text": "2 Textbook Exercise\n\n2.1 Question 6.6\n\nWith a random sample from &lt; 10% of the population, independence is satisfied. The success–failure condition is also satisfied. Hence, the margin of error can be calculated as follows:\n\n\\[\nME \\;=\\; z^\\* \\sqrt{\\frac{p(1-p)}{n}}\n\\;=\\; 1.96 \\times \\sqrt{\\frac{0.66 \\times 0.34}{1018}}\n\\;=\\; 0.029 \\approx 3\\%.\n\\]\n\nA 95% confidence interval for the proportion of adults who think that licensed drivers should be required to re-take their road test once they reach 65 years of age is\n\n\\[\n0.66 \\pm 0.03 \\;=\\; (0.63,\\; 0.69).\n\\]\nSince 70% is not contained in the interval, we would reject a null hypothesis where (p=0.7). Therefore, the data do not provide evidence that more than 70% of the population think that drivers over the age of 65 should re-take their road test.\n\n\n2.2 Question 6.8\n\nThe population parameter of interest is the proportion of all Greeks who would rate their lives poorly enough to be considered “suffering”, (p). The point estimate for this parameter is the proportion of Greeks in this sample who would rate their lives as such, (p = 0.25).\nConditions:\n\n\nIndependence: The sample is random, and (1000 &lt; 10%) of all Greeks, therefore the life rating of one Greek in this sample is independent of another.\n\nSuccess–failure: (1000 = 250 &gt; 10) and (1000 = 750 &gt; 10).\nSince the observations are independent and the success–failure condition is met, (p) is expected to be approximately normal.\n\n\nA 95% confidence interval can be calculated as follows:\n\n\\[\n\\hat p \\pm z^\\* \\sqrt{\\frac{\\hat p(1-\\hat p)}{n}}\n= 0.25 \\pm 1.96 \\times \\sqrt{\\frac{0.25 \\times 0.75}{1000}}\n= 0.25 \\pm 0.0269\n= (0.2231,\\; 0.2769).\n\\]\nWe are 95% confident that approximately 22% to 28% of Greeks would rate their lives poorly enough to be considered “suffering”.\n\nIncreasing the confidence level would increase the margin of error, hence widen the interval.\nIncreasing the sample size would decrease the margin of error, hence make the interval narrower.\n\n\n\n2.3 Question 6.26\n\nThe hypotheses are\n\n\\[\n\\left\\{\n\\begin{aligned}\nH_0 &: \\; p_R = p_D \\; (\\text{Proportions of Republicans and Democrats who support the use of full-body scans are equal.}) \\\\\nH_A &: \\; p_R \\ne p_D \\; (\\text{Proportions of Republicans and Democrats who support the use of full-body scans are different.})\n\\end{aligned}\n\\right.\n\\]\nThe pooled proportion can be calculated as follows:\n\\[\n\\hat{p}_{\\text{pool}}\n= \\frac{\\text{success}_R + \\text{success}_D}{n_R + n_D}\n= \\frac{264 + 299}{318 + 369}\n= \\frac{563}{687}\n\\approx 0.82\n\\]\nNext we calculate the test statistic,\n\\[\n\\hat{p}_R=\\frac{264}{318}=0.83,\\qquad\n\\hat{p}_D=\\frac{299}{369}=0.81\n\\]\n\\[\nZ\n= \\frac{\\hat{p}_R-\\hat{p}_D}\n{\\sqrt{\\hat{p}_{\\text{pool}}\\,(1-\\hat{p}_{\\text{pool}})\\left(\\frac{1}{n_R}+\\frac{1}{n_D}\\right)}}\n= \\frac{0.83-0.81}{\\sqrt{0.82\\times 0.18\\left(\\frac{1}{318}+\\frac{1}{369}\\right)}}\n= \\frac{0.02}{0.0294}\n= 0.68\n\\]\nand the p-value:\n\\[\np-\\text{value}\n= P\\big(|\\hat{p}_R-\\hat{p}_D|&gt;0.02 \\mid H_0\\big)\n= P(|Z|&gt;0.68)\n= 2 \\times 0.2483\n= 0.4966\n\\]\nSince the p-value is high, we fail to reject \\(H_0\\). The data do not provide strong evidence that the proportions of Republicans and Democrats who support the use of full-body scans are different.\n\nWe may have made a Type II error, since we may have incorrectly failed to reject \\(H_0\\).\n\n\n\n2.4 Question 6.40\n\nMultiply each percent by 701:\n\n\n\n\n\nDownload\nNo Download\n\n\n\n\nPositions 1\n97\n128\n\n\nPositions 2\n102\n130\n\n\nPositions 3\n85\n159\n\n\n\n\nPrepare. It is convenient to construct the actual table we care about, which will represent the totals in the three experiment groups:\n\n\n\n\nGroup\nTotal\n\n\n\n\nPositions 1\n225\n\n\nPositions 2\n232\n\n\nPositions 3\n244\n\n\n\nThis now looks like a goodness of fit chi-square problem. As part of our Prepare step, we should also construct the hypotheses.\n\\[\n\\left\\{\n\\begin{aligned}\nH_0 &: \\text{ The chance a user is in any experiment group is equal among the three groups.}\\\\\nH_A &: \\text{ The chance of being in one group or another varies by the group.}\n\\end{aligned}\n\\right.\n\\]\nCheck. If \\(H_0\\) were true, then we’d expect \\(1/3\\) of the 701 visitors to be in each group, i.e. \\(233.67\\) in each group. The \\(233.67\\) is greater than 5 for all three groups, satisfying one of the required conditions. The independence condition is also satisfied since each visitor was randomly assigned to a group and only counted once in the table. With the conditions satisfied, we can move forward with conducting a goodness-of-fit chi-square test.\nCalculate. We can compute the test statistic and degrees of freedom:\n\\[\n\\chi^2\n= \\frac{(255-233.67)^2}{233.67}\n+ \\frac{(232-233.67)^2}{233.67}\n+ \\frac{(244-233.67)^2}{233.67}\n= 0.79\n\\]\n\\[\ndf = 3-1 = 2\n\\]\nUsing software, we can identify the tail area as \\(0.67\\).\nConclude. Because the p-value is larger than \\(0.05\\), we do not reject \\(H_0\\). That is, we do not see any evidence that visitor randomization to the groups is imbalanced / malfunctioning.\n\n\nPrepare.\n\n\\[\n\\left\\{\n\\begin{aligned}\nH_0 &: \\text{ No difference in download rate across the experiment groups.}\\\\\nH_A &: \\text{ There is some difference in download rate across the groups.}\n\\end{aligned}\n\\right.\n\\]\nCheck. Each visitor was randomly assigned to a group and only counted once in the table, so the observations are independent. The expected counts can also be computed by constructing row and column totals, then multiplying these (and dividing by the table total) to get the expected counts under \\(H_0\\). Those expected counts are (reading down the first column then down the second): 91.2, 94.0, 98.9, 133.8, 138.0, 145.2. All of these expected counts are at least 5. Therefore, we can use the chi-square test.\nCalculate. We can calculate the test statistic as\n\\[\n\\chi^2\n= \\frac{(97-91.2)^2}{91.2}\n+ \\cdots\n+ \\frac{(159-145.2)^2}{145.2}\n= 5.04\n\\]\nwith \\(df=(3-1)\\times(2-1)=2\\). This results in a p-value of \\(0.08\\), which we can find using software.\nConclude. Because the p-value is less than \\(0.05\\), we do not reject \\(H_0\\). That is, we have not found evidence that there is any difference in the download rate depending on the download link position.\n\n\n2.5 Question 6.42\n\nThe hypotheses are as follows:\n\n\\[\n\\left\\{\n\\begin{aligned}\nH_0 &: p = 0.5 \\ \\ (50\\% \\text{ of Americans think the Civil War is still relevant})\\\\\nH_A &: p \\ne 0.5 \\ \\ (\\text{A majority of Americans hold an opinion (for or against) that the Civil War is still relevant.})\n\\end{aligned}\n\\right.\n\\]\nBefore calculating the test statistic we should check that the conditions are satisfied:\n\nIndependence: The sample is random, and 1,507 \\(&lt;10\\%\\) of all Americans, therefore whether or not one American in the sample thinks the Civil War is still relevant is independent of another.\n\nSuccess-failure: \\(1,507 \\times 0.50 = 753.5 &gt; 10\\) and \\(1,507 \\times 0.50 = 753.5 &gt; 10\\). Since the observations are independent and the success-failure condition is met, \\(\\hat{p}\\) is expected to be approximately normal.\n\nThe test statistic and the p-value can be calculated as follows:\n\\[\nZ = \\frac{\\hat{p}-p_0}{\\sqrt{\\dfrac{p_0(1-p_0)}{n}}}\n= \\frac{0.56-0.5}{\\sqrt{\\dfrac{0.5\\times 0.5}{1{,}507}}}\n= \\frac{0.06}{0.0129}\n= 4.65\n\\]\n\\[\np\\text{–value} = P(\\hat{p} &gt; 0.56 \\mid p=0.5) = P(|Z|&gt;4.65) \\approx 0\n\\]\nSince the p-value is very small, we reject \\(H_0\\). Since the data show \\(\\hat{p} &gt; 0.5\\) and we’ve rejected \\(H_0\\), the data provide strong evidence that the majority of the Americans think the Civil War is still relevant.\n\nIf in fact only \\(50\\%\\) of Americans thought the Civil War is still relevant, the probability of obtaining a random sample of \\(1,507\\) Americans where \\(56\\%\\) or more think it is still relevant would be approximately \\(0\\).\nFirst we need to recheck the success-failure condition using the sample proportion:\n\\(1,507 \\times 0.56 = 843.92 &gt; 10\\) and \\(1,507 \\times 0.44 = 663.08 &gt; 10\\). A \\(90\\%\\) confidence interval can be calculated as follows:\n\n\\[\n\\hat{p} \\pm z^\\star \\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n}}\n= 0.56 \\pm 1.65 \\sqrt{\\frac{0.56\\times 0.44}{1{,}507}}\n\\]\n\\[\n= 0.56 \\pm 1.65 \\times 0.0128\n= 0.56 \\pm 0.02\n= (0.54,\\; 0.58)\n\\]\nWe are \\(90\\%\\) confident that \\(54\\%\\) to \\(58\\%\\) of all Americans think that the Civil War is still relevant. This agrees with the conclusion of the earlier hypothesis test since the interval lies above \\(50\\%\\).\n\n\n2.6 Question 6.50\n\nChi-squared test of independence.\nThe hypotheses are:\n\n\\[\n\\left\\{\n\\begin{aligned}\nH_0 &: \\text{Caffeinated coffee consumption and depression in women are independent.}\\\\\nH_A &: \\text{Caffeinated coffee consumption and depression in women are dependent/associated.}\n\\end{aligned}\n\\right.\n\\]\n\nDepression: \\(\\dfrac{2607}{50739}=0.0514\\)\n\nNo depression: \\(1-0.0514=0.9486\\)\n\nWe have:\n\n\\[\nE=\\frac{2607 \\times 6617}{50739}=339.9854 \\approx 340\n\\]\n\\[\n\\frac{(O-E)^2}{E}=\\frac{(373-340)^2}{340}=3.20\n\\]\n\n\\(\\text{df}=(R-1)\\times(C-1)=1\\times 4=4\\), and \\(p\\)-value \\(&lt;0.001\\).\nThe \\(p\\)-value is small and we reject \\(H_0\\). The data provide convincing evidence to suggest that caffeinated coffee consumption and depression in women are associated.\nYes, this is an observational study. Based on this study we can’t deduce that drinking more coffee leads to less depression. There may be other factors, lurking variables, that cause decreased depression in women who drink more coffee.",
+    "text": "2 Textbook Exercise\n\n2.1 Question 6.6\n\nWith a random sample from &lt; 10% of the population, independence is satisfied. The success–failure condition is also satisfied. Hence, the margin of error can be calculated as follows:\n\n\\[\nME \\;=\\; z^* \\sqrt{\\frac{p(1-p)}{n}}\n\\;=\\; 1.96 \\times \\sqrt{\\frac{0.66 \\times 0.34}{1018}}\n\\;=\\; 0.029 \\approx 3\\%.\n\\]\n\nA 95% confidence interval for the proportion of adults who think that licensed drivers should be required to re-take their road test once they reach 65 years of age is\n\n\\[\n0.66 \\pm 0.03 \\;=\\; (0.63,\\; 0.69).\n\\]\nSince 70% is not contained in the interval, we would reject a null hypothesis where (p=0.7). Therefore, the data do not provide evidence that more than 70% of the population think that drivers over the age of 65 should re-take their road test.\n\n\n2.2 Question 6.8\n\nThe population parameter of interest is the proportion of all Greeks who would rate their lives poorly enough to be considered “suffering”, (p). The point estimate for this parameter is the proportion of Greeks in this sample who would rate their lives as such, (p = 0.25).\nConditions:\n\n\nIndependence: The sample is random, and (1000 &lt; 10%) of all Greeks, therefore the life rating of one Greek in this sample is independent of another.\n\nSuccess–failure: (1000 = 250 &gt; 10) and (1000 = 750 &gt; 10).\nSince the observations are independent and the success–failure condition is met, (p) is expected to be approximately normal.\n\n\nA 95% confidence interval can be calculated as follows:\n\n\\[\n\\hat p \\pm z^* \\sqrt{\\frac{\\hat p(1-\\hat p)}{n}}\n= 0.25 \\pm 1.96 \\times \\sqrt{\\frac{0.25 \\times 0.75}{1000}}\n= 0.25 \\pm 0.0269\n= (0.2231,\\; 0.2769).\n\\]\nWe are 95% confident that approximately 22% to 28% of Greeks would rate their lives poorly enough to be considered “suffering”.\n\nIncreasing the confidence level would increase the margin of error, hence widen the interval.\nIncreasing the sample size would decrease the margin of error, hence make the interval narrower.\n\n\n\n2.3 Question 6.26\n\nThe hypotheses are\n\n\\[\n\\left\\{\n\\begin{aligned}\nH_0 &: \\; p_R = p_D \\; (\\text{Proportions of Republicans and Democrats who support the use of full-body scans are equal.}) \\\\\nH_A &: \\; p_R \\ne p_D \\; (\\text{Proportions of Republicans and Democrats who support the use of full-body scans are different.})\n\\end{aligned}\n\\right.\n\\]\nThe pooled proportion can be calculated as follows:\n\\[\n\\hat{p}_{\\text{pool}}\n= \\frac{\\text{success}_R + \\text{success}_D}{n_R + n_D}\n= \\frac{264 + 299}{318 + 369}\n= \\frac{563}{687}\n\\approx 0.82\n\\]\nNext we calculate the test statistic,\n\\[\n\\hat{p}_R=\\frac{264}{318}=0.83,\\qquad\n\\hat{p}_D=\\frac{299}{369}=0.81\n\\]\n\\[\nZ\n= \\frac{\\hat{p}_R-\\hat{p}_D}\n{\\sqrt{\\hat{p}_{\\text{pool}}\\,(1-\\hat{p}_{\\text{pool}})\\left(\\frac{1}{n_R}+\\frac{1}{n_D}\\right)}}\n= \\frac{0.83-0.81}{\\sqrt{0.82\\times 0.18\\left(\\frac{1}{318}+\\frac{1}{369}\\right)}}\n= \\frac{0.02}{0.0294}\n= 0.68\n\\]\nand the p-value:\n\\[\np-\\text{value}\n= P\\big(|\\hat{p}_R-\\hat{p}_D|&gt;0.02 \\mid H_0\\big)\n= P(|Z|&gt;0.68)\n= 2 \\times 0.2483\n= 0.4966\n\\]\nSince the p-value is high, we fail to reject \\(H_0\\). The data do not provide strong evidence that the proportions of Republicans and Democrats who support the use of full-body scans are different.\n\nWe may have made a Type II error, since we may have incorrectly failed to reject \\(H_0\\).\n\n\n\n2.4 Question 6.40\n\nMultiply each percent by 701:\n\n\n\n\n\nDownload\nNo Download\n\n\n\n\nPositions 1\n97\n128\n\n\nPositions 2\n102\n130\n\n\nPositions 3\n85\n159\n\n\n\n\nPrepare. It is convenient to construct the actual table we care about, which will represent the totals in the three experiment groups:\n\n\n\n\nGroup\nTotal\n\n\n\n\nPositions 1\n225\n\n\nPositions 2\n232\n\n\nPositions 3\n244\n\n\n\nThis now looks like a goodness of fit chi-square problem. As part of our Prepare step, we should also construct the hypotheses.\n\\[\n\\left\\{\n\\begin{aligned}\nH_0 &: \\text{ The chance a user is in any experiment group is equal among the three groups.}\\\\\nH_A &: \\text{ The chance of being in one group or another varies by the group.}\n\\end{aligned}\n\\right.\n\\]\nCheck. If \\(H_0\\) were true, then we’d expect \\(1/3\\) of the 701 visitors to be in each group, i.e. \\(233.67\\) in each group. The \\(233.67\\) is greater than 5 for all three groups, satisfying one of the required conditions. The independence condition is also satisfied since each visitor was randomly assigned to a group and only counted once in the table. With the conditions satisfied, we can move forward with conducting a goodness-of-fit chi-square test.\nCalculate. We can compute the test statistic and degrees of freedom:\n\\[\n\\chi^2\n= \\frac{(255-233.67)^2}{233.67}\n+ \\frac{(232-233.67)^2}{233.67}\n+ \\frac{(244-233.67)^2}{233.67}\n= 0.79\n\\]\n\\[\ndf = 3-1 = 2\n\\]\nUsing software, we can identify the tail area as \\(0.67\\).\nConclude. Because the p-value is larger than \\(0.05\\), we do not reject \\(H_0\\). That is, we do not see any evidence that visitor randomization to the groups is imbalanced / malfunctioning.\n\n\nPrepare.\n\n\\[\n\\left\\{\n\\begin{aligned}\nH_0 &: \\text{ No difference in download rate across the experiment groups.}\\\\\nH_A &: \\text{ There is some difference in download rate across the groups.}\n\\end{aligned}\n\\right.\n\\]\nCheck. Each visitor was randomly assigned to a group and only counted once in the table, so the observations are independent. The expected counts can also be computed by constructing row and column totals, then multiplying these (and dividing by the table total) to get the expected counts under \\(H_0\\). Those expected counts are (reading down the first column then down the second): 91.2, 94.0, 98.9, 133.8, 138.0, 145.2. All of these expected counts are at least 5. Therefore, we can use the chi-square test.\nCalculate. We can calculate the test statistic as\n\\[\n\\chi^2\n= \\frac{(97-91.2)^2}{91.2}\n+ \\cdots\n+ \\frac{(159-145.2)^2}{145.2}\n= 5.04\n\\]\nwith \\(df=(3-1)\\times(2-1)=2\\). This results in a p-value of \\(0.08\\), which we can find using software.\nConclude. Because the p-value is less than \\(0.05\\), we do not reject \\(H_0\\). That is, we have not found evidence that there is any difference in the download rate depending on the download link position.\n\n\n2.5 Question 6.42\n\nThe hypotheses are as follows:\n\n\\[\n\\left\\{\n\\begin{aligned}\nH_0 &: p = 0.5 \\ \\ (50\\% \\text{ of Americans think the Civil War is still relevant})\\\\\nH_A &: p \\ne 0.5 \\ \\ (\\text{A majority of Americans hold an opinion (for or against) that the Civil War is still relevant.})\n\\end{aligned}\n\\right.\n\\]\nBefore calculating the test statistic we should check that the conditions are satisfied:\n\nIndependence: The sample is random, and 1,507 \\(&lt;10\\%\\) of all Americans, therefore whether or not one American in the sample thinks the Civil War is still relevant is independent of another.\n\nSuccess-failure: \\(1,507 \\times 0.50 = 753.5 &gt; 10\\) and \\(1,507 \\times 0.50 = 753.5 &gt; 10\\). Since the observations are independent and the success-failure condition is met, \\(\\hat{p}\\) is expected to be approximately normal.\n\nThe test statistic and the p-value can be calculated as follows:\n\\[\nZ = \\frac{\\hat{p}-p_0}{\\sqrt{\\dfrac{p_0(1-p_0)}{n}}}\n= \\frac{0.56-0.5}{\\sqrt{\\dfrac{0.5\\times 0.5}{1{,}507}}}\n= \\frac{0.06}{0.0129}\n= 4.65\n\\]\n\\[\np\\text{–value} = P(\\hat{p} &gt; 0.56 \\mid p=0.5) = P(|Z|&gt;4.65) \\approx 0\n\\]\nSince the p-value is very small, we reject \\(H_0\\). Since the data show \\(\\hat{p} &gt; 0.5\\) and we’ve rejected \\(H_0\\), the data provide strong evidence that the majority of the Americans think the Civil War is still relevant.\n\nIf in fact only \\(50\\%\\) of Americans thought the Civil War is still relevant, the probability of obtaining a random sample of \\(1,507\\) Americans where \\(56\\%\\) or more think it is still relevant would be approximately \\(0\\).\nFirst we need to recheck the success-failure condition using the sample proportion:\n\\(1,507 \\times 0.56 = 843.92 &gt; 10\\) and \\(1,507 \\times 0.44 = 663.08 &gt; 10\\). A \\(90\\%\\) confidence interval can be calculated as follows:\n\n\\[\n\\hat{p} \\pm z^\\star \\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n}}\n= 0.56 \\pm 1.65 \\sqrt{\\frac{0.56\\times 0.44}{1{,}507}}\n\\]\n\\[\n= 0.56 \\pm 1.65 \\times 0.0128\n= 0.56 \\pm 0.02\n= (0.54,\\; 0.58)\n\\]\nWe are \\(90\\%\\) confident that \\(54\\%\\) to \\(58\\%\\) of all Americans think that the Civil War is still relevant. This agrees with the conclusion of the earlier hypothesis test since the interval lies above \\(50\\%\\).\n\n\n2.6 Question 6.50\n\nChi-squared test of independence.\nThe hypotheses are:\n\n\\[\n\\left\\{\n\\begin{aligned}\nH_0 &: \\text{Caffeinated coffee consumption and depression in women are independent.}\\\\\nH_A &: \\text{Caffeinated coffee consumption and depression in women are dependent/associated.}\n\\end{aligned}\n\\right.\n\\]\n\nDepression: \\(\\dfrac{2607}{50739}=0.0514\\)\n\nNo depression: \\(1-0.0514=0.9486\\)\n\nWe have:\n\n\\[\nE=\\frac{2607 \\times 6617}{50739}=339.9854 \\approx 340\n\\]\n\\[\n\\frac{(O-E)^2}{E}=\\frac{(373-340)^2}{340}=3.20\n\\]\n\n\\(\\text{df}=(R-1)\\times(C-1)=1\\times 4=4\\), and \\(p\\)-value \\(&lt;0.001\\).\nThe \\(p\\)-value is small and we reject \\(H_0\\). The data provide convincing evidence to suggest that caffeinated coffee consumption and depression in women are associated.\nYes, this is an observational study. Based on this study we can’t deduce that drinking more coffee leads to less depression. There may be other factors, lurking variables, that cause decreased depression in women who drink more coffee.",
     "crumbs": [
       "Homework Solutions",
-      "Homework 3 Answers"
+      "Homework 4 Answers"
     ]
   },
   {
@@ -99,52 +99,52 @@
     ]
   },
   {
-    "objectID": "example_code/Example_Code_wk9.html",
-    "href": "example_code/Example_Code_wk9.html",
-    "title": "Week 9 Example R Code (1028)",
+    "objectID": "example_code/Example_Code_wk10.html",
+    "href": "example_code/Example_Code_wk10.html",
+    "title": "Week 10 Example R Code (1104)",
     "section": "",
-    "text": "Right click to download:\n\nwk9_example_code.R",
+    "text": "Right click to download:\n\nwk10_example_code.R",
     "crumbs": [
       "Example R code",
-      "Week 9 Example R Code (1028)"
+      "Week 10 Example R Code (1104)"
     ]
   },
   {
-    "objectID": "example_code/Example_Code_wk6.html",
-    "href": "example_code/Example_Code_wk6.html",
-    "title": "Week 6 Example R Code (1007)",
+    "objectID": "example_code/Example_Code_wk07.html",
+    "href": "example_code/Example_Code_wk07.html",
+    "title": "Week 7 Example R Code (1014)",
     "section": "",
-    "text": "Right click to download:\n\nwk6_example_code.R",
+    "text": "Right click to download:\n\nwk7_example_code.R",
     "crumbs": [
       "Example R code",
-      "Week 6 Example R Code (1007)"
+      "Week 7 Example R Code (1014)"
     ]
   },
   {
-    "objectID": "example_code/Example_Code_wk4.html",
-    "href": "example_code/Example_Code_wk4.html",
-    "title": "Week 4 Example R Code (0923)",
+    "objectID": "example_code/Example_Code_wk05.html",
+    "href": "example_code/Example_Code_wk05.html",
+    "title": "Week 5 Example R Code (0930)",
     "section": "",
-    "text": "Right click to download:\n\nwk4_example_code.R",
+    "text": "Right click to download:\n\nwk5_example_code.R",
     "crumbs": [
       "Example R code",
-      "Week 4 Example R Code (0923)"
+      "Week 5 Example R Code (0930)"
     ]
   },
   {
-    "objectID": "example_code/Example_Code_wk2.html",
-    "href": "example_code/Example_Code_wk2.html",
-    "title": "Week 2 Example R Code (0909)",
+    "objectID": "example_code/Example_Code_wk03.html",
+    "href": "example_code/Example_Code_wk03.html",
+    "title": "Week 3 Example R Code (0916)",
     "section": "",
-    "text": "Right click to download:\n\nwk2_example_code.R",
+    "text": "Right click to download:\n\nwk3_example_code.R",
     "crumbs": [
       "Example R code",
-      "Week 2 Example R Code (0909)"
+      "Week 3 Example R Code (0916)"
     ]
   },
   {
-    "objectID": "example_code/Example_Code_wk1.html",
-    "href": "example_code/Example_Code_wk1.html",
+    "objectID": "example_code/Example_Code_wk01.html",
+    "href": "example_code/Example_Code_wk01.html",
     "title": "Week 1 Example R Code (0902)",
     "section": "",
     "text": "Right click to download:\n\nwk1_example_code.R",
@@ -550,52 +550,52 @@
     ]
   },
   {
-    "objectID": "slides/Slides_wk9.html",
-    "href": "slides/Slides_wk9.html",
-    "title": "Week 9 Slides (1028)",
+    "objectID": "slides/Slides_wk10.html",
+    "href": "slides/Slides_wk10.html",
+    "title": "Week 10 Slides (1104)",
     "section": "",
     "text": "Open in new tab · Download PDF",
     "crumbs": [
       "Slides",
-      "Week 9 Slides (1028)"
+      "Week 10 Slides (1104)"
     ]
   },
   {
-    "objectID": "slides/Slides_wk6.html",
-    "href": "slides/Slides_wk6.html",
-    "title": "Week 6 Slides (1007)",
+    "objectID": "slides/Slides_wk07.html",
+    "href": "slides/Slides_wk07.html",
+    "title": "Week 7 Slides (1014)",
     "section": "",
     "text": "Open in new tab · Download PDF",
     "crumbs": [
       "Slides",
-      "Week 6 Slides (1007)"
+      "Week 7 Slides (1014)"
     ]
   },
   {
-    "objectID": "slides/Slides_wk4.html",
-    "href": "slides/Slides_wk4.html",
-    "title": "Week 4 Slides (0923)",
+    "objectID": "slides/Slides_wk05.html",
+    "href": "slides/Slides_wk05.html",
+    "title": "Week 5 Slides (0930)",
     "section": "",
     "text": "Open in new tab · Download PDF",
     "crumbs": [
       "Slides",
-      "Week 4 Slides (0923)"
+      "Week 5 Slides (0930)"
     ]
   },
   {
-    "objectID": "slides/Slides_wk2.html",
-    "href": "slides/Slides_wk2.html",
-    "title": "Week 2 Slides (0909)",
+    "objectID": "slides/Slides_wk03.html",
+    "href": "slides/Slides_wk03.html",
+    "title": "Week 3 Slides (0916)",
     "section": "",
     "text": "Open in new tab · Download PDF",
     "crumbs": [
       "Slides",
-      "Week 2 Slides (0909)"
+      "Week 3 Slides (0916)"
     ]
   },
   {
-    "objectID": "slides/Slides_wk1.html",
-    "href": "slides/Slides_wk1.html",
+    "objectID": "slides/Slides_wk01.html",
+    "href": "slides/Slides_wk01.html",
     "title": "Week 1 Slides (0902)",
     "section": "",
     "text": "Open in new tab · Download PDF",
@@ -615,47 +615,47 @@
     ]
   },
   {
-    "objectID": "slides/Slides_wk10.html",
-    "href": "slides/Slides_wk10.html",
-    "title": "Week 10 Slides (1104)",
+    "objectID": "slides/Slides_wk02.html",
+    "href": "slides/Slides_wk02.html",
+    "title": "Week 2 Slides (0909)",
     "section": "",
     "text": "Open in new tab · Download PDF",
     "crumbs": [
       "Slides",
-      "Week 10 Slides (1104)"
+      "Week 2 Slides (0909)"
     ]
   },
   {
-    "objectID": "slides/Slides_wk3.html",
-    "href": "slides/Slides_wk3.html",
-    "title": "Week 3 Slides (0916)",
+    "objectID": "slides/Slides_wk04.html",
+    "href": "slides/Slides_wk04.html",
+    "title": "Week 4 Slides (0923)",
     "section": "",
     "text": "Open in new tab · Download PDF",
     "crumbs": [
       "Slides",
-      "Week 3 Slides (0916)"
+      "Week 4 Slides (0923)"
     ]
   },
   {
-    "objectID": "slides/Slides_wk5.html",
-    "href": "slides/Slides_wk5.html",
-    "title": "Week 5 Slides (0930)",
+    "objectID": "slides/Slides_wk06.html",
+    "href": "slides/Slides_wk06.html",
+    "title": "Week 6 Slides (1007)",
     "section": "",
     "text": "Open in new tab · Download PDF",
     "crumbs": [
       "Slides",
-      "Week 5 Slides (0930)"
+      "Week 6 Slides (1007)"
     ]
   },
   {
-    "objectID": "slides/Slides_wk7.html",
-    "href": "slides/Slides_wk7.html",
-    "title": "Week 7 Slides (1014)",
+    "objectID": "slides/Slides_wk09.html",
+    "href": "slides/Slides_wk09.html",
+    "title": "Week 9 Slides (1028)",
     "section": "",
     "text": "Open in new tab · Download PDF",
     "crumbs": [
       "Slides",
-      "Week 7 Slides (1014)"
+      "Week 9 Slides (1028)"
     ]
   },
   {
@@ -1088,47 +1088,47 @@
     ]
   },
   {
-    "objectID": "example_code/Example_Code_wk10.html",
-    "href": "example_code/Example_Code_wk10.html",
-    "title": "Week 10 Example R Code (1104)",
+    "objectID": "example_code/Example_Code_wk02.html",
+    "href": "example_code/Example_Code_wk02.html",
+    "title": "Week 2 Example R Code (0909)",
     "section": "",
-    "text": "Right click to download:\n\nwk10_example_code.R",
+    "text": "Right click to download:\n\nwk2_example_code.R",
     "crumbs": [
       "Example R code",
-      "Week 10 Example R Code (1104)"
+      "Week 2 Example R Code (0909)"
     ]
   },
   {
-    "objectID": "example_code/Example_Code_wk3.html",
-    "href": "example_code/Example_Code_wk3.html",
-    "title": "Week 3 Example R Code (0916)",
+    "objectID": "example_code/Example_Code_wk04.html",
+    "href": "example_code/Example_Code_wk04.html",
+    "title": "Week 4 Example R Code (0923)",
     "section": "",
-    "text": "Right click to download:\n\nwk3_example_code.R",
+    "text": "Right click to download:\n\nwk4_example_code.R",
     "crumbs": [
       "Example R code",
-      "Week 3 Example R Code (0916)"
+      "Week 4 Example R Code (0923)"
     ]
   },
   {
-    "objectID": "example_code/Example_Code_wk5.html",
-    "href": "example_code/Example_Code_wk5.html",
-    "title": "Week 5 Example R Code (0930)",
+    "objectID": "example_code/Example_Code_wk06.html",
+    "href": "example_code/Example_Code_wk06.html",
+    "title": "Week 6 Example R Code (1007)",
     "section": "",
-    "text": "Right click to download:\n\nwk5_example_code.R",
+    "text": "Right click to download:\n\nwk6_example_code.R",
     "crumbs": [
       "Example R code",
-      "Week 5 Example R Code (0930)"
+      "Week 6 Example R Code (1007)"
     ]
   },
   {
-    "objectID": "example_code/Example_Code_wk7.html",
-    "href": "example_code/Example_Code_wk7.html",
-    "title": "Week 7 Example R Code (1014)",
+    "objectID": "example_code/Example_Code_wk09.html",
+    "href": "example_code/Example_Code_wk09.html",
+    "title": "Week 9 Example R Code (1028)",
     "section": "",
-    "text": "Right click to download:\n\nwk7_example_code.R",
+    "text": "Right click to download:\n\nwk9_example_code.R",
     "crumbs": [
       "Example R code",
-      "Week 7 Example R Code (1014)"
+      "Week 9 Example R Code (1028)"
     ]
   },
   {
