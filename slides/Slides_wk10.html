@@ -507,7 +507,13 @@ window.Quarto = {
 
     bottom: 1rem;
 
-    z-index: 9999;
+    /* Make absolutely sure nothing blocks clicks or overlaps it */
+
+    z-index: 2147483647;          /* max-ish */
+
+    pointer-events: auto;
+
+
 
     padding: .45rem .7rem;
 
@@ -551,7 +557,7 @@ window.Quarto = {
 
 (function () {
 
-  // Prevent double init if this file is included twice
+  // Guard: avoid duplicate init if included twice
 
   if (window.__bgmInstalled) return;
 
@@ -567,7 +573,7 @@ window.Quarto = {
 
 
 
-  // Absolute URL so it works on all pages after publish
+  // ✅ Absolute URL so it works on every page after publish
 
   const AUDIO_ABS = 'https://danny2915.github.io/2025StatTASession/assets/audio/lofi.mp3';
 
@@ -580,8 +586,6 @@ window.Quarto = {
   let saved = {};
 
   try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch {}
-
-
 
   if (typeof saved.volume === 'number') audio.volume = saved.volume;
 
@@ -631,8 +635,6 @@ window.Quarto = {
 
     if (saved.playing) {
 
-      // Try to resume; may be blocked until user clicks
-
       audio.muted = false;
 
       try { await audio.play(); } catch {}
@@ -645,13 +647,19 @@ window.Quarto = {
 
 
 
-  audio.addEventListener('loadedmetadata', () => { restoreAndMaybePlay(); }, { once: true });
+  audio.addEventListener('loadedmetadata', restoreAndMaybePlay, { once: true });
 
 
 
-  // Toggle handler — no audio.load() here (that can retrigger playback)
+  // Single, reliable toggle (no audio.load() here)
 
-  btn.addEventListener('click', async () => {
+  btn.addEventListener('click', async (ev) => {
+
+    ev.preventDefault();
+
+    ev.stopPropagation();
+
+
 
     const isPlaying = !audio.paused && !audio.muted;
 
@@ -659,21 +667,17 @@ window.Quarto = {
 
     if (isPlaying) {
 
-      // Mute/pause -> label should switch to "Play"
-
       audio.pause();
 
       audio.muted = true;
 
     } else {
 
-      // Unmute/play -> label should switch to "Mute"
-
       audio.muted = false;
 
       try { await audio.play(); } catch (e) {
 
-        // If play fails after a user gesture, keep muted state as-is
+        // If play fails (shouldn’t after a click), keep muted state
 
         console.warn('BGM play failed:', e);
 
@@ -687,11 +691,11 @@ window.Quarto = {
 
     setLabel();
 
-  });
+  }, { passive: false, once: false });
 
 
 
-  // Keep label synced with real state
+  // Keep label in sync
 
   ['play','pause','volumechange','emptied','stalled','suspend','ratechange'].forEach(ev => {
 
@@ -710,8 +714,6 @@ window.Quarto = {
   document.addEventListener('visibilitychange', () => { if (document.hidden) persist(); });
 
 
-
-  // Initial label
 
   setLabel();
 
