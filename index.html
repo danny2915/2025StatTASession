@@ -56,6 +56,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<script src="https://unpkg.com/@hotwired/turbo@8.0.4/dist/turbo.es2017-umd.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -512,6 +513,190 @@ window.Quarto = {
 
 
 </main> <!-- /main -->
+<!-- assets/bgm.html -->
+
+<style>
+
+  #bgm-toggle {
+
+    position: fixed;
+
+    left: 1rem;
+
+    bottom: 1rem;
+
+    z-index: 9999;
+
+    padding: .45rem .7rem;
+
+    border-radius: .5rem;
+
+    border: 1px solid rgba(0,0,0,.15);
+
+    background: #fff;
+
+    color: #111;
+
+    font: 500 14px/1.1 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+
+    cursor: pointer;
+
+  }
+
+</style>
+
+
+
+<audio id="bgm" src="/assets/audio/Black_Souls.mp3" loop="" muted="" autoplay="" preload="metadata"></audio>
+
+<button id="bgm-toggle" type="button">🔈 Play BGM</button>
+
+
+
+<script>
+
+(function () {
+
+  const STORAGE_KEY = 'bgm-state-v1';
+
+  const audio = document.getElementById('bgm');
+
+  const btn   = document.getElementById('bgm-toggle');
+
+
+
+  // Restore last state (source, time, volume, muted, playing)
+
+  const saved = (() => {
+
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+
+    catch { return {}; }
+
+  })();
+
+
+
+  if (saved.src) audio.src = saved.src;
+
+  if (typeof saved.volume === 'number') audio.volume = saved.volume;
+
+  if (saved.muted === true) audio.muted = true;
+
+
+
+  function label() {
+
+    btn.textContent = (audio.paused || audio.muted) ? '🔈 Play BGM' : '🔇 Mute BGM';
+
+  }
+
+
+
+  function save() {
+
+    const state = {
+
+      src: audio.currentSrc || audio.src,
+
+      time: audio.currentTime || 0,
+
+      muted: audio.muted,
+
+      volume: audio.volume,
+
+      playing: !audio.paused && !audio.muted
+
+    };
+
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {}
+
+  }
+
+
+
+  // After metadata loads, seek to previous time and resume if it was playing
+
+  audio.addEventListener('loadedmetadata', async () => {
+
+    if (typeof saved.time === 'number' && saved.time < (audio.duration || Infinity)) {
+
+      try { audio.currentTime = saved.time; } catch {}
+
+    }
+
+    if (saved.playing) {
+
+      audio.muted = false;
+
+      try { await audio.play(); } catch {}
+
+    }
+
+    label();
+
+  }, { once: true });
+
+
+
+  // Toggle
+
+  btn.addEventListener('click', async () => {
+
+    if (audio.paused || audio.muted) {
+
+      audio.muted = false;
+
+      try { await audio.play(); } catch {}
+
+    } else {
+
+      // Using pause + muted gives a clear "off" state and avoids auto-play issues
+
+      audio.pause();
+
+      audio.muted = true;
+
+    }
+
+    save();
+
+    label();
+
+  });
+
+
+
+  // Keep label in sync
+
+  ['play','pause','volumechange','emptied','stalled'].forEach(ev => {
+
+    audio.addEventListener(ev, label);
+
+  });
+
+
+
+  // Persist frequently and on page transitions
+
+  setInterval(() => { if (!audio.paused) save(); }, 2000);
+
+  window.addEventListener('beforeunload', save);
+
+  document.addEventListener('visibilitychange', () => { if (document.hidden) save(); });
+
+
+
+  // Initial label (in case metadata isn't ready yet)
+
+  label();
+
+})();
+
+</script>
+
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
