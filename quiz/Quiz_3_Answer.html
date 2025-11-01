@@ -495,6 +495,8 @@ window.Quarto = {
 </main> <!-- /main -->
 <!-- assets/bgm.html -->
 
+
+
 <style>
 
   #bgm-toggle {
@@ -529,9 +531,9 @@ window.Quarto = {
 
 
 
-<audio id="bgm" src="/assets/audio/Black_Souls.mp3" loop="" muted="" autoplay="" preload="metadata"></audio>
+<audio id="bgm" loop="" muted="" autoplay="" preload="metadata"></audio>
 
-<button id="bgm-toggle" type="button">🔈 Play BGM</button>
+<button id="bgm-toggle" type="button">Play BGM</button>
 
 
 
@@ -547,7 +549,21 @@ window.Quarto = {
 
 
 
-  // Restore last state (source, time, volume, muted, playing)
+  // --- Resolve the correct path to /assets/audio/Black_Souls.mp3 on any page depth ---
+
+  // Quarto injects a meta "quarto:offset" like "../../" on nested pages.
+
+  const offset = (document.querySelector('meta[name="quarto:offset"]')?.content) || '';
+
+  const AUDIO_REL = 'assets/audio/Black_Souls.mp3';      // change if your file has a different name
+
+  const resolvedSrc = offset + AUDIO_REL;
+
+  audio.src = resolvedSrc;
+
+
+
+  // ---- Persisted state helpers ----
 
   const saved = (() => {
 
@@ -559,8 +575,6 @@ window.Quarto = {
 
 
 
-  if (saved.src) audio.src = saved.src;
-
   if (typeof saved.volume === 'number') audio.volume = saved.volume;
 
   if (saved.muted === true) audio.muted = true;
@@ -569,11 +583,9 @@ window.Quarto = {
 
   function label() {
 
-    btn.textContent = (audio.paused || audio.muted) ? '🔈 Play BGM' : '🔇 Mute BGM';
+    btn.textContent = (audio.paused || audio.muted) ? 'Play BGM' : 'Mute BGM';
 
   }
-
-
 
   function save() {
 
@@ -597,11 +609,9 @@ window.Quarto = {
 
 
 
-  // After metadata loads, seek to previous time and resume if it was playing
-
   audio.addEventListener('loadedmetadata', async () => {
 
-    if (typeof saved.time === 'number' && saved.time < (audio.duration || Infinity)) {
+    if (typeof saved.time === 'number' && saved.time > 0 && saved.time < (audio.duration || Infinity)) {
 
       try { audio.currentTime = saved.time; } catch {}
 
@@ -611,7 +621,7 @@ window.Quarto = {
 
       audio.muted = false;
 
-      try { await audio.play(); } catch {}
+      try { await audio.play(); } catch (e) { /* autoplay may be blocked until click */ }
 
     }
 
@@ -621,19 +631,19 @@ window.Quarto = {
 
 
 
-  // Toggle
-
   btn.addEventListener('click', async () => {
 
     if (audio.paused || audio.muted) {
 
       audio.muted = false;
 
-      try { await audio.play(); } catch {}
+      try { await audio.play(); } catch (e) {
+
+        console.warn('BGM play failed:', e);
+
+      }
 
     } else {
-
-      // Using pause + muted gives a clear "off" state and avoids auto-play issues
 
       audio.pause();
 
@@ -649,17 +659,13 @@ window.Quarto = {
 
 
 
-  // Keep label in sync
-
-  ['play','pause','volumechange','emptied','stalled'].forEach(ev => {
+  ['play','pause','volumechange','emptied','stalled','suspend'].forEach(ev => {
 
     audio.addEventListener(ev, label);
 
   });
 
 
-
-  // Persist frequently and on page transitions
 
   setInterval(() => { if (!audio.paused) save(); }, 2000);
 
@@ -668,8 +674,6 @@ window.Quarto = {
   document.addEventListener('visibilitychange', () => { if (document.hidden) save(); });
 
 
-
-  // Initial label (in case metadata isn't ready yet)
 
   label();
 
