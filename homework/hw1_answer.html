@@ -1133,7 +1133,7 @@ Box plot: median, quartiles (IQR), and identification of outliers are explicit, 
 
 <audio id="bgm" loop="" muted="" autoplay="" preload="metadata"></audio>
 
-<button id="bgm-toggle" type="button">Play BGM</button>
+<button id="bgm-toggle" type="button" aria-pressed="false">🔈 Play BGM</button>
 
 
 
@@ -1149,9 +1149,7 @@ Box plot: median, quartiles (IQR), and identification of outliers are explicit, 
 
 
 
-  // ❗ CHANGE THIS to your actual GitHub Pages URL + file
-
-  // This MUST be absolute so it works on ALL pages.
+  // ❗ Use absolute URL so it works on every page
 
   const AUDIO_ABS = 'https://danny2915.github.io/2025StatTASession/assets/audio/Black_Souls.mp3';
 
@@ -1159,7 +1157,7 @@ Box plot: median, quartiles (IQR), and identification of outliers are explicit, 
 
 
 
-  // restore saved state
+  // Restore saved state
 
   const saved = (() => {
 
@@ -1169,19 +1167,27 @@ Box plot: median, quartiles (IQR), and identification of outliers are explicit, 
 
   })();
 
+
+
   if (typeof saved.volume === 'number') audio.volume = saved.volume;
 
   if (saved.muted === true) audio.muted = true;
 
 
 
-  function label() {
+  function setLabel() {
 
-    btn.textContent = (audio.paused || audio.muted) ? 'Play BGM' : 'Mute BGM';
+    const playing = !audio.paused && !audio.muted;
+
+    btn.textContent = playing ? '🔇 Mute BGM' : '🔈 Play BGM';
+
+    btn.setAttribute('aria-pressed', playing ? 'true' : 'false');
 
   }
 
-  function save() {
+
+
+  function persist() {
 
     const state = {
 
@@ -1201,7 +1207,7 @@ Box plot: median, quartiles (IQR), and identification of outliers are explicit, 
 
 
 
-  audio.addEventListener('loadedmetadata', async () => {
+  async function resumeFromSaved() {
 
     if (typeof saved.time === 'number' && saved.time > 0 && saved.time < (audio.duration || Infinity)) {
 
@@ -1211,61 +1217,99 @@ Box plot: median, quartiles (IQR), and identification of outliers are explicit, 
 
     if (saved.playing) {
 
+      // try to resume automatically only after a user has interacted at least once
+
+      // browsers may block autoplay with sound; button click will always work
+
       audio.muted = false;
 
-      try { await audio.play(); } catch (_) { /* user gesture may be required */ }
+      try { await audio.play(); } catch (_) {}
 
     }
 
-    label();
+    setLabel();
 
-  }, { once: true });
+  }
 
 
+
+  audio.addEventListener('loadedmetadata', () => { resumeFromSaved(); }, { once: true });
+
+
+
+  // Toggle behavior
 
   btn.addEventListener('click', async () => {
 
+    // ensure we have a fresh media pipeline in case of iOS quirks
+
     try { audio.load(); } catch {}
 
-    if (audio.paused || audio.muted) {
 
-      audio.muted = false;
 
-      try { await audio.play(); } catch (e) { console.warn('BGM play failed:', e); }
+    const isPlaying = !audio.paused && !audio.muted;
 
-    } else {
+
+
+    if (isPlaying) {
+
+      // -> MUTE: pause and mute
 
       audio.pause();
 
       audio.muted = true;
 
+    } else {
+
+      // -> PLAY: unmute and play
+
+      audio.muted = false;
+
+      try {
+
+        await audio.play();
+
+      } catch (e) {
+
+        // If play fails (very rare after click), keep in Play state
+
+        audio.muted = true;
+
+      }
+
     }
 
-    save();
-
-    label();
-
-  });
 
 
+    persist();
 
-  ['play','pause','volumechange','emptied','stalled','suspend'].forEach(ev => {
-
-    audio.addEventListener(ev, label);
+    setLabel();
 
   });
 
 
 
-  setInterval(() => { if (!audio.paused) save(); }, 2000);
+  // Keep label in sync with actual state
 
-  window.addEventListener('beforeunload', save);
+  ['play','pause','volumechange','emptied','stalled','suspend','ratechange'].forEach(ev => {
 
-  document.addEventListener('visibilitychange', () => { if (document.hidden) save(); });
+    audio.addEventListener(ev, setLabel);
+
+  });
 
 
 
-  label();
+  // Save every 2s while playing and when navigating away
+
+  const saver = setInterval(() => { if (!audio.paused) persist(); }, 2000);
+
+  window.addEventListener('beforeunload', () => { clearInterval(saver); persist(); });
+
+  document.addEventListener('visibilitychange', () => { if (document.hidden) persist(); });
+
+
+
+  setLabel();
 
 })();
 
