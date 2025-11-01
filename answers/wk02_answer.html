@@ -640,7 +640,7 @@ Set your working directory as that folder and import the datasets <code>county.c
 
     color: #111;
 
-    font: 500 14px/1.1 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    font: 500 14px/1.1 system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif;
 
     box-shadow: 0 2px 8px rgba(0,0,0,.15);
 
@@ -654,7 +654,7 @@ Set your working directory as that folder and import the datasets <code>county.c
 
 <audio id="bgm" loop="" muted="" autoplay="" preload="metadata"></audio>
 
-<button id="bgm-toggle" type="button">🔈 Play BGM</button>
+<button id="bgm-toggle" type="button">Play BGM</button>
 
 
 
@@ -670,21 +670,19 @@ Set your working directory as that folder and import the datasets <code>county.c
 
 
 
-  // --- Resolve the correct path to /assets/audio/Black_Souls.mp3 on any page depth ---
+  // ✅ Resolve audio path relative to the current page (works on all pages)
 
-  // Quarto injects a meta "quarto:offset" like "../../" on nested pages.
+  // Put your file at assets/audio/Black_Souls.mp3 in the project.
 
-  const offset = (document.querySelector('meta[name="quarto:offset"]')?.content) || '';
+  const AUDIO_REL = 'assets/audio/Black_Souls.mp3';
 
-  const AUDIO_REL = 'assets/audio/Black_Souls.mp3';      // change if your file has a different name
-
-  const resolvedSrc = offset + AUDIO_REL;
+  const resolvedSrc = new URL(AUDIO_REL, document.baseURI).toString();
 
   audio.src = resolvedSrc;
 
 
 
-  // ---- Persisted state helpers ----
+  // Restore saved state
 
   const saved = (() => {
 
@@ -694,8 +692,6 @@ Set your working directory as that folder and import the datasets <code>county.c
 
   })();
 
-
-
   if (typeof saved.volume === 'number') audio.volume = saved.volume;
 
   if (saved.muted === true) audio.muted = true;
@@ -704,15 +700,13 @@ Set your working directory as that folder and import the datasets <code>county.c
 
   function label() {
 
-    btn.textContent = (audio.paused || audio.muted) ? '🔈 Play BGM' : '🔇 Mute BGM';
+    btn.textContent = (audio.paused || audio.muted) ? 'Play BGM' : 'Mute BGM';
 
   }
 
   function save() {
 
     const state = {
-
-      src: audio.currentSrc || audio.src,
 
       time: audio.currentTime || 0,
 
@@ -742,7 +736,7 @@ Set your working directory as that folder and import the datasets <code>county.c
 
       audio.muted = false;
 
-      try { await audio.play(); } catch (e) { /* autoplay may be blocked until click */ }
+      try { await audio.play(); } catch (_) { /* needs user gesture first */ }
 
     }
 
@@ -753,6 +747,10 @@ Set your working directory as that folder and import the datasets <code>county.c
 
 
   btn.addEventListener('click', async () => {
+
+    // Ensure the file is loaded before play
+
+    try { audio.load(); } catch {}
 
     if (audio.paused || audio.muted) {
 
@@ -787,6 +785,8 @@ Set your working directory as that folder and import the datasets <code>county.c
   });
 
 
+
+  // Persist position/volume across navigations
 
   setInterval(() => { if (!audio.paused) save(); }, 2000);
 
