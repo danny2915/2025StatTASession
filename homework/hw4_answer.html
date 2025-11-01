@@ -90,7 +90,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
-<script src="https://unpkg.com/@hotwired/turbo@8.0.4/dist/turbo.es2017-umd.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -931,19 +930,17 @@ E=\frac{2607 \times 6617}{50739}=339.9854 \approx 340
 
 
 
-  // ✅ Resolve audio path relative to the current page (works on all pages)
+  // ❗ CHANGE THIS to your actual GitHub Pages URL + file
 
-  // Put your file at assets/audio/Black_Souls.mp3 in the project.
+  // This MUST be absolute so it works on ALL pages.
 
-  const AUDIO_REL = 'assets/audio/Black_Souls.mp3';
+  const AUDIO_ABS = 'https://danny2915.github.io/2025StatTASession/assets/audio/Black_Souls.mp3';
 
-  const resolvedSrc = new URL(AUDIO_REL, document.baseURI).toString();
-
-  audio.src = resolvedSrc;
+  audio.src = AUDIO_ABS;
 
 
 
-  // Restore saved state
+  // restore saved state
 
   const saved = (() => {
 
@@ -997,7 +994,7 @@ E=\frac{2607 \times 6617}{50739}=339.9854 \approx 340
 
       audio.muted = false;
 
-      try { await audio.play(); } catch (_) { /* needs user gesture first */ }
+      try { await audio.play(); } catch (_) { /* user gesture may be required */ }
 
     }
 
@@ -1009,19 +1006,13 @@ E=\frac{2607 \times 6617}{50739}=339.9854 \approx 340
 
   btn.addEventListener('click', async () => {
 
-    // Ensure the file is loaded before play
-
     try { audio.load(); } catch {}
 
     if (audio.paused || audio.muted) {
 
       audio.muted = false;
 
-      try { await audio.play(); } catch (e) {
-
-        console.warn('BGM play failed:', e);
-
-      }
+      try { await audio.play(); } catch (e) { console.warn('BGM play failed:', e); }
 
     } else {
 
@@ -1046,8 +1037,6 @@ E=\frac{2607 \times 6617}{50739}=339.9854 \approx 340
   });
 
 
-
-  // Persist position/volume across navigations
 
   setInterval(() => { if (!audio.paused) save(); }, 2000);
 
