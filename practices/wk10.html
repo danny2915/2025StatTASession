@@ -572,6 +572,16 @@ window.Quarto = {
 
   }
 
+  html[data-bs-theme="dark"] #bgm-toggle {
+
+    background: #1e1e1e;
+
+    color: #e6e6e6;
+
+    border-color: rgba(255,255,255,.2);
+
+  }
+
 </style>
 
 
@@ -586,6 +596,14 @@ window.Quarto = {
 
 (function () {
 
+  // Prevent double init if this file is included twice
+
+  if (window.__bgmInstalled) return;
+
+  window.__bgmInstalled = true;
+
+
+
   const STORAGE_KEY = 'bgm-state-v1';
 
   const audio = document.getElementById('bgm');
@@ -594,9 +612,9 @@ window.Quarto = {
 
 
 
-  // ❗ Use absolute URL so it works on every page
+  // Absolute URL so it works on all pages after publish
 
-  const AUDIO_ABS = 'https://danny2915.github.io/2025StatTASession/assets/audio/Black_Souls.mp3';
+  const AUDIO_ABS = 'https://danny2915.github.io/2025StatTASession/assets/audio/lofi.mp3';
 
   audio.src = AUDIO_ABS;
 
@@ -604,13 +622,9 @@ window.Quarto = {
 
   // Restore saved state
 
-  const saved = (() => {
+  let saved = {};
 
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
-
-    catch { return {}; }
-
-  })();
+  try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch {}
 
 
 
@@ -652,7 +666,7 @@ window.Quarto = {
 
 
 
-  async function resumeFromSaved() {
+  async function restoreAndMaybePlay() {
 
     if (typeof saved.time === 'number' && saved.time > 0 && saved.time < (audio.duration || Infinity)) {
 
@@ -662,13 +676,11 @@ window.Quarto = {
 
     if (saved.playing) {
 
-      // try to resume automatically only after a user has interacted at least once
-
-      // browsers may block autoplay with sound; button click will always work
+      // Try to resume; may be blocked until user clicks
 
       audio.muted = false;
 
-      try { await audio.play(); } catch (_) {}
+      try { await audio.play(); } catch {}
 
     }
 
@@ -678,19 +690,13 @@ window.Quarto = {
 
 
 
-  audio.addEventListener('loadedmetadata', () => { resumeFromSaved(); }, { once: true });
+  audio.addEventListener('loadedmetadata', () => { restoreAndMaybePlay(); }, { once: true });
 
 
 
-  // Toggle behavior
+  // Toggle handler — no audio.load() here (that can retrigger playback)
 
   btn.addEventListener('click', async () => {
-
-    // ensure we have a fresh media pipeline in case of iOS quirks
-
-    try { audio.load(); } catch {}
-
-
 
     const isPlaying = !audio.paused && !audio.muted;
 
@@ -698,7 +704,7 @@ window.Quarto = {
 
     if (isPlaying) {
 
-      // -> MUTE: pause and mute
+      // Mute/pause -> label should switch to "Play"
 
       audio.pause();
 
@@ -706,25 +712,21 @@ window.Quarto = {
 
     } else {
 
-      // -> PLAY: unmute and play
+      // Unmute/play -> label should switch to "Mute"
 
       audio.muted = false;
 
-      try {
+      try { await audio.play(); } catch (e) {
 
-        await audio.play();
+        // If play fails after a user gesture, keep muted state as-is
 
-      } catch (e) {
-
-        // If play fails (very rare after click), keep in Play state
+        console.warn('BGM play failed:', e);
 
         audio.muted = true;
 
       }
 
     }
-
-
 
     persist();
 
@@ -734,7 +736,7 @@ window.Quarto = {
 
 
 
-  // Keep label in sync with actual state
+  // Keep label synced with real state
 
   ['play','pause','volumechange','emptied','stalled','suspend','ratechange'].forEach(ev => {
 
@@ -744,7 +746,7 @@ window.Quarto = {
 
 
 
-  // Save every 2s while playing and when navigating away
+  // Save while playing and on navigation
 
   const saver = setInterval(() => { if (!audio.paused) persist(); }, 2000);
 
@@ -753,6 +755,8 @@ window.Quarto = {
   document.addEventListener('visibilitychange', () => { if (document.hidden) persist(); });
 
 
+
+  // Initial label
 
   setLabel();
 
