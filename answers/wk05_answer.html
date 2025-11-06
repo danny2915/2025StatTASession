@@ -347,6 +347,12 @@ window.Quarto = {
  <span class="menu-text">Week 10 Practices (1104)</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../practices/wk11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 11 Practices (1111)</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -724,7 +730,7 @@ Finally, the function should return the students who wins the certificate.</li>
 <span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    pass_count <span class="ot">&lt;-</span> <span class="dv">0</span></span>
 <span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># for j in 1:10</span></span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> <span class="fu">seq</span>(test_cols)){</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> <span class="fu">seq_along</span>(test_cols)){</span>
 <span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>      </span>
 <span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Passed if score larger than passing_score</span></span>
 <span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span>(data[i, j<span class="sc">+</span><span class="dv">1</span>] <span class="sc">&gt;=</span> passing_score){</span>
