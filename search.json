@@ -442,34 +442,34 @@
   {
     "objectID": "practices/wk13.html",
     "href": "practices/wk13.html",
-    "title": "Week 13 Pratices (1125)",
+    "title": "Week 13 Practices (1125)",
     "section": "",
     "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
     "crumbs": [
       "Practices",
-      "Week 13 Pratices (1125)"
+      "Week 13 Practices (1125)"
     ]
   },
   {
     "objectID": "practices/wk13.html#reminders",
     "href": "practices/wk13.html#reminders",
-    "title": "Week 13 Pratices (1125)",
+    "title": "Week 13 Practices (1125)",
     "section": "",
     "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
     "crumbs": [
       "Practices",
-      "Week 13 Pratices (1125)"
+      "Week 13 Practices (1125)"
     ]
   },
   {
     "objectID": "practices/wk13.html#shangri-la-frontier-香格里拉開拓異境",
     "href": "practices/wk13.html#shangri-la-frontier-香格里拉開拓異境",
-    "title": "Week 13 Pratices (1125)",
+    "title": "Week 13 Practices (1125)",
     "section": "2 Shangri-La Frontier (香格里拉·開拓異境)",
     "text": "2 Shangri-La Frontier (香格里拉·開拓異境)\nShangri-La Frontier is a cutting-edge VRMMO game. After a major update, Sunraku is testing a new build and wants to know whether it actually increases his average damage per combo compared to his old build, which had a known average of 1200 damage per combo in similar areas.\nSunraku goes to a stable grinding spot and records the damage per combo for 15 battles using the new build:\n\\[\n1310, 1195, 1240, 1285, 1220,\n1350, 1290, 1210, 1265, 1305,\n1330, 1275, 1255, 1190, 1320\n\\]\n\nRun an appropriate one-sample t-test using t.test(), and report a 95% confidence interval for the mean damage with the form: 95 percent confidence interval: (a, b).\n\nPsyger-0 is another top-tier player in Shangri-La Frontier, known for her insane burst damage. She tests her own optimized build in the same area and logs her damage per combo in 12 battles:\n\\[\n1380, 1425, 1405, 1360, 1390,\n1435, 1410, 1375, 1440, 1400,\n1395, 1420\n\\]\n\nDoes Psyger-0’s build have a different mean damage than Sunraku’s new build? Report the p-value.",
     "crumbs": [
       "Practices",
-      "Week 13 Pratices (1125)"
+      "Week 13 Practices (1125)"
     ]
   },
   {
