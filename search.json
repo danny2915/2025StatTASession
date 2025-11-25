@@ -1,5 +1,16 @@
 [
   {
+    "objectID": "quiz/Quiz_5_Answer.html",
+    "href": "quiz/Quiz_5_Answer.html",
+    "title": "Quiz 5 Answers",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Quizzes",
+      "Quiz 5 Answers"
+    ]
+  },
+  {
     "objectID": "quiz/Quiz_4_Answer.html",
     "href": "quiz/Quiz_4_Answer.html",
     "title": "Quiz 4 Answers",
@@ -209,1080 +220,80 @@
     ]
   },
   {
-    "objectID": "answers/wk11_answer.html",
-    "href": "answers/wk11_answer.html",
-    "title": "Week 11 Answers (1111)",
+    "objectID": "answers/wk12_answer.html",
+    "href": "answers/wk12_answer.html",
+    "title": "Week 12 Answers (1118)",
     "section": "",
     "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
     "crumbs": [
       "Practice Answers",
-      "Week 11 Answers (1111)"
+      "Week 12 Answers (1118)"
     ]
   },
   {
-    "objectID": "answers/wk11_answer.html#reminders",
-    "href": "answers/wk11_answer.html#reminders",
-    "title": "Week 11 Answers (1111)",
+    "objectID": "answers/wk12_answer.html#reminders",
+    "href": "answers/wk12_answer.html#reminders",
+    "title": "Week 12 Answers (1118)",
     "section": "",
     "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
     "crumbs": [
       "Practice Answers",
-      "Week 11 Answers (1111)"
+      "Week 12 Answers (1118)"
     ]
   },
   {
-    "objectID": "answers/wk11_answer.html#download-data",
-    "href": "answers/wk11_answer.html#download-data",
-    "title": "Week 11 Answers (1111)",
-    "section": "2 Download Data",
-    "text": "2 Download Data\nPlease download the datasets garden_shifts.csv (right click here)",
-    "crumbs": [
-      "Practice Answers",
-      "Week 11 Answers (1111)"
-    ]
-  },
-  {
-    "objectID": "answers/wk11_answer.html#isekai-nonbiri-nouka-異世界悠閒農家",
-    "href": "answers/wk11_answer.html#isekai-nonbiri-nouka-異世界悠閒農家",
-    "title": "Week 11 Answers (1111)",
-    "section": "3 Isekai Nonbiri Nouka (異世界悠閒農家)",
-    "text": "3 Isekai Nonbiri Nouka (異世界悠閒農家)\nHiraku is the village head of Taiju no mura (大樹村) and owns a big farmland. He keeps a log of when each villager — Hiraku, Rurushi, Tia, Ria, Daga, Fraurem, Senna — is responsible for a plot. However, because the log was kept by hand and then typed in, the dates are a bit messy and some entries are incomplete.\nHiraku sees a dataset garden_shifts.csv with the following columns:\n\nname: villager name\nstart_str: start date of the shift\n\nend_str: end date of the shift\nplot: which plant/plot they look after\n\nAll shifts are in September and October 2025, and no villager works on more than one plot on the same day.\nHiraku wants to know how many days each villager works in October.\n\nUse the pipe %&gt;% in the steps below.\nCreate a new data frame shifts_complete that adds two new columns, start_date and end_date, which convert start_str and end_date to Date types for the original data.\n\n\n\n\n\n\n\nTipHint\n\n\n\nRemember to keep NA as NA when using mutate().\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse grepl(\"-\", start_str) ~ in case_when().\n\n\n\nDrops any rows containing NA (in any column) in shifts_complete .\nCreate a new data frame shifts_coverage that includes the full sequence of dates from start_date to end_date in shifts_coverage.\n\n\n\n\n\n\n\nTipHint\n\n\n\nFor example, if Hiraku is responsible for cabbage from 2025-09-10 to 2025-09-13, then there would be 4 rows that take value 2025-09-10, 2025-09-11, 2025-09-12 and 2025-09-13 in column date for shifts_complete.\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nFor each row in shifts_complete, create a temperate data frame temp in the for-loop with columns name, plot, date, where date columns includes all the dates between start_date and end_date.\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse rbind() to combine data frames in each loop.\n\n\n\nAdd a column month to shifts_coverage that contains only the YYYY-MM part of column date.\nCreate a new data frame shifts_coverage_oct for dates in October only.\nHow many days does each villager work in October?\n\nlibrary(tidyverse)\n\nshifts &lt;- read.csv(\"data/garden_shifts.csv\")\n\n# Part 1\nshifts_complete &lt;- shifts %&gt;%\n  mutate(\n    start_date = case_when(\n      grepl(\"-\", start_str) ~ as.Date(start_str, format = \"%Y-%m-%d\"),\n      grepl(\"/\", start_str) ~ as.Date(start_str, format = \"%Y/%m/%d\"),\n      TRUE ~ NA\n      )\n    ) %&gt;% \n  mutate(\n    end_date = case_when(\n      grepl(\"-\", end_str) ~ as.Date(end_str, format = \"%Y-%m-%d\"),\n      grepl(\"/\", end_str) ~ as.Date(end_str, format = \"%Y/%m/%d\"),\n      TRUE ~ NA\n      )\n    )\n\n# Part 2 \nshifts_complete &lt;- shifts_complete %&gt;% \n  na.omit()\n\n# Part 3\nfor(i in seq_along(shifts_complete$name)){\n  days &lt;- seq(from = shifts_complete$start_date[i],\n              to = shifts_complete$end_date[i],\n              by = \"day\")\n  \n  temp &lt;- data.frame(\n    name = shifts_complete$name[i],\n    plot = shifts_complete$plot[i],\n    date = days\n  )\n  if(i == 1){\n    shifts_coverage &lt;- temp\n  }\n  else{\n    shifts_coverage &lt;- rbind(shifts_coverage, temp)\n  }\n}\n\n# Part 4\nshifts_coverage &lt;- shifts_coverage %&gt;% \n  mutate(month = substring(date, 1, 7))\n\n# Part 5\nshifts_coverage_oct &lt;- shifts_coverage %&gt;%\n  filter(month == \"2025-10\")\n\n# Part 6\nvillagers &lt;- c(\"Hiraku\", \"Rurushi\", \"Tia\", \"Ria\", \"Daga\", \"Fraurem\", \"Senna\")\ndays_vec &lt;- c()\n\nfor(villager in villagers){\n  temp &lt;- shifts_coverage_oct %&gt;% \n    filter(name == villager)\n  days_vec &lt;- c(days_vec, nrow(temp))\n}\n\nvillager_oct_days &lt;- data.frame(\n  name = villagers,\n  num_days = days_vec\n)\n\nprint(villager_oct_days)\n\n\n     name num_days\n1  Hiraku       22\n2 Rurushi       10\n3     Tia       21\n4     Ria       18\n5    Daga       20\n6 Fraurem       20\n7   Senna       19",
-    "crumbs": [
-      "Practice Answers",
-      "Week 11 Answers (1111)"
-    ]
-  },
-  {
-    "objectID": "answers/wk09_answer.html",
-    "href": "answers/wk09_answer.html",
-    "title": "Week 9 Answers (1028)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 9 Answers (1028)"
-    ]
-  },
-  {
-    "objectID": "answers/wk09_answer.html#reminders",
-    "href": "answers/wk09_answer.html#reminders",
-    "title": "Week 9 Answers (1028)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 9 Answers (1028)"
-    ]
-  },
-  {
-    "objectID": "answers/wk09_answer.html#download-data",
-    "href": "answers/wk09_answer.html#download-data",
-    "title": "Week 9 Answers (1028)",
-    "section": "2 Download Data",
-    "text": "2 Download Data\nPlease download the datasets restaurants.csv (right click here)",
-    "crumbs": [
-      "Practice Answers",
-      "Week 9 Answers (1028)"
-    ]
-  },
-  {
-    "objectID": "answers/wk09_answer.html#nohara-hiroshi-hiru-meshi-no-ryuugi-野原廣志-午餐的流派",
-    "href": "answers/wk09_answer.html#nohara-hiroshi-hiru-meshi-no-ryuugi-野原廣志-午餐的流派",
-    "title": "Week 9 Answers (1028)",
-    "section": "3 Nohara Hiroshi: Hiru Meshi no Ryuugi (野原廣志 午餐的流派)",
-    "text": "3 Nohara Hiroshi: Hiru Meshi no Ryuugi (野原廣志 午餐的流派)\n“My name is Hiroshi Nohara (野原廣志). I’m an office worker and often eat lunch out. Based on the state of my body and my wallet, I quickly decide what to eat each day. You could say that while I’m a business expert, I’m also a lunch expert.”\nHiroshi keeps a list of restaurants in restaurants.csv. The file has five columns:\n\nname: The restaurant’s name.\ntype: The type of cuisine.\nclosed: The restaurant’s closed day; some restaurants are permanently closed.\nlunch_set: Whether the restaurant offers lunch sets at noon.\nrating: Hiroshi’s personal rating for the restaurant.\n\nToday is Thursday. Hiroshi feels like seafood, but curry or noodles would also be fine. Since he had fast food yesterday, he’d rather avoid it today. It’s close to the end of the month, so it would be better if the restaurant offers lunch sets.\nFollow the instructions below to help Hiroshi choose the restaurants that best fit his needs:\n\n\n\n\n\n\nTipHint\n\n\n\nIn this practice, filter(), select(), mutate(), arrange() will all be used.\n\n\n\nUse the pipe %&gt;% in the steps below.\nFilter the restaurants that are open today.\nAdd a column lunch_set_score that is 1.5 if the restaurant offers lunch sets and 0 otherwise.\nAdd a column preference_score that takes value 1.5 for seafood, 1 for curry and noodle, -2 for fastfood, and 0 otherwise.\nAdd a column total_score that sums up the columns rating, lunch_set_score and preference_score.\nRemove the lunch_set_score and preference_score columns.\nArrange the rows in descending order of total_score.\nPrint the top 5 rows with the highest total_score.\n\nlibrary(tidyverse)\n\nrestaurants &lt;- read.csv(\"data/restaurants.csv\")\n\nrestaurants_cleaned &lt;- restaurants %&gt;% \n  filter(closed != \"Thu\" & closed != \"close down\") %&gt;%\n  mutate(lunch_set_score = ifelse(lunch_set == \"Yes\", 1.5, 0)) %&gt;%\n  mutate(preference_score = case_when(\n    type == \"seafood\" ~ 1.5,\n    type == \"curry\" | type == \"noodle\" ~ 1,\n    type == \"fastfood\" ~ -2,\n    TRUE ~ 0\n    )) %&gt;%\n  mutate(total_score = rating + lunch_set_score + preference_score) %&gt;%\n  select(-c(lunch_set_score, preference_score)) %&gt;%\n  arrange(desc(total_score))\n  \nprint(restaurants_cleaned[1:5, ])\n#### Answers\n##               name    type closed lunch_set rating total_score\n## 1       Curry Spot   curry    Fri       Yes    4.4         6.9\n## 2    Curry Delight   curry    Sun       Yes    3.9         6.4\n## 3 Blue Ocean Grill seafood    Fri        No    4.2         5.7\n## 4   Mama’s Kitchen   other    Fri       Yes    4.1         5.6\n## 5      Urban Pizza   pizza    Sun       Yes    4.0         5.5",
-    "crumbs": [
-      "Practice Answers",
-      "Week 9 Answers (1028)"
-    ]
-  },
-  {
-    "objectID": "answers/wk06_answer.html",
-    "href": "answers/wk06_answer.html",
-    "title": "Week 6 Practices (1007)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 6 Practices (1007)"
-    ]
-  },
-  {
-    "objectID": "answers/wk06_answer.html#reminders",
-    "href": "answers/wk06_answer.html#reminders",
-    "title": "Week 6 Practices (1007)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 6 Practices (1007)"
-    ]
-  },
-  {
-    "objectID": "answers/wk06_answer.html#download-data",
-    "href": "answers/wk06_answer.html#download-data",
-    "title": "Week 6 Practices (1007)",
-    "section": "2 Download Data",
-    "text": "2 Download Data\nPlease download the datasets ames.csv here.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 6 Practices (1007)"
-    ]
-  },
-  {
-    "objectID": "answers/wk06_answer.html#housing-price-in-2025",
-    "href": "answers/wk06_answer.html#housing-price-in-2025",
-    "title": "Week 6 Practices (1007)",
-    "section": "3 Housing Price in 2025",
-    "text": "3 Housing Price in 2025\n\nUse paste() and for-loop to create a character vector date_2025 that contains 365 days in 2025, and each date repeat 3 times. i.e., c(\"2025-01-01\", \"2025-01-01\", \"2025-01-01\", ..., \"2025-12-31\")\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse if (month %in% vec) to check if there are 28, 30 or 31 days in that month.\n\n\n\nUse as.Date() to convert the date_2025 as type date.\nCreate a numeric vector housing_price with length 1095 having the value generated from a normal distribution with mean = 10000, sd = 2000.\nCombine date_2025 and housing_price_2025 as a new dataframe housing_2025.\nUse geom_line() with linewidth = 0.3 to plot the average housing price for each date in 2025.\n\nset.seed(2025)\n\nlibrary(tidyverse)\n\ndate_2025 &lt;- c()\n\nfor (month in 1:12){\n  if (month %in% c(1, 3, 5, 7, 8, 10, 12)){\n    for (day in 1:31){\n      temp &lt;- replicate(n = 3, expr = paste(\"2025\", month, day, \n                                            sep = \"-\")\n                        )\n      date_2025 &lt;- c(date_2025, temp)\n    }\n  }\n  else if (month %in% c(4, 6, 9, 11)){\n    for (day in 1:30){\n      temp &lt;- replicate(n = 3, expr = paste(\"2025\", month, day, \n                                            sep = \"-\")\n                        )\n      date_2025 &lt;- c(date_2025, temp)\n    }    \n  }\n  else{\n    for (day in 1:28){\n      temp &lt;- replicate(n = 3, expr = paste(\"2025\", \"2\", day, \n                                            sep = \"-\")\n                        )\n      date_2025 &lt;- c(date_2025, temp)\n    }        \n  }\n}\n\ndate_2025 &lt;- as.Date(date_2025)\n\nhousing_price_2025 &lt;- rnorm(n = 1095, mean = 10000, sd = 2000)\n\nhousing_2025 &lt;- data.frame(date = date_2025,\n                           price = housing_price_2025\n                           )\n\nggplot(housing_2025, aes(x = date, y = price)) + \n    geom_line(stat = \"summary\", \n              fun = \"mean\", \n              linewidth = 0.3, \n              color = \"steelblue\"\n              )",
-    "crumbs": [
-      "Practice Answers",
-      "Week 6 Practices (1007)"
-    ]
-  },
-  {
-    "objectID": "answers/wk04_answer.html",
-    "href": "answers/wk04_answer.html",
-    "title": "Week 4 Answers (0923)",
-    "section": "",
-    "text": "Remember to use the project you create last week!",
-    "crumbs": [
-      "Practice Answers",
-      "Week 4 Answers (0923)"
-    ]
-  },
-  {
-    "objectID": "answers/wk04_answer.html#project",
-    "href": "answers/wk04_answer.html#project",
-    "title": "Week 4 Answers (0923)",
-    "section": "",
-    "text": "Remember to use the project you create last week!",
-    "crumbs": [
-      "Practice Answers",
-      "Week 4 Answers (0923)"
-    ]
-  },
-  {
-    "objectID": "answers/wk04_answer.html#draw-uniform-random-sample",
-    "href": "answers/wk04_answer.html#draw-uniform-random-sample",
-    "title": "Week 4 Answers (0923)",
-    "section": "2 Draw Uniform Random Sample",
-    "text": "2 Draw Uniform Random Sample\nSet random seed as 2025. Draw 200 observations from uniform distribution [0, 100] and compute the mean of the observations.\n\n\n\n\n\n\nTipHint\n\n\n\nHint: Use mean() function.\n\n\nset.seed(2025)\nsample_size &lt;- 200\nrdn &lt;- runif(n = sample_size, min = 0, max = 100)\nmean &lt;- mean(rdn)\nprint(mean)\n## [1] 52.17858",
-    "crumbs": [
-      "Practice Answers",
-      "Week 4 Answers (0923)"
-    ]
-  },
-  {
-    "objectID": "answers/wk04_answer.html#histogram",
-    "href": "answers/wk04_answer.html#histogram",
-    "title": "Week 4 Answers (0923)",
-    "section": "3 Histogram",
-    "text": "3 Histogram\n\nUsing the random sample you just generated, create a DataFrame to store the drawn values by using data.frame() function, and draw the histogram graph to see the distribution.\n\ndf_1 &lt;- data.frame(\n  values = rdn\n)\nggplot(df_1, aes(x = values)) +\n  geom_histogram()\n\n\n\n\n\n\n\n\n\n\nNow, draw another 10,000 observations from uniform distribution [0, 100], and draw the histogram graph to see the distribution.\n\nrdn_2 &lt;- runif(n = 10000, min = 0, max = 100)\ndf_2 &lt;- data.frame(\n  values = rdn_2\n)\nggplot(df_2, aes(x = values)) +\n  geom_histogram()",
-    "crumbs": [
-      "Practice Answers",
-      "Week 4 Answers (0923)"
-    ]
-  },
-  {
-    "objectID": "answers/wk02_answer.html",
-    "href": "answers/wk02_answer.html",
-    "title": "Week 2 Answers (0909)",
-    "section": "",
-    "text": "Please download the datasets county.csv and loan50.csv here.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 2 Answers (0909)"
-    ]
-  },
-  {
-    "objectID": "answers/wk02_answer.html#download-data",
-    "href": "answers/wk02_answer.html#download-data",
-    "title": "Week 2 Answers (0909)",
-    "section": "",
-    "text": "Please download the datasets county.csv and loan50.csv here.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 2 Answers (0909)"
-    ]
-  },
-  {
-    "objectID": "answers/wk02_answer.html#import-data",
-    "href": "answers/wk02_answer.html#import-data",
-    "title": "Week 2 Answers (0909)",
-    "section": "2 Import Data",
-    "text": "2 Import Data\n\nImport the package tidyverse, which contains several useful functions for data wrangling and visualization.\nCreate a folder on your computer to store the dataset downloaded from NTU COOL or OpenIntro website.\nSet your working directory as that folder and import the datasets county.csv and loan50.csv.\n\nlibrary(tidyverse)\nsetwd(\"/your/working/directory\")\ncounty &lt;- read.csv(\"county.csv\")\nloan &lt;- read.csv(\"loan50.csv\")",
-    "crumbs": [
-      "Practice Answers",
-      "Week 2 Answers (0909)"
-    ]
-  },
-  {
-    "objectID": "answers/wk02_answer.html#scatter-plot",
-    "href": "answers/wk02_answer.html#scatter-plot",
-    "title": "Week 2 Answers (0909)",
-    "section": "3 Scatter Plot",
-    "text": "3 Scatter Plot\n\nUse county.csv to draw the scatter plot of unemployment_rate (x-axis) and per_capita_income (y-axis).\n\n\n\n\n\n\n\nTipHint\n\n\n\nHint: You don’t need to specify any parameter in geom_point().\n\n\nggplot(county, aes(x = unemployment_rate, y = per_capita_income)) + \n  geom_point()\n\n\n\n\n\n\n\n\n\n\nDraw the same graph again, but this time make the following adjustments:\n\nadjust the point color to lightcoral\nadjust the point size to 0.5\n\n\nggplot(county, aes(x = unemployment_rate, y = per_capita_income)) +\n  geom_point(color = \"lightcoral\", size = 0.5)",
-    "crumbs": [
-      "Practice Answers",
-      "Week 2 Answers (0909)"
-    ]
-  },
-  {
-    "objectID": "answers/wk02_answer.html#histogram",
-    "href": "answers/wk02_answer.html#histogram",
-    "title": "Week 2 Answers (0909)",
-    "section": "4 Histogram",
-    "text": "4 Histogram\nUse loan50.csv data to draw the histogram of loan_amount (set as x-axis), and adjust the parameter binwidth in geom_histogram() to 5000.\nggplot(loan, aes(x = loan_amount)) +\n  geom_histogram(binwidth = 5000)",
-    "crumbs": [
-      "Practice Answers",
-      "Week 2 Answers (0909)"
-    ]
-  },
-  {
-    "objectID": "practices/wk13.html",
-    "href": "practices/wk13.html",
-    "title": "Week 13 Practices (1125)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 13 Practices (1125)"
-    ]
-  },
-  {
-    "objectID": "practices/wk13.html#reminders",
-    "href": "practices/wk13.html#reminders",
-    "title": "Week 13 Practices (1125)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 13 Practices (1125)"
-    ]
-  },
-  {
-    "objectID": "practices/wk13.html#shangri-la-frontier-香格里拉開拓異境",
-    "href": "practices/wk13.html#shangri-la-frontier-香格里拉開拓異境",
-    "title": "Week 13 Practices (1125)",
-    "section": "2 Shangri-La Frontier (香格里拉·開拓異境)",
-    "text": "2 Shangri-La Frontier (香格里拉·開拓異境)\nShangri-La Frontier is a cutting-edge VRMMO game. After a major update, Sunraku is testing a new build and wants to know whether it actually increases his average damage per combo compared to his old build, which had a known average of 1200 damage per combo in similar areas.\nSunraku goes to a stable grinding spot and records the damage per combo for 15 battles using the new build:\n\\[\n1310, 1195, 1240, 1285, 1220,\n1350, 1290, 1210, 1265, 1305,\n1330, 1275, 1255, 1190, 1320\n\\]\n\nRun an appropriate one-sample t-test using t.test(), and report a 95% confidence interval for the mean damage with the form: 95 percent confidence interval: (a, b).\n\nPsyger-0 is another top-tier player in Shangri-La Frontier, known for her insane burst damage. She tests her own optimized build in the same area and logs her damage per combo in 12 battles:\n\\[\n1380, 1425, 1405, 1360, 1390,\n1435, 1410, 1375, 1440, 1400,\n1395, 1420\n\\]\n\nDoes Psyger-0’s build have a different mean damage than Sunraku’s new build? Report the p-value.",
-    "crumbs": [
-      "Practices",
-      "Week 13 Practices (1125)"
-    ]
-  },
-  {
-    "objectID": "practices/wk11.html",
-    "href": "practices/wk11.html",
-    "title": "Week 11 Practices (1111)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 11 Practices (1111)"
-    ]
-  },
-  {
-    "objectID": "practices/wk11.html#reminders",
-    "href": "practices/wk11.html#reminders",
-    "title": "Week 11 Practices (1111)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 11 Practices (1111)"
-    ]
-  },
-  {
-    "objectID": "practices/wk11.html#download-data",
-    "href": "practices/wk11.html#download-data",
-    "title": "Week 11 Practices (1111)",
-    "section": "2 Download Data",
-    "text": "2 Download Data\nPlease download the datasets garden_shifts.csv (right click here)",
-    "crumbs": [
-      "Practices",
-      "Week 11 Practices (1111)"
-    ]
-  },
-  {
-    "objectID": "practices/wk11.html#isekai-nonbiri-nouka-異世界悠閒農家",
-    "href": "practices/wk11.html#isekai-nonbiri-nouka-異世界悠閒農家",
-    "title": "Week 11 Practices (1111)",
-    "section": "3 Isekai Nonbiri Nouka (異世界悠閒農家)",
-    "text": "3 Isekai Nonbiri Nouka (異世界悠閒農家)\nHiraku is the village head of Taiju no mura (大樹村) and owns a big farmland. He keeps a log of when each villager — Hiraku, Rurushi, Tia, Ria, Daga, Fraurem, Senna — is responsible for a plot. However, because the log was kept by hand and then typed in, the dates are a bit messy and some entries are incomplete.\nHiraku sees a dataset garden_shifts.csv with the following columns:\n\nname: villager name\nstart_str: start date of the shift\n\nend_str: end date of the shift\nplot: which plant/plot they look after\n\nAll shifts are in September and October 2025, and no villager works on more than one plot on the same day.\nHiraku wants to know how many days each villager works in October.\n\nUse the pipe %&gt;% in the steps below.\nCreate a new data frame shifts_complete that adds two new columns, start_date and end_date, which convert start_str and end_date to Date types for the original data.\n\n\n\n\n\n\n\nTipHint\n\n\n\nRemember to keep NA as NA when using mutate().\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse grepl(\"-\", start_str) ~ in case_when().\n\n\n\nDrops any rows containing NA (in any column) in shifts_complete .\nCreate a new data frame shifts_coverage that includes the full sequence of dates from start_date to end_date in shifts_coverage.\n\n\n\n\n\n\n\nTipHint\n\n\n\nFor example, if Hiraku is responsible for cabbage from 2025-09-10 to 2025-09-13, then there would be 4 rows that take value 2025-09-10, 2025-09-11, 2025-09-12 and 2025-09-13 in column date for shifts_complete.\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nFor each row in shifts_complete, create a temperate data frame temp in the for-loop with columns name, plot, date, where date columns includes all the dates between start_date and end_date.\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse rbind() to combine data frames in each loop.\n\n\n\nAdd a column month to shifts_coverage that contains only the YYYY-MM part of column date.\nCreate a new data frame shifts_coverage_oct for dates in October only.\nHow many days does each villager work in October?",
-    "crumbs": [
-      "Practices",
-      "Week 11 Practices (1111)"
-    ]
-  },
-  {
-    "objectID": "practices/wk09.html",
-    "href": "practices/wk09.html",
-    "title": "Week 9 Practices (1028)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 9 Practices (1028)"
-    ]
-  },
-  {
-    "objectID": "practices/wk09.html#reminders",
-    "href": "practices/wk09.html#reminders",
-    "title": "Week 9 Practices (1028)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 9 Practices (1028)"
-    ]
-  },
-  {
-    "objectID": "practices/wk09.html#download-data",
-    "href": "practices/wk09.html#download-data",
-    "title": "Week 9 Practices (1028)",
-    "section": "2 Download Data",
-    "text": "2 Download Data\nPlease download the datasets restaurants.csv (right click here)",
-    "crumbs": [
-      "Practices",
-      "Week 9 Practices (1028)"
-    ]
-  },
-  {
-    "objectID": "practices/wk09.html#nohara-hiroshi-hiru-meshi-no-ryuugi-野原廣志-午餐的流派",
-    "href": "practices/wk09.html#nohara-hiroshi-hiru-meshi-no-ryuugi-野原廣志-午餐的流派",
-    "title": "Week 9 Practices (1028)",
-    "section": "3 Nohara Hiroshi: Hiru Meshi no Ryuugi (野原廣志 午餐的流派)",
-    "text": "3 Nohara Hiroshi: Hiru Meshi no Ryuugi (野原廣志 午餐的流派)\n“My name is Hiroshi Nohara (野原廣志). I’m an office worker and often eat lunch out. Based on the state of my body and my wallet, I quickly decide what to eat each day. You could say that while I’m a business expert, I’m also a lunch expert.”\nHiroshi keeps a list of restaurants in restaurants.csv. The file has five columns:\n\nname: The restaurant’s name.\ntype: The type of cuisine.\nclosed: The restaurant’s closed day; some restaurants are permanently closed.\nlunch_set: Whether the restaurant offers lunch sets at noon.\nrating: Hiroshi’s personal rating for the restaurant.\n\nToday is Thursday. Hiroshi feels like seafood, but curry or noodles would also be fine. Since he had fast food yesterday, he’d rather avoid it today. It’s close to the end of the month, so it would be better if the restaurant offers lunch sets.\nFollow the instructions below to help Hiroshi choose the restaurants that best fit his needs:\n\n\n\n\n\n\nTipHint\n\n\n\nIn this practice, filter(), select(), mutate(), arrange() will all be used.\n\n\n\nUse the pipe %&gt;% in the steps below.\nFilter the restaurants that are open today.\nAdd a column lunch_set_score that is 1.5 if the restaurant offers lunch sets and 0 otherwise.\nAdd a column preference_score that takes value 1.5 for seafood, 1 for curry and noodle, -2 for fastfood, and 0 otherwise.\nAdd a column total_score that sums up the columns rating, lunch_set_score and preference_score.\nRemove the lunch_set_score and preference_score columns.\nArrange the rows in descending order of total_score.\nPrint the top 5 rows with the highest total_score.",
-    "crumbs": [
-      "Practices",
-      "Week 9 Practices (1028)"
-    ]
-  },
-  {
-    "objectID": "practices/wk06.html",
-    "href": "practices/wk06.html",
-    "title": "Week 6 Practices (1007)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 6 Practices (1007)"
-    ]
-  },
-  {
-    "objectID": "practices/wk06.html#reminders",
-    "href": "practices/wk06.html#reminders",
-    "title": "Week 6 Practices (1007)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 6 Practices (1007)"
-    ]
-  },
-  {
-    "objectID": "practices/wk06.html#download-data",
-    "href": "practices/wk06.html#download-data",
-    "title": "Week 6 Practices (1007)",
-    "section": "2 Download Data",
-    "text": "2 Download Data\nPlease download the datasets ames.csv here.",
-    "crumbs": [
-      "Practices",
-      "Week 6 Practices (1007)"
-    ]
-  },
-  {
-    "objectID": "practices/wk06.html#housing-price-in-2025",
-    "href": "practices/wk06.html#housing-price-in-2025",
-    "title": "Week 6 Practices (1007)",
-    "section": "3 Housing Price in 2025",
-    "text": "3 Housing Price in 2025\n\nUse paste() and for-loop to create a character vector date_2025 that contains 365 days in 2025, and each date repeat 3 times. i.e., c(\"2025-01-01\", \"2025-01-01\", \"2025-01-01\", ..., \"2025-12-31\")\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse if (month %in% vec) to check if there are 28, 30 or 31 days in that month.\n\n\n\nUse as.Date() to convert the date_2025 as type date.\nCreate a numeric vector housing_price with length 1095 having the value generated from a normal distribution with mean = 10000, sd = 2000.\nCombine date_2025 and housing_price_2025 as a new dataframe housing_2025.\nUse geom_line() with linewidth = 0.3 to plot the average housing price for each date in 2025.",
-    "crumbs": [
-      "Practices",
-      "Week 6 Practices (1007)"
-    ]
-  },
-  {
-    "objectID": "practices/wk04.html",
-    "href": "practices/wk04.html",
-    "title": "Week 4 Practices (0923)",
-    "section": "",
-    "text": "Remember to use the project you create last week!",
-    "crumbs": [
-      "Practices",
-      "Week 4 Practices (0923)"
-    ]
-  },
-  {
-    "objectID": "practices/wk04.html#project",
-    "href": "practices/wk04.html#project",
-    "title": "Week 4 Practices (0923)",
-    "section": "",
-    "text": "Remember to use the project you create last week!",
-    "crumbs": [
-      "Practices",
-      "Week 4 Practices (0923)"
-    ]
-  },
-  {
-    "objectID": "practices/wk04.html#draw-uniform-random-sample",
-    "href": "practices/wk04.html#draw-uniform-random-sample",
-    "title": "Week 4 Practices (0923)",
-    "section": "2 Draw Uniform Random Sample",
-    "text": "2 Draw Uniform Random Sample\nSet random seed as 2025. Draw 200 observations from uniform distribution [0, 100] and compute the mean of the observations.\n\n\n\n\n\n\nTipHint\n\n\n\nHint: Use mean() function.",
-    "crumbs": [
-      "Practices",
-      "Week 4 Practices (0923)"
-    ]
-  },
-  {
-    "objectID": "practices/wk04.html#histogram",
-    "href": "practices/wk04.html#histogram",
-    "title": "Week 4 Practices (0923)",
-    "section": "3 Histogram",
-    "text": "3 Histogram\n\nUsing the random sample you just generated, create a DataFrame to store the drawn values by using data.frame() function, and draw the histogram graph to see the distribution.\nNow, draw another 10,000 observations from uniform distribution [0, 100], and draw the histogram graph to see the distribution.",
-    "crumbs": [
-      "Practices",
-      "Week 4 Practices (0923)"
-    ]
-  },
-  {
-    "objectID": "practices/wk02.html",
-    "href": "practices/wk02.html",
-    "title": "Week 2 Practices (0909)",
-    "section": "",
-    "text": "Please download the datasets county.csv and loan50.csv here.",
-    "crumbs": [
-      "Practices",
-      "Week 2 Practices (0909)"
-    ]
-  },
-  {
-    "objectID": "practices/wk02.html#download-data",
-    "href": "practices/wk02.html#download-data",
-    "title": "Week 2 Practices (0909)",
-    "section": "",
-    "text": "Please download the datasets county.csv and loan50.csv here.",
-    "crumbs": [
-      "Practices",
-      "Week 2 Practices (0909)"
-    ]
-  },
-  {
-    "objectID": "practices/wk02.html#import-data",
-    "href": "practices/wk02.html#import-data",
-    "title": "Week 2 Practices (0909)",
-    "section": "2 Import Data",
-    "text": "2 Import Data\n\nImport the package tidyverse, which contains several useful functions for data wrangling and visualization.\nCreate a folder on your computer to store the dataset downloaded from NTU COOL or OpenIntro website.\nSet your working directory as that folder and import the datasets county.csv and loan50.csv.",
-    "crumbs": [
-      "Practices",
-      "Week 2 Practices (0909)"
-    ]
-  },
-  {
-    "objectID": "practices/wk02.html#scatter-plot",
-    "href": "practices/wk02.html#scatter-plot",
-    "title": "Week 2 Practices (0909)",
-    "section": "3 Scatter Plot",
-    "text": "3 Scatter Plot\n\nUse county.csv to draw the scatter plot of unemployment_rate (x-axis) and per_capita_income (y-axis).\n\n\n\n\n\n\n\nTipHint\n\n\n\nHint: You don’t need to specify any parameter in geom_point().\n\n\n\nDraw the same graph again, but this time make the following adjustments:\n\nadjust the point color to lightcoral\nadjust the point size to 0.5",
-    "crumbs": [
-      "Practices",
-      "Week 2 Practices (0909)"
-    ]
-  },
-  {
-    "objectID": "practices/wk02.html#histogram",
-    "href": "practices/wk02.html#histogram",
-    "title": "Week 2 Practices (0909)",
-    "section": "4 Histogram",
-    "text": "4 Histogram\nUse loan50.csv data to draw the histogram of loan_amount (set as x-axis), and adjust the parameter binwidth in geom_histogram() to 5000.",
-    "crumbs": [
-      "Practices",
-      "Week 2 Practices (0909)"
-    ]
-  },
-  {
-    "objectID": "slides/Slides_wk13.html",
-    "href": "slides/Slides_wk13.html",
-    "title": "Week 13 Slides (1125)",
-    "section": "",
-    "text": "Open in new tab · Download PDF",
-    "crumbs": [
-      "Slides",
-      "Week 13 Slides (1125)"
-    ]
-  },
-  {
-    "objectID": "slides/Slides_wk11.html",
-    "href": "slides/Slides_wk11.html",
-    "title": "Week 11 Slides (1111)",
-    "section": "",
-    "text": "Open in new tab · Download PDF",
-    "crumbs": [
-      "Slides",
-      "Week 11 Slides (1111)"
-    ]
-  },
-  {
-    "objectID": "slides/Slides_wk09.html",
-    "href": "slides/Slides_wk09.html",
-    "title": "Week 9 Slides (1028)",
-    "section": "",
-    "text": "Open in new tab · Download PDF",
-    "crumbs": [
-      "Slides",
-      "Week 9 Slides (1028)"
-    ]
-  },
-  {
-    "objectID": "slides/Slides_wk06.html",
-    "href": "slides/Slides_wk06.html",
-    "title": "Week 6 Slides (1007)",
-    "section": "",
-    "text": "Open in new tab · Download PDF",
-    "crumbs": [
-      "Slides",
-      "Week 6 Slides (1007)"
-    ]
-  },
-  {
-    "objectID": "slides/Slides_wk04.html",
-    "href": "slides/Slides_wk04.html",
-    "title": "Week 4 Slides (0923)",
-    "section": "",
-    "text": "Open in new tab · Download PDF",
-    "crumbs": [
-      "Slides",
-      "Week 4 Slides (0923)"
-    ]
-  },
-  {
-    "objectID": "slides/Slides_wk02.html",
-    "href": "slides/Slides_wk02.html",
-    "title": "Week 2 Slides (0909)",
-    "section": "",
-    "text": "Open in new tab · Download PDF",
-    "crumbs": [
-      "Slides",
-      "Week 2 Slides (0909)"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "2025Fall Statistics TA Session",
-    "section": "",
-    "text": "Welcome! Use the sidebar to open weekly Slides, Practices and Answers\nAnswers to the practice will be published after each TA Session.\nSending email: r13323002@ntu.edu.tw (mail title including [Statistics TA])\nTA Office hours: Tuesday, 4:30-5:20 p.m. at SSB. (社會科學院) Room 645.",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "slides/Slides_wk01.html",
-    "href": "slides/Slides_wk01.html",
-    "title": "Week 1 Slides (0902)",
-    "section": "",
-    "text": "Open in new tab · Download PDF",
-    "crumbs": [
-      "Slides",
-      "Week 1 Slides (0902)"
-    ]
-  },
-  {
-    "objectID": "slides/Slides_wk03.html",
-    "href": "slides/Slides_wk03.html",
-    "title": "Week 3 Slides (0916)",
-    "section": "",
-    "text": "Open in new tab · Download PDF",
-    "crumbs": [
-      "Slides",
-      "Week 3 Slides (0916)"
-    ]
-  },
-  {
-    "objectID": "slides/Slides_wk05.html",
-    "href": "slides/Slides_wk05.html",
-    "title": "Week 5 Slides (0930)",
-    "section": "",
-    "text": "Open in new tab · Download PDF",
-    "crumbs": [
-      "Slides",
-      "Week 5 Slides (0930)"
-    ]
-  },
-  {
-    "objectID": "slides/Slides_wk07.html",
-    "href": "slides/Slides_wk07.html",
-    "title": "Week 7 Slides (1014)",
-    "section": "",
-    "text": "Open in new tab · Download PDF",
-    "crumbs": [
-      "Slides",
-      "Week 7 Slides (1014)"
-    ]
-  },
-  {
-    "objectID": "slides/Slides_wk10.html",
-    "href": "slides/Slides_wk10.html",
-    "title": "Week 10 Slides (1104)",
-    "section": "",
-    "text": "Open in new tab · Download PDF",
-    "crumbs": [
-      "Slides",
-      "Week 10 Slides (1104)"
-    ]
-  },
-  {
-    "objectID": "slides/Slides_wk12.html",
-    "href": "slides/Slides_wk12.html",
-    "title": "Week 12 Slides (1118)",
-    "section": "",
-    "text": "Open in new tab · Download PDF",
-    "crumbs": [
-      "Slides",
-      "Week 12 Slides (1118)"
-    ]
-  },
-  {
-    "objectID": "practices/wk01.html",
-    "href": "practices/wk01.html",
-    "title": "Week 1 Practices (0902)",
-    "section": "",
-    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.",
-    "crumbs": [
-      "Practices",
-      "Week 1 Practices (0902)"
-    ]
-  },
-  {
-    "objectID": "practices/wk01.html#assign-values",
-    "href": "practices/wk01.html#assign-values",
-    "title": "Week 1 Practices (0902)",
-    "section": "",
-    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.",
-    "crumbs": [
-      "Practices",
-      "Week 1 Practices (0902)"
-    ]
-  },
-  {
-    "objectID": "practices/wk01.html#help",
-    "href": "practices/wk01.html#help",
-    "title": "Week 1 Practices (0902)",
-    "section": "2 Help",
-    "text": "2 Help\nUse the help() function to check docs, e.g. data.frame() or mean().",
-    "crumbs": [
-      "Practices",
-      "Week 1 Practices (0902)"
-    ]
-  },
-  {
-    "objectID": "practices/wk01.html#matrix",
-    "href": "practices/wk01.html#matrix",
-    "title": "Week 1 Practices (0902)",
-    "section": "3 Matrix",
-    "text": "3 Matrix\nCreate the following vectors:\nname_vec &lt;- c(\"James\", \"Noc\", \"Monica\")\n\nage_vec &lt;- c(25, 30, 28)\nand create a 3 × 2 matrix with these two vectors.\nDo you encounter errors? Can you print the matrix out? What’s the data type of the matrix?",
-    "crumbs": [
-      "Practices",
-      "Week 1 Practices (0902)"
-    ]
-  },
-  {
-    "objectID": "practices/wk03.html",
-    "href": "practices/wk03.html",
-    "title": "Week 3 Practices (0916)",
-    "section": "",
-    "text": "Please download the datasets county.csv and loan_full_schema.csv here.",
-    "crumbs": [
-      "Practices",
-      "Week 3 Practices (0916)"
-    ]
-  },
-  {
-    "objectID": "practices/wk03.html#download-data",
-    "href": "practices/wk03.html#download-data",
-    "title": "Week 3 Practices (0916)",
-    "section": "",
-    "text": "Please download the datasets county.csv and loan_full_schema.csv here.",
-    "crumbs": [
-      "Practices",
-      "Week 3 Practices (0916)"
-    ]
-  },
-  {
-    "objectID": "practices/wk03.html#coding-style",
-    "href": "practices/wk03.html#coding-style",
-    "title": "Week 3 Practices (0916)",
-    "section": "2 Coding Style",
-    "text": "2 Coding Style\n\nCreate an RStudio project inside a folder with proper names (e.g. TA_Session).\nCreate folders for R scripts and data. (optional: put scripts for the first two weeks’ TA session in the script folder as well.)\nFor the following questions, your code should follow the coding styles in the slides.",
-    "crumbs": [
-      "Practices",
-      "Week 3 Practices (0916)"
-    ]
-  },
-  {
-    "objectID": "practices/wk03.html#contingency-table",
-    "href": "practices/wk03.html#contingency-table",
-    "title": "Week 3 Practices (0916)",
-    "section": "3 Contingency Table",
-    "text": "3 Contingency Table\nUsing the dataset loans_full_schema.csv, create a contingency table by loan_purpose (set as row) and application_type (set as column), and add the sum row and sum column.",
-    "crumbs": [
-      "Practices",
-      "Week 3 Practices (0916)"
-    ]
-  },
-  {
-    "objectID": "practices/wk03.html#bar-graph",
-    "href": "practices/wk03.html#bar-graph",
-    "title": "Week 3 Practices (0916)",
-    "section": "4 Bar Graph",
-    "text": "4 Bar Graph\nUsing the dataset loans_full_schema.csv, draw the bar graph to show the numbers of applicant according to each credit grade by following procedures:\n\nSpecify sub_grade as the x-axis, and fill the bar with grade.\nAdd graph title and axis labels\n\nTitle: Number of Applicant by Credit Grade\n\nx-axis: Credit Grade\n\ny-axis: Number of Applicant\n\nCenter the graph title.\n\n\n\n\n\n\n\nTipHint\n\n\n\nHint: Add theme(plot.title = element_text(hjust = 0.5)) to the graph.\n\n\nAfter that, you should have a beautiful graph and share it with me! :)",
-    "crumbs": [
-      "Practices",
-      "Week 3 Practices (0916)"
-    ]
-  },
-  {
-    "objectID": "practices/wk05.html",
-    "href": "practices/wk05.html",
-    "title": "Week 5 Practices (0930)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 5 Practices (0930)"
-    ]
-  },
-  {
-    "objectID": "practices/wk05.html#reminders",
-    "href": "practices/wk05.html#reminders",
-    "title": "Week 5 Practices (0930)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 5 Practices (0930)"
-    ]
-  },
-  {
-    "objectID": "practices/wk05.html#control-flow",
-    "href": "practices/wk05.html#control-flow",
-    "title": "Week 5 Practices (0930)",
-    "section": "2 Control Flow",
-    "text": "2 Control Flow\nPrint out the characters \"NTU\" for four times, and then print out the characters \"National Taiwan University\" for six times.\n(There are multiple ways to accomplish this, but I encourage you to use a single for-loop and an if-else statement to complete the task so you can get familiar with these syntax.)",
-    "crumbs": [
-      "Practices",
-      "Week 5 Practices (0930)"
-    ]
-  },
-  {
-    "objectID": "practices/wk05.html#binomial-random-sample",
-    "href": "practices/wk05.html#binomial-random-sample",
-    "title": "Week 5 Practices (0930)",
-    "section": "3 Binomial Random Sample",
-    "text": "3 Binomial Random Sample\n\nDraw 400 observations from binomial distribution [size = 1000, prob = 0.5] and compute the mean of the observations.\nUsing the random sample you just generated, create a DataFrame to store the drawn values by using data.frame() function, and draw the histogram graph to see the distribution.",
-    "crumbs": [
-      "Practices",
-      "Week 5 Practices (0930)"
-    ]
-  },
-  {
-    "objectID": "practices/wk05.html#certification-exam",
-    "href": "practices/wk05.html#certification-exam",
-    "title": "Week 5 Practices (0930)",
-    "section": "4 Certification Exam",
-    "text": "4 Certification Exam\nA certification exam is organized for 10 students: Alice, Bob, Charlie, Diana, Ethan, Fiona, George, Hannah, Ivan, and Julia. Each student participates in 10 tests, named test_1, test_2, …, test_10. If the students pass certain amount of tests, they can claim the certificate.\n\nCreate a vector students that contains 10 students’ name.\nCreate a matrix scores that uses the rnorm() to generate students score in 10 tests (average score: 60, standard deviation: 15). Let the column name of the matrix be test_1, test_2, …, test_10.\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse replicate() function to create the matrix first, create a character vector test_names for column names, then use colnames() to assign test_names as the column names of the matrix.\n\n\n\nCreate a dataframe stu_scores that combines students and scores.\n\n\n\n\n\n\n\nTipHint\n\n\n\ndata.frame(name = students, scores) is our new dataframe.\n\n\n\nCreate a function certificate_winner containing three parameters: data, passing_score, min_passed such that a student\n\npasses the test if the his/her score of that test is greater than or equal passing_score\nwins the certificate if the number of passing test is greater than or equal min_passed\n\nFinally, the function should return the students who wins the certificate.\n\n\n\n\n\n\n\nTipHint\n\n\n\nYou can use seq_along in the for-loop, such as for(i in seq_along(data[, 1])){}\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nSet a counter that counts the number of tests the student passed in a for-loop. Remember to reset the counter to be 0 when the next loop begins.\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nCreate a vector passed_students in the function that saves the student’s name if his/her meets the requirements.\n\n\n\nAnswer the following questions:\n\nWho are the certificate winner if passing_score is 60, and the passing_score is 5?\nWho are the certificate winner if passing_score is 65, and the passing_score is 6?",
-    "crumbs": [
-      "Practices",
-      "Week 5 Practices (0930)"
-    ]
-  },
-  {
-    "objectID": "practices/wk07.html",
-    "href": "practices/wk07.html",
-    "title": "Week 7 Practices (1014)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 7 Practices (1014)"
-    ]
-  },
-  {
-    "objectID": "practices/wk07.html#reminders",
-    "href": "practices/wk07.html#reminders",
-    "title": "Week 7 Practices (1014)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 7 Practices (1014)"
-    ]
-  },
-  {
-    "objectID": "practices/wk07.html#download-data",
-    "href": "practices/wk07.html#download-data",
-    "title": "Week 7 Practices (1014)",
-    "section": "2 Download Data",
-    "text": "2 Download Data\nPlease download the datasets loan_full_schema.csv here.",
-    "crumbs": [
-      "Practices",
-      "Week 7 Practices (1014)"
-    ]
-  },
-  {
-    "objectID": "practices/wk07.html#wrap-the-graph",
-    "href": "practices/wk07.html#wrap-the-graph",
-    "title": "Week 7 Practices (1014)",
-    "section": "3 Wrap the graph",
-    "text": "3 Wrap the graph\nUse the dataset loans_full_schema.csv to create a histogram of the variable interest_rate. Set the bin width to 2.5, and facet the graph by the variable loan_purpose, and allow each sub-graph to have a different y-axis scale.",
-    "crumbs": [
-      "Practices",
-      "Week 7 Practices (1014)"
-    ]
-  },
-  {
-    "objectID": "practices/wk07.html#save-the-graph",
-    "href": "practices/wk07.html#save-the-graph",
-    "title": "Week 7 Practices (1014)",
-    "section": "4 Save the graph",
-    "text": "4 Save the graph\n\nCreate a folder figures in your project folder.\nSave the graph in the last question to the figures folder with name wk7_default_plot without any customized setting.\nSave another graph with name wk7_sized_plot using height = 6, width = 4.\nAdd assignment dpi = 150 to the last graph, and named the new graph as wk7_sized_plot_150dpi.\nCompare the differences between wk7_default_plot, wk7_sized_plot and wk7_sized_plot_150dpi.",
-    "crumbs": [
-      "Practices",
-      "Week 7 Practices (1014)"
-    ]
-  },
-  {
-    "objectID": "practices/wk10.html",
-    "href": "practices/wk10.html",
-    "title": "Week 10 Practices (1104)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 10 Practices (1104)"
-    ]
-  },
-  {
-    "objectID": "practices/wk10.html#reminders",
-    "href": "practices/wk10.html#reminders",
-    "title": "Week 10 Practices (1104)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 10 Practices (1104)"
-    ]
-  },
-  {
-    "objectID": "practices/wk10.html#clt-simulation",
-    "href": "practices/wk10.html#clt-simulation",
-    "title": "Week 10 Practices (1104)",
-    "section": "2 CLT Simulation",
-    "text": "2 CLT Simulation\n\n2.1 Draw Poisson Sample\nWrite a function called sample_mean_pois(n) with the following specification:\n\nDraw \\(n\\) random samples from a Poisson distribution \\(\\lambda = 5\\).\n\n2.Compute the sample mean.\n\nReturn the sample mean.\n\nThis function allows you to draw \\(n\\) random samples from a Poisson distribution (\\(\\lambda=5\\)) and compute the sample mean.\n\n\n2.2 Build Sample Mean DataFrame\nNow, we’re going to utilize the function to help us compute the sample mean multiple times. Please follow the instructions step-by-step:\n\nSet the random seed to 2025.\nGiven \\(n=500\\), use the function replicate() to execute the function sample_mean_pois(n) we just defined for 1,000 times.\nAfter that, you should obtain 1,000 sample means. Assign the 1,000 sample means to a variable called rdmean and build a DataFrame from it.\n\nSo far, we have obtained \\(1,000\\) sample means, each calculated from \\(500\\) Poisson samples.\n\n\n2.3 Histogram\nUsing the DataFrame we just built, draw a histogram to examine the distribution of the sample means.",
-    "crumbs": [
-      "Practices",
-      "Week 10 Practices (1104)"
-    ]
-  },
-  {
-    "objectID": "practices/wk12.html",
-    "href": "practices/wk12.html",
-    "title": "Week 12 Practices (1118)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 12 Practices (1118)"
-    ]
-  },
-  {
-    "objectID": "practices/wk12.html#reminders",
-    "href": "practices/wk12.html#reminders",
-    "title": "Week 12 Practices (1118)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practices",
-      "Week 12 Practices (1118)"
-    ]
-  },
-  {
-    "objectID": "practices/wk12.html#download-data",
-    "href": "practices/wk12.html#download-data",
-    "title": "Week 12 Practices (1118)",
+    "objectID": "answers/wk12_answer.html#download-data",
+    "href": "answers/wk12_answer.html#download-data",
+    "title": "Week 12 Answers (1118)",
     "section": "2 Download Data",
     "text": "2 Download Data\nPlease download the datasets transactions.csv (right click here)",
     "crumbs": [
-      "Practices",
-      "Week 12 Practices (1118)"
+      "Practice Answers",
+      "Week 12 Answers (1118)"
     ]
   },
   {
-    "objectID": "practices/wk12.html#silent-witch-chinmoku-no-majo-no-kakushigoto-silent-witch-沉默魔女的祕密",
-    "href": "practices/wk12.html#silent-witch-chinmoku-no-majo-no-kakushigoto-silent-witch-沉默魔女的祕密",
-    "title": "Week 12 Practices (1118)",
+    "objectID": "answers/wk12_answer.html#silent-witch-chinmoku-no-majo-no-kakushigoto-silent-witch-沉默魔女的祕密",
+    "href": "answers/wk12_answer.html#silent-witch-chinmoku-no-majo-no-kakushigoto-silent-witch-沉默魔女的祕密",
+    "title": "Week 12 Answers (1118)",
     "section": "3 Silent Witch: Chinmoku no Majo no Kakushigoto (Silent Witch 沉默魔女的祕密)",
-    "text": "3 Silent Witch: Chinmoku no Majo no Kakushigoto (Silent Witch 沉默魔女的祕密)\nMonica is the new accountant for the Serendia Academy’s student association. She suspects that cash vs non-cash transactions in 2024 look quite different from previous years, and worries there might be some false accounting going on.\nMonica sees a dataset transactions.csv with the following columns:\n\nyear: the year of the transaction (2015–2024)\n\npayment_type: \"cash\", \"bank_transfer\", or \"online\"\n\namount: transaction amount in dollars\n\nShe wants to use a chi-squared test to check if the distribution of payment types in 2024’s accounting is significantly different from the other years.\n\nUse the pipe %&gt;% in the steps below.\nCreate a new column period with two categories: pre_2024 for years 2015–2023, year_2024 for year 2024 only. Save the result as transactions_by2024.\nUsing group_by() and summarise(), compute a table of the number and mean of transactions for each combination of period and payment_type from transactions_by2024.\nFrom transactions_by2024, create a 2 × 3 contingency table tab (period × payment_type) using table().\nUse chisq.test() on tab to test:\n\n\\(H_0\\): The distribution of payment_type is the same in pre_2024 and year_2024.\n\\(H_1\\): The distribution of payment_type is different in year_2024.\n\nReport the p-value from the chi-squared test. Is there false accounting in 2024?",
+    "text": "3 Silent Witch: Chinmoku no Majo no Kakushigoto (Silent Witch 沉默魔女的祕密)\nMonica is the new accountant for the Serendia Academy’s student association. She suspects that cash vs non-cash transactions in 2024 look quite different from previous years, and worries there might be some false accounting going on.\nMonica sees a dataset transactions.csv with the following columns:\n\nyear: the year of the transaction (2015–2024)\n\npayment_type: \"cash\", \"bank_transfer\", or \"online\"\n\namount: transaction amount in dollars\n\nShe wants to use a chi-squared test to check if the distribution of payment types in 2024’s accounting is significantly different from the other years.\n\nUse the pipe %&gt;% in the steps below.\nCreate a new column period with two categories: pre_2024 for years 2015–2023, year_2024 for year 2024 only. Save the result as transactions_by2024.\n\nlibrary(tidyverse)\n\ntransactions &lt;- read.csv(\"data/transactions.csv\")\n\ntransactions_by2024 &lt;- transactions %&gt;%\n  mutate(\n    period = if_else(year == 2024, \"year_2024\", \"pre_2024\")\n  )\n\nUsing group_by() and summarise(), compute a table of the number and mean of transactions for each combination of period and payment_type from transactions_by2024.\n\nsummary_counts &lt;- transactions_by2024 %&gt;%\n  group_by(period, payment_type) %&gt;%\n  summarize(n = n(), \n            mean = mean(amount)\n            ) %&gt;%\n  ungroup()\n\n\n# A tibble: 6 × 4\n  period    payment_type      n  mean\n  &lt;chr&gt;     &lt;chr&gt;         &lt;int&gt; &lt;dbl&gt;\n1 pre_2024  bank_transfer   828  271.\n2 pre_2024  cash           1259  271.\n3 pre_2024  online          613  277.\n4 year_2024 bank_transfer    53  267.\n5 year_2024 cash            213  277.\n6 year_2024 online           34  244.\n\n\n\nFrom transactions_by2024, create a 2 × 3 contingency table tab (period × payment_type) using table().\n\ntab &lt;- table(transactions_by2024$period, \n             transactions_by2024$payment_type\n             )\n\n\n           \n            bank_transfer cash online\n  pre_2024            828 1259    613\n  year_2024            53  213     34\n\n\n\nUse chisq.test() on tab to test:\n\n\\(H_0\\): The distribution of payment_type is the same in pre_2024 and year_2024.\n\\(H_1\\): The distribution of payment_type is different in year_2024.\n\n\nchisq_result &lt;- chisq.test(tab)\n\n\n\n    Pearson's Chi-squared test\n\ndata:  tab\nX-squared = 64.405, df = 2, p-value = 1.034e-14\n\n\n\nReport the p-value from the chi-squared test. Is there false accounting in 2024?\n\nprint(chisq_result[[\"p.value\"]]) # reject the null hypothesis\n\n\n[1] 1.034198e-14",
     "crumbs": [
-      "Practices",
-      "Week 12 Practices (1118)"
+      "Practice Answers",
+      "Week 12 Answers (1118)"
     ]
   },
   {
-    "objectID": "answers/wk01_answer.html",
-    "href": "answers/wk01_answer.html",
-    "title": "Week 1 Answers (0902)",
+    "objectID": "answers/wk10_answer.html",
+    "href": "answers/wk10_answer.html",
+    "title": "Week 10 Answers (1104)",
     "section": "",
-    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.\nx &lt;- 20250902\ny &lt;- 1031\nprint(x / y)",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
     "crumbs": [
       "Practice Answers",
-      "Week 1 Answers (0902)"
+      "Week 10 Answers (1104)"
     ]
   },
   {
-    "objectID": "answers/wk01_answer.html#assign-values",
-    "href": "answers/wk01_answer.html#assign-values",
-    "title": "Week 1 Answers (0902)",
+    "objectID": "answers/wk10_answer.html#reminders",
+    "href": "answers/wk10_answer.html#reminders",
+    "title": "Week 10 Answers (1104)",
     "section": "",
-    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.\nx &lt;- 20250902\ny &lt;- 1031\nprint(x / y)",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
     "crumbs": [
       "Practice Answers",
-      "Week 1 Answers (0902)"
+      "Week 10 Answers (1104)"
     ]
   },
   {
-    "objectID": "answers/wk01_answer.html#help",
-    "href": "answers/wk01_answer.html#help",
-    "title": "Week 1 Answers (0902)",
-    "section": "2 Help",
-    "text": "2 Help\nUse the help() function to check docs, e.g. data.frame() or mean().\nhelp(data.frame)\nhelp(mean)",
+    "objectID": "answers/wk10_answer.html#clt-simulation",
+    "href": "answers/wk10_answer.html#clt-simulation",
+    "title": "Week 10 Answers (1104)",
+    "section": "2 CLT Simulation",
+    "text": "2 CLT Simulation\n\n2.1 Draw Poisson Sample\nWrite a function called sample_mean_pois(n) with the following specification:\n\nDraw \\(n\\) random samples from a Poisson distribution \\(\\lambda = 5\\).\nCompute the sample mean.\nReturn the sample mean.\n\nThis function allows you to draw \\(n\\) random samples from a Poisson distribution (\\(\\lambda=5\\)) and compute the sample mean.\nsample_mean_pois &lt;- function(n){\n  rdnum &lt;- rpois(n, lambda = 5)\n  return(mean(rdnum))\n}\n\n\n2.2 Build Sample Mean DataFrame\nNow, we’re going to utilize the function to help us compute the sample mean multiple times. Please follow the instructions step-by-step:\n\nSet the random seed to 2025.\nGiven \\(n=500\\), use the function replicate() to execute the function sample_mean_pois(n) we just defined for 1,000 times.\nAfter that, you should obtain 1,000 sample means. Assign the 1,000 sample means to a variable called rdmean and build a DataFrame from it.\n\nSo far, we have obtained \\(1,000\\) sample means, each calculated from \\(500\\) Poisson samples.\nset.seed(2025)\n\nrdmean &lt;- replicate(n = 1000, sample_mean_pois(500))\n\ndf &lt;- data.frame(\n  rdmean\n)\n\n\n2.3 Histogram\nUsing the DataFrame we just built, draw a histogram to examine the distribution of the sample means.\ndf %&gt;% ggplot(aes(x = rdmean)) +\n  geom_histogram()",
     "crumbs": [
       "Practice Answers",
-      "Week 1 Answers (0902)"
-    ]
-  },
-  {
-    "objectID": "answers/wk01_answer.html#matrix",
-    "href": "answers/wk01_answer.html#matrix",
-    "title": "Week 1 Answers (0902)",
-    "section": "3 Matrix",
-    "text": "3 Matrix\nCreate the following vectors:\nname_vec &lt;- c(\"James\", \"Noc\", \"Monica\")\n\nage_vec &lt;- c(25, 30, 28)\nand create a 3 × 2 matrix with these two vectors.\nDo you encounter errors? Can you print the matrix out? What’s the data type of the matrix?\nname_vec &lt;- c(\"James\", \"Noc\", \"Monica\")\nage_vec &lt;- c(25, 30, 28)\nmat &lt;- matrix(c(name_vec, age_vec), nrow = 3)\nprint(mat)\nclass(mat)\n\n# `mat[,2]` only select the second column\n# note that the `age_vec` become character type after merging into matrix\nprint(mat[,2])\nclass(mat[,2])",
-    "crumbs": [
-      "Practice Answers",
-      "Week 1 Answers (0902)"
-    ]
-  },
-  {
-    "objectID": "answers/wk03_answer.html",
-    "href": "answers/wk03_answer.html",
-    "title": "Week 3 Answers (0916)",
-    "section": "",
-    "text": "Please download the datasets county.csv and loan_full_schema.csv here.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 3 Answers (0916)"
-    ]
-  },
-  {
-    "objectID": "answers/wk03_answer.html#download-data",
-    "href": "answers/wk03_answer.html#download-data",
-    "title": "Week 3 Answers (0916)",
-    "section": "",
-    "text": "Please download the datasets county.csv and loan_full_schema.csv here.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 3 Answers (0916)"
-    ]
-  },
-  {
-    "objectID": "answers/wk03_answer.html#coding-style",
-    "href": "answers/wk03_answer.html#coding-style",
-    "title": "Week 3 Answers (0916)",
-    "section": "2 Coding Style",
-    "text": "2 Coding Style\n\nCreate an RStudio project inside a folder with proper names (e.g. TA_Session).\nCreate folders for R scripts and data. (optional: put scripts for the first two weeks’ TA session in the script folder as well.)\nFor the following questions, your code should follow the coding styles in the slides.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 3 Answers (0916)"
-    ]
-  },
-  {
-    "objectID": "answers/wk03_answer.html#contingency-table",
-    "href": "answers/wk03_answer.html#contingency-table",
-    "title": "Week 3 Answers (0916)",
-    "section": "3 Contingency Table",
-    "text": "3 Contingency Table\nUsing the dataset loans_full_schema.csv, create a contingency table by loan_purpose (set as row) and application_type (set as column), and add the sum row and sum column.\nloan   &lt;- read.csv(\"data/loans_full_schema.csv\")\ntable &lt;- table(loan$loan_purpose, loan$application_type)\ntable_sum &lt;- addmargins(table)\nprint(table_sum)\n##                      individual joint   Sum\n##   car                       116    15   131\n##   credit_card              1971   278  2249\n##   debt_consolidation       4289   855  5144\n##   home_improvement          566   114   680\n##   house                     146     5   151\n##   major_purchase            273    30   303\n##   medical                   128    34   162\n##   moving                     59    10    69\n##   other                     793   121   914\n##   renewable_energy            9     1    10\n##   small_business            101    24   125\n##   vacation                   54     8    62\n##   Sum                      8505  1495 10000",
-    "crumbs": [
-      "Practice Answers",
-      "Week 3 Answers (0916)"
-    ]
-  },
-  {
-    "objectID": "answers/wk03_answer.html#bar-graph",
-    "href": "answers/wk03_answer.html#bar-graph",
-    "title": "Week 3 Answers (0916)",
-    "section": "4 Bar Graph",
-    "text": "4 Bar Graph\nUsing the dataset loans_full_schema.csv, draw the bar graph to show the numbers of applicant according to each credit grade by following procedures:\n\nSpecify sub_grade as the x-axis, and fill the bar with grade.\nAdd graph title and axis labels\n\nTitle: Number of Applicant by Credit Grade\n\nx-axis: Credit Grade\n\ny-axis: Number of Applicant\n\nCenter the graph title.\n\n\n\n\n\n\n\nTipHint\n\n\n\nHint: Add theme(plot.title = element_text(hjust = 0.5)) to the graph.\n\n\nAfter that, you should have a beautiful graph and share it with me! :)\nggplot(loan, aes(x = sub_grade, fill = grade)) +\n  geom_bar() +\n  labs(\n    x = \"Credit Grade\",\n    y = \"Number of Applicant\",\n    title = \"Number of Applicant by Credit Grade\"\n  ) +\n  theme(plot.title = element_text(hjust = 0.5))",
-    "crumbs": [
-      "Practice Answers",
-      "Week 3 Answers (0916)"
-    ]
-  },
-  {
-    "objectID": "answers/wk05_answer.html",
-    "href": "answers/wk05_answer.html",
-    "title": "Week 5 Answers (0930)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 5 Answers (0930)"
-    ]
-  },
-  {
-    "objectID": "answers/wk05_answer.html#reminders",
-    "href": "answers/wk05_answer.html#reminders",
-    "title": "Week 5 Answers (0930)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 5 Answers (0930)"
-    ]
-  },
-  {
-    "objectID": "answers/wk05_answer.html#control-flow",
-    "href": "answers/wk05_answer.html#control-flow",
-    "title": "Week 5 Answers (0930)",
-    "section": "2 Control Flow",
-    "text": "2 Control Flow\nPrint out the characters \"NTU\" for four times, and then print out the characters \"National Taiwan University\" for six times.\n(There are multiple ways to accomplish this, but I encourage you to use a single for-loop and an if-else statement to complete the task so you can get familiar with these syntax.)\nfor (i in 1:10){\n  if (i &lt;= 4){\n    print(\"NTU\")\n  }else{\n    print(\"National Taiwan University\")\n  }\n}\n## [1] \"NTU\"\n## [1] \"NTU\"\n## [1] \"NTU\"\n## [1] \"NTU\"\n## [1] \"National Taiwan University\"\n## [1] \"National Taiwan University\"\n## [1] \"National Taiwan University\"\n## [1] \"National Taiwan University\"\n## [1] \"National Taiwan University\"\n## [1] \"National Taiwan University\"",
-    "crumbs": [
-      "Practice Answers",
-      "Week 5 Answers (0930)"
-    ]
-  },
-  {
-    "objectID": "answers/wk05_answer.html#binomial-random-sample",
-    "href": "answers/wk05_answer.html#binomial-random-sample",
-    "title": "Week 5 Answers (0930)",
-    "section": "3 Binomial Random Sample",
-    "text": "3 Binomial Random Sample\n\nDraw 400 observations from binomial distribution [size = 1000, prob = 0.5] and compute the mean of the observations.\n\nset.seed(2025)\nsample_size &lt;- 400\nrdn &lt;- rbinom(n = sample_size, size = 1000, prob = 0.5)\nmean &lt;- mean(rdn)\nprint(mean)\n## [1] 499.2225\n\nUsing the random sample you just generated, create a DataFrame to store the drawn values by using data.frame() function, and draw the histogram graph to see the distribution.\n\nlibrary(ggplot2)\n\ndf &lt;- data.frame(\n  values = rdn\n)\nggplot(df, aes(x = values)) +\n  geom_histogram()",
-    "crumbs": [
-      "Practice Answers",
-      "Week 5 Answers (0930)"
-    ]
-  },
-  {
-    "objectID": "answers/wk05_answer.html#certification-exam",
-    "href": "answers/wk05_answer.html#certification-exam",
-    "title": "Week 5 Answers (0930)",
-    "section": "4 Certification Exam",
-    "text": "4 Certification Exam\nA certification exam is organized for 10 students: Alice, Bob, Charlie, Diana, Ethan, Fiona, George, Hannah, Ivan, and Julia. Each student participates in 10 tests, named test_1, test_2, …, test_10. If the students pass certain amount of tests, they can claim the certificate.\n\nCreate a vector students that contains 10 students’ name.\nCreate a matrix scores that uses the rnorm() to generate students score in 10 tests (average score: 60, standard deviation: 15). Let the column name of the matrix be test_1, test_2, …, test_10.\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse replicate() function to create the matrix first, create a character vector test_names for column names, then use colnames() to assign test_names as the column names of the matrix.\n\n\n\nCreate a dataframe stu_scores that combines students and scores.\n\n\n\n\n\n\n\nTipHint\n\n\n\ndata.frame(name = students, scores) is our new dataframe.\n\n\n\nCreate a function certificate_winner containing three parameters: data, passing_score, min_passed such that a student\n\npasses the test if the his/her score of that test is greater than or equal passing_score\nwins the certificate if the number of passing test is greater than or equal min_passed\n\nFinally, the function should return the students who wins the certificate.\n\n\n\n\n\n\n\nTipHint\n\n\n\nYou can use seq_along in the for-loop, such as for(i in seq_along(data[, 1])){}\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nSet a counter that counts the number of tests the student passed in a for-loop. Remember to reset the counter to be 0 when the next loop begins.\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nCreate a vector passed_students in the function that saves the student’s name if his/her meets the requirements.\n\n\n\nAnswer the following questions:\n\nWho are the certificate winner if passing_score is 60, and the passing_score is 5?\nWho are the certificate winner if passing_score is 65, and the passing_score is 6?\n\n\n# Part 1: Create student vector\nstudents &lt;- c(\"Alice\", \"Bob\", \"Charlie\", \"Diana\", \"Ethan\",\n              \"Fiona\", \"George\", \"Hannah\", \"Ivan\", \"Julia\")\n\n# Part 2: Create score matrix\ntest_names &lt;- c(\"test_1\", \"test_2\", \"test_3\", \"test_4\", \"test_5\",\n              \"test_6\", \"test_7\", \"test_8\", \"test_9\", \"test_10\")\n\n\nscores &lt;- replicate(10, rnorm(10, mean = 60, sd = 15))\n\ncolnames(scores) &lt;- test_names\n\n# Part 3: Create the dataframe that combines students and scores\nstu_scores &lt;- data.frame(name = students, scores)\n\n# Part 4: Create the certificate_winner function\ncertificate_winner &lt;- function(data, passing_score, min_passed){\n  \n  # Students names are in the first column\n  stu_vec &lt;- data[, 1]\n  \n  # Test names are in 2~11th columns\n  test_cols &lt;- colnames(data[, 2:11])\n  \n  # Counter for the number of exam passed\n  pass_count &lt;- 0\n  \n  # Students that wins the certificate\n  passed_students &lt;- c()\n  \n  # for i in 1:10\n  for(i in seq_along(stu_vec)){\n    \n    # Remember the counter should be reset for each student\n    pass_count &lt;- 0\n    \n    # for j in 1:10\n    for (j in seq_along(test_cols)){\n      \n      # Passed if score larger than passing_score\n      if(data[i, j+1] &gt;= passing_score){\n        \n        # Count how many tests student i passed\n        pass_count &lt;- pass_count + 1\n      }\n      \n    }\n      # Claims the certificate if number of exam passed &gt; minimum requirements\n      if(pass_count &gt;= min_passed){\n        \n        passed_students &lt;- c(passed_students, data[i, 1])\n        \n      }\n  }\n  \n  # Return the winners\n  return(passed_students)\n}\n\n# Question 1\nquestion_1_winners &lt;- certificate_winner(stu_scores, 60, 5)\nprint(question_1_winners)\n\n# Question 2\nquestion_2_winners &lt;- certificate_winner(stu_scores, 70, 6)\nprint(question_2_winners)\n#### Question 1 Answers\n## [1] \"Bob\"     \"Charlie\" \"Diana\"   \"Ethan\"   \"Fiona\"   \"Hannah\" \n#### Question 2 Answers\n## [1] \"Ethan\"",
-    "crumbs": [
-      "Practice Answers",
-      "Week 5 Answers (0930)"
+      "Week 10 Answers (1104)"
     ]
   },
   {
@@ -1341,80 +352,1113 @@
     ]
   },
   {
-    "objectID": "answers/wk10_answer.html",
-    "href": "answers/wk10_answer.html",
-    "title": "Week 10 Answers (1104)",
+    "objectID": "answers/wk05_answer.html",
+    "href": "answers/wk05_answer.html",
+    "title": "Week 5 Answers (0930)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 5 Answers (0930)"
+    ]
+  },
+  {
+    "objectID": "answers/wk05_answer.html#reminders",
+    "href": "answers/wk05_answer.html#reminders",
+    "title": "Week 5 Answers (0930)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 5 Answers (0930)"
+    ]
+  },
+  {
+    "objectID": "answers/wk05_answer.html#control-flow",
+    "href": "answers/wk05_answer.html#control-flow",
+    "title": "Week 5 Answers (0930)",
+    "section": "2 Control Flow",
+    "text": "2 Control Flow\nPrint out the characters \"NTU\" for four times, and then print out the characters \"National Taiwan University\" for six times.\n(There are multiple ways to accomplish this, but I encourage you to use a single for-loop and an if-else statement to complete the task so you can get familiar with these syntax.)\nfor (i in 1:10){\n  if (i &lt;= 4){\n    print(\"NTU\")\n  }else{\n    print(\"National Taiwan University\")\n  }\n}\n## [1] \"NTU\"\n## [1] \"NTU\"\n## [1] \"NTU\"\n## [1] \"NTU\"\n## [1] \"National Taiwan University\"\n## [1] \"National Taiwan University\"\n## [1] \"National Taiwan University\"\n## [1] \"National Taiwan University\"\n## [1] \"National Taiwan University\"\n## [1] \"National Taiwan University\"",
+    "crumbs": [
+      "Practice Answers",
+      "Week 5 Answers (0930)"
+    ]
+  },
+  {
+    "objectID": "answers/wk05_answer.html#binomial-random-sample",
+    "href": "answers/wk05_answer.html#binomial-random-sample",
+    "title": "Week 5 Answers (0930)",
+    "section": "3 Binomial Random Sample",
+    "text": "3 Binomial Random Sample\n\nDraw 400 observations from binomial distribution [size = 1000, prob = 0.5] and compute the mean of the observations.\n\nset.seed(2025)\nsample_size &lt;- 400\nrdn &lt;- rbinom(n = sample_size, size = 1000, prob = 0.5)\nmean &lt;- mean(rdn)\nprint(mean)\n## [1] 499.2225\n\nUsing the random sample you just generated, create a DataFrame to store the drawn values by using data.frame() function, and draw the histogram graph to see the distribution.\n\nlibrary(ggplot2)\n\ndf &lt;- data.frame(\n  values = rdn\n)\nggplot(df, aes(x = values)) +\n  geom_histogram()",
+    "crumbs": [
+      "Practice Answers",
+      "Week 5 Answers (0930)"
+    ]
+  },
+  {
+    "objectID": "answers/wk05_answer.html#certification-exam",
+    "href": "answers/wk05_answer.html#certification-exam",
+    "title": "Week 5 Answers (0930)",
+    "section": "4 Certification Exam",
+    "text": "4 Certification Exam\nA certification exam is organized for 10 students: Alice, Bob, Charlie, Diana, Ethan, Fiona, George, Hannah, Ivan, and Julia. Each student participates in 10 tests, named test_1, test_2, …, test_10. If the students pass certain amount of tests, they can claim the certificate.\n\nCreate a vector students that contains 10 students’ name.\nCreate a matrix scores that uses the rnorm() to generate students score in 10 tests (average score: 60, standard deviation: 15). Let the column name of the matrix be test_1, test_2, …, test_10.\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse replicate() function to create the matrix first, create a character vector test_names for column names, then use colnames() to assign test_names as the column names of the matrix.\n\n\n\nCreate a dataframe stu_scores that combines students and scores.\n\n\n\n\n\n\n\nTipHint\n\n\n\ndata.frame(name = students, scores) is our new dataframe.\n\n\n\nCreate a function certificate_winner containing three parameters: data, passing_score, min_passed such that a student\n\npasses the test if the his/her score of that test is greater than or equal passing_score\nwins the certificate if the number of passing test is greater than or equal min_passed\n\nFinally, the function should return the students who wins the certificate.\n\n\n\n\n\n\n\nTipHint\n\n\n\nYou can use seq_along in the for-loop, such as for(i in seq_along(data[, 1])){}\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nSet a counter that counts the number of tests the student passed in a for-loop. Remember to reset the counter to be 0 when the next loop begins.\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nCreate a vector passed_students in the function that saves the student’s name if his/her meets the requirements.\n\n\n\nAnswer the following questions:\n\nWho are the certificate winner if passing_score is 60, and the passing_score is 5?\nWho are the certificate winner if passing_score is 65, and the passing_score is 6?\n\n\n# Part 1: Create student vector\nstudents &lt;- c(\"Alice\", \"Bob\", \"Charlie\", \"Diana\", \"Ethan\",\n              \"Fiona\", \"George\", \"Hannah\", \"Ivan\", \"Julia\")\n\n# Part 2: Create score matrix\ntest_names &lt;- c(\"test_1\", \"test_2\", \"test_3\", \"test_4\", \"test_5\",\n              \"test_6\", \"test_7\", \"test_8\", \"test_9\", \"test_10\")\n\n\nscores &lt;- replicate(10, rnorm(10, mean = 60, sd = 15))\n\ncolnames(scores) &lt;- test_names\n\n# Part 3: Create the dataframe that combines students and scores\nstu_scores &lt;- data.frame(name = students, scores)\n\n# Part 4: Create the certificate_winner function\ncertificate_winner &lt;- function(data, passing_score, min_passed){\n  \n  # Students names are in the first column\n  stu_vec &lt;- data[, 1]\n  \n  # Test names are in 2~11th columns\n  test_cols &lt;- colnames(data[, 2:11])\n  \n  # Counter for the number of exam passed\n  pass_count &lt;- 0\n  \n  # Students that wins the certificate\n  passed_students &lt;- c()\n  \n  # for i in 1:10\n  for(i in seq_along(stu_vec)){\n    \n    # Remember the counter should be reset for each student\n    pass_count &lt;- 0\n    \n    # for j in 1:10\n    for (j in seq_along(test_cols)){\n      \n      # Passed if score larger than passing_score\n      if(data[i, j+1] &gt;= passing_score){\n        \n        # Count how many tests student i passed\n        pass_count &lt;- pass_count + 1\n      }\n      \n    }\n      # Claims the certificate if number of exam passed &gt; minimum requirements\n      if(pass_count &gt;= min_passed){\n        \n        passed_students &lt;- c(passed_students, data[i, 1])\n        \n      }\n  }\n  \n  # Return the winners\n  return(passed_students)\n}\n\n# Question 1\nquestion_1_winners &lt;- certificate_winner(stu_scores, 60, 5)\nprint(question_1_winners)\n\n# Question 2\nquestion_2_winners &lt;- certificate_winner(stu_scores, 70, 6)\nprint(question_2_winners)\n#### Question 1 Answers\n## [1] \"Bob\"     \"Charlie\" \"Diana\"   \"Ethan\"   \"Fiona\"   \"Hannah\" \n#### Question 2 Answers\n## [1] \"Ethan\"",
+    "crumbs": [
+      "Practice Answers",
+      "Week 5 Answers (0930)"
+    ]
+  },
+  {
+    "objectID": "answers/wk03_answer.html",
+    "href": "answers/wk03_answer.html",
+    "title": "Week 3 Answers (0916)",
+    "section": "",
+    "text": "Please download the datasets county.csv and loan_full_schema.csv here.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 3 Answers (0916)"
+    ]
+  },
+  {
+    "objectID": "answers/wk03_answer.html#download-data",
+    "href": "answers/wk03_answer.html#download-data",
+    "title": "Week 3 Answers (0916)",
+    "section": "",
+    "text": "Please download the datasets county.csv and loan_full_schema.csv here.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 3 Answers (0916)"
+    ]
+  },
+  {
+    "objectID": "answers/wk03_answer.html#coding-style",
+    "href": "answers/wk03_answer.html#coding-style",
+    "title": "Week 3 Answers (0916)",
+    "section": "2 Coding Style",
+    "text": "2 Coding Style\n\nCreate an RStudio project inside a folder with proper names (e.g. TA_Session).\nCreate folders for R scripts and data. (optional: put scripts for the first two weeks’ TA session in the script folder as well.)\nFor the following questions, your code should follow the coding styles in the slides.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 3 Answers (0916)"
+    ]
+  },
+  {
+    "objectID": "answers/wk03_answer.html#contingency-table",
+    "href": "answers/wk03_answer.html#contingency-table",
+    "title": "Week 3 Answers (0916)",
+    "section": "3 Contingency Table",
+    "text": "3 Contingency Table\nUsing the dataset loans_full_schema.csv, create a contingency table by loan_purpose (set as row) and application_type (set as column), and add the sum row and sum column.\nloan   &lt;- read.csv(\"data/loans_full_schema.csv\")\ntable &lt;- table(loan$loan_purpose, loan$application_type)\ntable_sum &lt;- addmargins(table)\nprint(table_sum)\n##                      individual joint   Sum\n##   car                       116    15   131\n##   credit_card              1971   278  2249\n##   debt_consolidation       4289   855  5144\n##   home_improvement          566   114   680\n##   house                     146     5   151\n##   major_purchase            273    30   303\n##   medical                   128    34   162\n##   moving                     59    10    69\n##   other                     793   121   914\n##   renewable_energy            9     1    10\n##   small_business            101    24   125\n##   vacation                   54     8    62\n##   Sum                      8505  1495 10000",
+    "crumbs": [
+      "Practice Answers",
+      "Week 3 Answers (0916)"
+    ]
+  },
+  {
+    "objectID": "answers/wk03_answer.html#bar-graph",
+    "href": "answers/wk03_answer.html#bar-graph",
+    "title": "Week 3 Answers (0916)",
+    "section": "4 Bar Graph",
+    "text": "4 Bar Graph\nUsing the dataset loans_full_schema.csv, draw the bar graph to show the numbers of applicant according to each credit grade by following procedures:\n\nSpecify sub_grade as the x-axis, and fill the bar with grade.\nAdd graph title and axis labels\n\nTitle: Number of Applicant by Credit Grade\n\nx-axis: Credit Grade\n\ny-axis: Number of Applicant\n\nCenter the graph title.\n\n\n\n\n\n\n\nTipHint\n\n\n\nHint: Add theme(plot.title = element_text(hjust = 0.5)) to the graph.\n\n\nAfter that, you should have a beautiful graph and share it with me! :)\nggplot(loan, aes(x = sub_grade, fill = grade)) +\n  geom_bar() +\n  labs(\n    x = \"Credit Grade\",\n    y = \"Number of Applicant\",\n    title = \"Number of Applicant by Credit Grade\"\n  ) +\n  theme(plot.title = element_text(hjust = 0.5))",
+    "crumbs": [
+      "Practice Answers",
+      "Week 3 Answers (0916)"
+    ]
+  },
+  {
+    "objectID": "answers/wk01_answer.html",
+    "href": "answers/wk01_answer.html",
+    "title": "Week 1 Answers (0902)",
+    "section": "",
+    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.\nx &lt;- 20250902\ny &lt;- 1031\nprint(x / y)",
+    "crumbs": [
+      "Practice Answers",
+      "Week 1 Answers (0902)"
+    ]
+  },
+  {
+    "objectID": "answers/wk01_answer.html#assign-values",
+    "href": "answers/wk01_answer.html#assign-values",
+    "title": "Week 1 Answers (0902)",
+    "section": "",
+    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.\nx &lt;- 20250902\ny &lt;- 1031\nprint(x / y)",
+    "crumbs": [
+      "Practice Answers",
+      "Week 1 Answers (0902)"
+    ]
+  },
+  {
+    "objectID": "answers/wk01_answer.html#help",
+    "href": "answers/wk01_answer.html#help",
+    "title": "Week 1 Answers (0902)",
+    "section": "2 Help",
+    "text": "2 Help\nUse the help() function to check docs, e.g. data.frame() or mean().\nhelp(data.frame)\nhelp(mean)",
+    "crumbs": [
+      "Practice Answers",
+      "Week 1 Answers (0902)"
+    ]
+  },
+  {
+    "objectID": "answers/wk01_answer.html#matrix",
+    "href": "answers/wk01_answer.html#matrix",
+    "title": "Week 1 Answers (0902)",
+    "section": "3 Matrix",
+    "text": "3 Matrix\nCreate the following vectors:\nname_vec &lt;- c(\"James\", \"Noc\", \"Monica\")\n\nage_vec &lt;- c(25, 30, 28)\nand create a 3 × 2 matrix with these two vectors.\nDo you encounter errors? Can you print the matrix out? What’s the data type of the matrix?\nname_vec &lt;- c(\"James\", \"Noc\", \"Monica\")\nage_vec &lt;- c(25, 30, 28)\nmat &lt;- matrix(c(name_vec, age_vec), nrow = 3)\nprint(mat)\nclass(mat)\n\n# `mat[,2]` only select the second column\n# note that the `age_vec` become character type after merging into matrix\nprint(mat[,2])\nclass(mat[,2])",
+    "crumbs": [
+      "Practice Answers",
+      "Week 1 Answers (0902)"
+    ]
+  },
+  {
+    "objectID": "practices/wk12.html",
+    "href": "practices/wk12.html",
+    "title": "Week 12 Practices (1118)",
     "section": "",
     "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
     "crumbs": [
-      "Practice Answers",
-      "Week 10 Answers (1104)"
+      "Practices",
+      "Week 12 Practices (1118)"
     ]
   },
   {
-    "objectID": "answers/wk10_answer.html#reminders",
-    "href": "answers/wk10_answer.html#reminders",
-    "title": "Week 10 Answers (1104)",
+    "objectID": "practices/wk12.html#reminders",
+    "href": "practices/wk12.html#reminders",
+    "title": "Week 12 Practices (1118)",
     "section": "",
     "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
     "crumbs": [
-      "Practice Answers",
-      "Week 10 Answers (1104)"
+      "Practices",
+      "Week 12 Practices (1118)"
     ]
   },
   {
-    "objectID": "answers/wk10_answer.html#clt-simulation",
-    "href": "answers/wk10_answer.html#clt-simulation",
-    "title": "Week 10 Answers (1104)",
-    "section": "2 CLT Simulation",
-    "text": "2 CLT Simulation\n\n2.1 Draw Poisson Sample\nWrite a function called sample_mean_pois(n) with the following specification:\n\nDraw \\(n\\) random samples from a Poisson distribution \\(\\lambda = 5\\).\nCompute the sample mean.\nReturn the sample mean.\n\nThis function allows you to draw \\(n\\) random samples from a Poisson distribution (\\(\\lambda=5\\)) and compute the sample mean.\nsample_mean_pois &lt;- function(n){\n  rdnum &lt;- rpois(n, lambda = 5)\n  return(mean(rdnum))\n}\n\n\n2.2 Build Sample Mean DataFrame\nNow, we’re going to utilize the function to help us compute the sample mean multiple times. Please follow the instructions step-by-step:\n\nSet the random seed to 2025.\nGiven \\(n=500\\), use the function replicate() to execute the function sample_mean_pois(n) we just defined for 1,000 times.\nAfter that, you should obtain 1,000 sample means. Assign the 1,000 sample means to a variable called rdmean and build a DataFrame from it.\n\nSo far, we have obtained \\(1,000\\) sample means, each calculated from \\(500\\) Poisson samples.\nset.seed(2025)\n\nrdmean &lt;- replicate(n = 1000, sample_mean_pois(500))\n\ndf &lt;- data.frame(\n  rdmean\n)\n\n\n2.3 Histogram\nUsing the DataFrame we just built, draw a histogram to examine the distribution of the sample means.\ndf %&gt;% ggplot(aes(x = rdmean)) +\n  geom_histogram()",
-    "crumbs": [
-      "Practice Answers",
-      "Week 10 Answers (1104)"
-    ]
-  },
-  {
-    "objectID": "answers/wk12_answer.html",
-    "href": "answers/wk12_answer.html",
-    "title": "Week 12 Answers (1118)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 12 Answers (1118)"
-    ]
-  },
-  {
-    "objectID": "answers/wk12_answer.html#reminders",
-    "href": "answers/wk12_answer.html#reminders",
-    "title": "Week 12 Answers (1118)",
-    "section": "",
-    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
-    "crumbs": [
-      "Practice Answers",
-      "Week 12 Answers (1118)"
-    ]
-  },
-  {
-    "objectID": "answers/wk12_answer.html#download-data",
-    "href": "answers/wk12_answer.html#download-data",
-    "title": "Week 12 Answers (1118)",
+    "objectID": "practices/wk12.html#download-data",
+    "href": "practices/wk12.html#download-data",
+    "title": "Week 12 Practices (1118)",
     "section": "2 Download Data",
     "text": "2 Download Data\nPlease download the datasets transactions.csv (right click here)",
     "crumbs": [
-      "Practice Answers",
-      "Week 12 Answers (1118)"
+      "Practices",
+      "Week 12 Practices (1118)"
     ]
   },
   {
-    "objectID": "answers/wk12_answer.html#silent-witch-chinmoku-no-majo-no-kakushigoto-silent-witch-沉默魔女的祕密",
-    "href": "answers/wk12_answer.html#silent-witch-chinmoku-no-majo-no-kakushigoto-silent-witch-沉默魔女的祕密",
-    "title": "Week 12 Answers (1118)",
+    "objectID": "practices/wk12.html#silent-witch-chinmoku-no-majo-no-kakushigoto-silent-witch-沉默魔女的祕密",
+    "href": "practices/wk12.html#silent-witch-chinmoku-no-majo-no-kakushigoto-silent-witch-沉默魔女的祕密",
+    "title": "Week 12 Practices (1118)",
     "section": "3 Silent Witch: Chinmoku no Majo no Kakushigoto (Silent Witch 沉默魔女的祕密)",
-    "text": "3 Silent Witch: Chinmoku no Majo no Kakushigoto (Silent Witch 沉默魔女的祕密)\nMonica is the new accountant for the Serendia Academy’s student association. She suspects that cash vs non-cash transactions in 2024 look quite different from previous years, and worries there might be some false accounting going on.\nMonica sees a dataset transactions.csv with the following columns:\n\nyear: the year of the transaction (2015–2024)\n\npayment_type: \"cash\", \"bank_transfer\", or \"online\"\n\namount: transaction amount in dollars\n\nShe wants to use a chi-squared test to check if the distribution of payment types in 2024’s accounting is significantly different from the other years.\n\nUse the pipe %&gt;% in the steps below.\nCreate a new column period with two categories: pre_2024 for years 2015–2023, year_2024 for year 2024 only. Save the result as transactions_by2024.\n\nlibrary(tidyverse)\n\ntransactions &lt;- read.csv(\"data/transactions.csv\")\n\ntransactions_by2024 &lt;- transactions %&gt;%\n  mutate(\n    period = if_else(year == 2024, \"year_2024\", \"pre_2024\")\n  )\n\nUsing group_by() and summarise(), compute a table of the number and mean of transactions for each combination of period and payment_type from transactions_by2024.\n\nsummary_counts &lt;- transactions_by2024 %&gt;%\n  group_by(period, payment_type) %&gt;%\n  summarize(n = n(), \n            mean = mean(amount)\n            ) %&gt;%\n  ungroup()\n\n\n# A tibble: 6 × 4\n  period    payment_type      n  mean\n  &lt;chr&gt;     &lt;chr&gt;         &lt;int&gt; &lt;dbl&gt;\n1 pre_2024  bank_transfer   828  271.\n2 pre_2024  cash           1259  271.\n3 pre_2024  online          613  277.\n4 year_2024 bank_transfer    53  267.\n5 year_2024 cash            213  277.\n6 year_2024 online           34  244.\n\n\n\nFrom transactions_by2024, create a 2 × 3 contingency table tab (period × payment_type) using table().\n\ntab &lt;- table(transactions_by2024$period, \n             transactions_by2024$payment_type\n             )\n\n\n           \n            bank_transfer cash online\n  pre_2024            828 1259    613\n  year_2024            53  213     34\n\n\n\nUse chisq.test() on tab to test:\n\n\\(H_0\\): The distribution of payment_type is the same in pre_2024 and year_2024.\n\\(H_1\\): The distribution of payment_type is different in year_2024.\n\n\nchisq_result &lt;- chisq.test(tab)\n\n\n\n    Pearson's Chi-squared test\n\ndata:  tab\nX-squared = 64.405, df = 2, p-value = 1.034e-14\n\n\n\nReport the p-value from the chi-squared test. Is there false accounting in 2024?\n\nprint(chisq_result[[\"p.value\"]]) # reject the null hypothesis\n\n\n[1] 1.034198e-14",
+    "text": "3 Silent Witch: Chinmoku no Majo no Kakushigoto (Silent Witch 沉默魔女的祕密)\nMonica is the new accountant for the Serendia Academy’s student association. She suspects that cash vs non-cash transactions in 2024 look quite different from previous years, and worries there might be some false accounting going on.\nMonica sees a dataset transactions.csv with the following columns:\n\nyear: the year of the transaction (2015–2024)\n\npayment_type: \"cash\", \"bank_transfer\", or \"online\"\n\namount: transaction amount in dollars\n\nShe wants to use a chi-squared test to check if the distribution of payment types in 2024’s accounting is significantly different from the other years.\n\nUse the pipe %&gt;% in the steps below.\nCreate a new column period with two categories: pre_2024 for years 2015–2023, year_2024 for year 2024 only. Save the result as transactions_by2024.\nUsing group_by() and summarise(), compute a table of the number and mean of transactions for each combination of period and payment_type from transactions_by2024.\nFrom transactions_by2024, create a 2 × 3 contingency table tab (period × payment_type) using table().\nUse chisq.test() on tab to test:\n\n\\(H_0\\): The distribution of payment_type is the same in pre_2024 and year_2024.\n\\(H_1\\): The distribution of payment_type is different in year_2024.\n\nReport the p-value from the chi-squared test. Is there false accounting in 2024?",
+    "crumbs": [
+      "Practices",
+      "Week 12 Practices (1118)"
+    ]
+  },
+  {
+    "objectID": "practices/wk10.html",
+    "href": "practices/wk10.html",
+    "title": "Week 10 Practices (1104)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 10 Practices (1104)"
+    ]
+  },
+  {
+    "objectID": "practices/wk10.html#reminders",
+    "href": "practices/wk10.html#reminders",
+    "title": "Week 10 Practices (1104)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 10 Practices (1104)"
+    ]
+  },
+  {
+    "objectID": "practices/wk10.html#clt-simulation",
+    "href": "practices/wk10.html#clt-simulation",
+    "title": "Week 10 Practices (1104)",
+    "section": "2 CLT Simulation",
+    "text": "2 CLT Simulation\n\n2.1 Draw Poisson Sample\nWrite a function called sample_mean_pois(n) with the following specification:\n\nDraw \\(n\\) random samples from a Poisson distribution \\(\\lambda = 5\\).\n\n2.Compute the sample mean.\n\nReturn the sample mean.\n\nThis function allows you to draw \\(n\\) random samples from a Poisson distribution (\\(\\lambda=5\\)) and compute the sample mean.\n\n\n2.2 Build Sample Mean DataFrame\nNow, we’re going to utilize the function to help us compute the sample mean multiple times. Please follow the instructions step-by-step:\n\nSet the random seed to 2025.\nGiven \\(n=500\\), use the function replicate() to execute the function sample_mean_pois(n) we just defined for 1,000 times.\nAfter that, you should obtain 1,000 sample means. Assign the 1,000 sample means to a variable called rdmean and build a DataFrame from it.\n\nSo far, we have obtained \\(1,000\\) sample means, each calculated from \\(500\\) Poisson samples.\n\n\n2.3 Histogram\nUsing the DataFrame we just built, draw a histogram to examine the distribution of the sample means.",
+    "crumbs": [
+      "Practices",
+      "Week 10 Practices (1104)"
+    ]
+  },
+  {
+    "objectID": "practices/wk07.html",
+    "href": "practices/wk07.html",
+    "title": "Week 7 Practices (1014)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 7 Practices (1014)"
+    ]
+  },
+  {
+    "objectID": "practices/wk07.html#reminders",
+    "href": "practices/wk07.html#reminders",
+    "title": "Week 7 Practices (1014)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 7 Practices (1014)"
+    ]
+  },
+  {
+    "objectID": "practices/wk07.html#download-data",
+    "href": "practices/wk07.html#download-data",
+    "title": "Week 7 Practices (1014)",
+    "section": "2 Download Data",
+    "text": "2 Download Data\nPlease download the datasets loan_full_schema.csv here.",
+    "crumbs": [
+      "Practices",
+      "Week 7 Practices (1014)"
+    ]
+  },
+  {
+    "objectID": "practices/wk07.html#wrap-the-graph",
+    "href": "practices/wk07.html#wrap-the-graph",
+    "title": "Week 7 Practices (1014)",
+    "section": "3 Wrap the graph",
+    "text": "3 Wrap the graph\nUse the dataset loans_full_schema.csv to create a histogram of the variable interest_rate. Set the bin width to 2.5, and facet the graph by the variable loan_purpose, and allow each sub-graph to have a different y-axis scale.",
+    "crumbs": [
+      "Practices",
+      "Week 7 Practices (1014)"
+    ]
+  },
+  {
+    "objectID": "practices/wk07.html#save-the-graph",
+    "href": "practices/wk07.html#save-the-graph",
+    "title": "Week 7 Practices (1014)",
+    "section": "4 Save the graph",
+    "text": "4 Save the graph\n\nCreate a folder figures in your project folder.\nSave the graph in the last question to the figures folder with name wk7_default_plot without any customized setting.\nSave another graph with name wk7_sized_plot using height = 6, width = 4.\nAdd assignment dpi = 150 to the last graph, and named the new graph as wk7_sized_plot_150dpi.\nCompare the differences between wk7_default_plot, wk7_sized_plot and wk7_sized_plot_150dpi.",
+    "crumbs": [
+      "Practices",
+      "Week 7 Practices (1014)"
+    ]
+  },
+  {
+    "objectID": "practices/wk05.html",
+    "href": "practices/wk05.html",
+    "title": "Week 5 Practices (0930)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 5 Practices (0930)"
+    ]
+  },
+  {
+    "objectID": "practices/wk05.html#reminders",
+    "href": "practices/wk05.html#reminders",
+    "title": "Week 5 Practices (0930)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 5 Practices (0930)"
+    ]
+  },
+  {
+    "objectID": "practices/wk05.html#control-flow",
+    "href": "practices/wk05.html#control-flow",
+    "title": "Week 5 Practices (0930)",
+    "section": "2 Control Flow",
+    "text": "2 Control Flow\nPrint out the characters \"NTU\" for four times, and then print out the characters \"National Taiwan University\" for six times.\n(There are multiple ways to accomplish this, but I encourage you to use a single for-loop and an if-else statement to complete the task so you can get familiar with these syntax.)",
+    "crumbs": [
+      "Practices",
+      "Week 5 Practices (0930)"
+    ]
+  },
+  {
+    "objectID": "practices/wk05.html#binomial-random-sample",
+    "href": "practices/wk05.html#binomial-random-sample",
+    "title": "Week 5 Practices (0930)",
+    "section": "3 Binomial Random Sample",
+    "text": "3 Binomial Random Sample\n\nDraw 400 observations from binomial distribution [size = 1000, prob = 0.5] and compute the mean of the observations.\nUsing the random sample you just generated, create a DataFrame to store the drawn values by using data.frame() function, and draw the histogram graph to see the distribution.",
+    "crumbs": [
+      "Practices",
+      "Week 5 Practices (0930)"
+    ]
+  },
+  {
+    "objectID": "practices/wk05.html#certification-exam",
+    "href": "practices/wk05.html#certification-exam",
+    "title": "Week 5 Practices (0930)",
+    "section": "4 Certification Exam",
+    "text": "4 Certification Exam\nA certification exam is organized for 10 students: Alice, Bob, Charlie, Diana, Ethan, Fiona, George, Hannah, Ivan, and Julia. Each student participates in 10 tests, named test_1, test_2, …, test_10. If the students pass certain amount of tests, they can claim the certificate.\n\nCreate a vector students that contains 10 students’ name.\nCreate a matrix scores that uses the rnorm() to generate students score in 10 tests (average score: 60, standard deviation: 15). Let the column name of the matrix be test_1, test_2, …, test_10.\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse replicate() function to create the matrix first, create a character vector test_names for column names, then use colnames() to assign test_names as the column names of the matrix.\n\n\n\nCreate a dataframe stu_scores that combines students and scores.\n\n\n\n\n\n\n\nTipHint\n\n\n\ndata.frame(name = students, scores) is our new dataframe.\n\n\n\nCreate a function certificate_winner containing three parameters: data, passing_score, min_passed such that a student\n\npasses the test if the his/her score of that test is greater than or equal passing_score\nwins the certificate if the number of passing test is greater than or equal min_passed\n\nFinally, the function should return the students who wins the certificate.\n\n\n\n\n\n\n\nTipHint\n\n\n\nYou can use seq_along in the for-loop, such as for(i in seq_along(data[, 1])){}\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nSet a counter that counts the number of tests the student passed in a for-loop. Remember to reset the counter to be 0 when the next loop begins.\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nCreate a vector passed_students in the function that saves the student’s name if his/her meets the requirements.\n\n\n\nAnswer the following questions:\n\nWho are the certificate winner if passing_score is 60, and the passing_score is 5?\nWho are the certificate winner if passing_score is 65, and the passing_score is 6?",
+    "crumbs": [
+      "Practices",
+      "Week 5 Practices (0930)"
+    ]
+  },
+  {
+    "objectID": "practices/wk03.html",
+    "href": "practices/wk03.html",
+    "title": "Week 3 Practices (0916)",
+    "section": "",
+    "text": "Please download the datasets county.csv and loan_full_schema.csv here.",
+    "crumbs": [
+      "Practices",
+      "Week 3 Practices (0916)"
+    ]
+  },
+  {
+    "objectID": "practices/wk03.html#download-data",
+    "href": "practices/wk03.html#download-data",
+    "title": "Week 3 Practices (0916)",
+    "section": "",
+    "text": "Please download the datasets county.csv and loan_full_schema.csv here.",
+    "crumbs": [
+      "Practices",
+      "Week 3 Practices (0916)"
+    ]
+  },
+  {
+    "objectID": "practices/wk03.html#coding-style",
+    "href": "practices/wk03.html#coding-style",
+    "title": "Week 3 Practices (0916)",
+    "section": "2 Coding Style",
+    "text": "2 Coding Style\n\nCreate an RStudio project inside a folder with proper names (e.g. TA_Session).\nCreate folders for R scripts and data. (optional: put scripts for the first two weeks’ TA session in the script folder as well.)\nFor the following questions, your code should follow the coding styles in the slides.",
+    "crumbs": [
+      "Practices",
+      "Week 3 Practices (0916)"
+    ]
+  },
+  {
+    "objectID": "practices/wk03.html#contingency-table",
+    "href": "practices/wk03.html#contingency-table",
+    "title": "Week 3 Practices (0916)",
+    "section": "3 Contingency Table",
+    "text": "3 Contingency Table\nUsing the dataset loans_full_schema.csv, create a contingency table by loan_purpose (set as row) and application_type (set as column), and add the sum row and sum column.",
+    "crumbs": [
+      "Practices",
+      "Week 3 Practices (0916)"
+    ]
+  },
+  {
+    "objectID": "practices/wk03.html#bar-graph",
+    "href": "practices/wk03.html#bar-graph",
+    "title": "Week 3 Practices (0916)",
+    "section": "4 Bar Graph",
+    "text": "4 Bar Graph\nUsing the dataset loans_full_schema.csv, draw the bar graph to show the numbers of applicant according to each credit grade by following procedures:\n\nSpecify sub_grade as the x-axis, and fill the bar with grade.\nAdd graph title and axis labels\n\nTitle: Number of Applicant by Credit Grade\n\nx-axis: Credit Grade\n\ny-axis: Number of Applicant\n\nCenter the graph title.\n\n\n\n\n\n\n\nTipHint\n\n\n\nHint: Add theme(plot.title = element_text(hjust = 0.5)) to the graph.\n\n\nAfter that, you should have a beautiful graph and share it with me! :)",
+    "crumbs": [
+      "Practices",
+      "Week 3 Practices (0916)"
+    ]
+  },
+  {
+    "objectID": "practices/wk01.html",
+    "href": "practices/wk01.html",
+    "title": "Week 1 Practices (0902)",
+    "section": "",
+    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.",
+    "crumbs": [
+      "Practices",
+      "Week 1 Practices (0902)"
+    ]
+  },
+  {
+    "objectID": "practices/wk01.html#assign-values",
+    "href": "practices/wk01.html#assign-values",
+    "title": "Week 1 Practices (0902)",
+    "section": "",
+    "text": "Create two variables called x and y, and assign values 20250902 and 1031. Compute x / y.",
+    "crumbs": [
+      "Practices",
+      "Week 1 Practices (0902)"
+    ]
+  },
+  {
+    "objectID": "practices/wk01.html#help",
+    "href": "practices/wk01.html#help",
+    "title": "Week 1 Practices (0902)",
+    "section": "2 Help",
+    "text": "2 Help\nUse the help() function to check docs, e.g. data.frame() or mean().",
+    "crumbs": [
+      "Practices",
+      "Week 1 Practices (0902)"
+    ]
+  },
+  {
+    "objectID": "practices/wk01.html#matrix",
+    "href": "practices/wk01.html#matrix",
+    "title": "Week 1 Practices (0902)",
+    "section": "3 Matrix",
+    "text": "3 Matrix\nCreate the following vectors:\nname_vec &lt;- c(\"James\", \"Noc\", \"Monica\")\n\nage_vec &lt;- c(25, 30, 28)\nand create a 3 × 2 matrix with these two vectors.\nDo you encounter errors? Can you print the matrix out? What’s the data type of the matrix?",
+    "crumbs": [
+      "Practices",
+      "Week 1 Practices (0902)"
+    ]
+  },
+  {
+    "objectID": "slides/Slides_wk12.html",
+    "href": "slides/Slides_wk12.html",
+    "title": "Week 12 Slides (1118)",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Slides",
+      "Week 12 Slides (1118)"
+    ]
+  },
+  {
+    "objectID": "slides/Slides_wk10.html",
+    "href": "slides/Slides_wk10.html",
+    "title": "Week 10 Slides (1104)",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Slides",
+      "Week 10 Slides (1104)"
+    ]
+  },
+  {
+    "objectID": "slides/Slides_wk07.html",
+    "href": "slides/Slides_wk07.html",
+    "title": "Week 7 Slides (1014)",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Slides",
+      "Week 7 Slides (1014)"
+    ]
+  },
+  {
+    "objectID": "slides/Slides_wk05.html",
+    "href": "slides/Slides_wk05.html",
+    "title": "Week 5 Slides (0930)",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Slides",
+      "Week 5 Slides (0930)"
+    ]
+  },
+  {
+    "objectID": "slides/Slides_wk03.html",
+    "href": "slides/Slides_wk03.html",
+    "title": "Week 3 Slides (0916)",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Slides",
+      "Week 3 Slides (0916)"
+    ]
+  },
+  {
+    "objectID": "slides/Slides_wk01.html",
+    "href": "slides/Slides_wk01.html",
+    "title": "Week 1 Slides (0902)",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Slides",
+      "Week 1 Slides (0902)"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "2025Fall Statistics TA Session",
+    "section": "",
+    "text": "Welcome! Use the sidebar to open weekly Slides, Practices and Answers\nAnswers to the practice will be published after each TA Session.\nSending email: r13323002@ntu.edu.tw (mail title including [Statistics TA])\nTA Office hours: Tuesday, 4:30-5:20 p.m. at SSB. (社會科學院) Room 645.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "slides/Slides_wk02.html",
+    "href": "slides/Slides_wk02.html",
+    "title": "Week 2 Slides (0909)",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Slides",
+      "Week 2 Slides (0909)"
+    ]
+  },
+  {
+    "objectID": "slides/Slides_wk04.html",
+    "href": "slides/Slides_wk04.html",
+    "title": "Week 4 Slides (0923)",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Slides",
+      "Week 4 Slides (0923)"
+    ]
+  },
+  {
+    "objectID": "slides/Slides_wk06.html",
+    "href": "slides/Slides_wk06.html",
+    "title": "Week 6 Slides (1007)",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Slides",
+      "Week 6 Slides (1007)"
+    ]
+  },
+  {
+    "objectID": "slides/Slides_wk09.html",
+    "href": "slides/Slides_wk09.html",
+    "title": "Week 9 Slides (1028)",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Slides",
+      "Week 9 Slides (1028)"
+    ]
+  },
+  {
+    "objectID": "slides/Slides_wk11.html",
+    "href": "slides/Slides_wk11.html",
+    "title": "Week 11 Slides (1111)",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Slides",
+      "Week 11 Slides (1111)"
+    ]
+  },
+  {
+    "objectID": "slides/Slides_wk13.html",
+    "href": "slides/Slides_wk13.html",
+    "title": "Week 13 Slides (1125)",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Slides",
+      "Week 13 Slides (1125)"
+    ]
+  },
+  {
+    "objectID": "practices/wk02.html",
+    "href": "practices/wk02.html",
+    "title": "Week 2 Practices (0909)",
+    "section": "",
+    "text": "Please download the datasets county.csv and loan50.csv here.",
+    "crumbs": [
+      "Practices",
+      "Week 2 Practices (0909)"
+    ]
+  },
+  {
+    "objectID": "practices/wk02.html#download-data",
+    "href": "practices/wk02.html#download-data",
+    "title": "Week 2 Practices (0909)",
+    "section": "",
+    "text": "Please download the datasets county.csv and loan50.csv here.",
+    "crumbs": [
+      "Practices",
+      "Week 2 Practices (0909)"
+    ]
+  },
+  {
+    "objectID": "practices/wk02.html#import-data",
+    "href": "practices/wk02.html#import-data",
+    "title": "Week 2 Practices (0909)",
+    "section": "2 Import Data",
+    "text": "2 Import Data\n\nImport the package tidyverse, which contains several useful functions for data wrangling and visualization.\nCreate a folder on your computer to store the dataset downloaded from NTU COOL or OpenIntro website.\nSet your working directory as that folder and import the datasets county.csv and loan50.csv.",
+    "crumbs": [
+      "Practices",
+      "Week 2 Practices (0909)"
+    ]
+  },
+  {
+    "objectID": "practices/wk02.html#scatter-plot",
+    "href": "practices/wk02.html#scatter-plot",
+    "title": "Week 2 Practices (0909)",
+    "section": "3 Scatter Plot",
+    "text": "3 Scatter Plot\n\nUse county.csv to draw the scatter plot of unemployment_rate (x-axis) and per_capita_income (y-axis).\n\n\n\n\n\n\n\nTipHint\n\n\n\nHint: You don’t need to specify any parameter in geom_point().\n\n\n\nDraw the same graph again, but this time make the following adjustments:\n\nadjust the point color to lightcoral\nadjust the point size to 0.5",
+    "crumbs": [
+      "Practices",
+      "Week 2 Practices (0909)"
+    ]
+  },
+  {
+    "objectID": "practices/wk02.html#histogram",
+    "href": "practices/wk02.html#histogram",
+    "title": "Week 2 Practices (0909)",
+    "section": "4 Histogram",
+    "text": "4 Histogram\nUse loan50.csv data to draw the histogram of loan_amount (set as x-axis), and adjust the parameter binwidth in geom_histogram() to 5000.",
+    "crumbs": [
+      "Practices",
+      "Week 2 Practices (0909)"
+    ]
+  },
+  {
+    "objectID": "practices/wk04.html",
+    "href": "practices/wk04.html",
+    "title": "Week 4 Practices (0923)",
+    "section": "",
+    "text": "Remember to use the project you create last week!",
+    "crumbs": [
+      "Practices",
+      "Week 4 Practices (0923)"
+    ]
+  },
+  {
+    "objectID": "practices/wk04.html#project",
+    "href": "practices/wk04.html#project",
+    "title": "Week 4 Practices (0923)",
+    "section": "",
+    "text": "Remember to use the project you create last week!",
+    "crumbs": [
+      "Practices",
+      "Week 4 Practices (0923)"
+    ]
+  },
+  {
+    "objectID": "practices/wk04.html#draw-uniform-random-sample",
+    "href": "practices/wk04.html#draw-uniform-random-sample",
+    "title": "Week 4 Practices (0923)",
+    "section": "2 Draw Uniform Random Sample",
+    "text": "2 Draw Uniform Random Sample\nSet random seed as 2025. Draw 200 observations from uniform distribution [0, 100] and compute the mean of the observations.\n\n\n\n\n\n\nTipHint\n\n\n\nHint: Use mean() function.",
+    "crumbs": [
+      "Practices",
+      "Week 4 Practices (0923)"
+    ]
+  },
+  {
+    "objectID": "practices/wk04.html#histogram",
+    "href": "practices/wk04.html#histogram",
+    "title": "Week 4 Practices (0923)",
+    "section": "3 Histogram",
+    "text": "3 Histogram\n\nUsing the random sample you just generated, create a DataFrame to store the drawn values by using data.frame() function, and draw the histogram graph to see the distribution.\nNow, draw another 10,000 observations from uniform distribution [0, 100], and draw the histogram graph to see the distribution.",
+    "crumbs": [
+      "Practices",
+      "Week 4 Practices (0923)"
+    ]
+  },
+  {
+    "objectID": "practices/wk06.html",
+    "href": "practices/wk06.html",
+    "title": "Week 6 Practices (1007)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 6 Practices (1007)"
+    ]
+  },
+  {
+    "objectID": "practices/wk06.html#reminders",
+    "href": "practices/wk06.html#reminders",
+    "title": "Week 6 Practices (1007)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 6 Practices (1007)"
+    ]
+  },
+  {
+    "objectID": "practices/wk06.html#download-data",
+    "href": "practices/wk06.html#download-data",
+    "title": "Week 6 Practices (1007)",
+    "section": "2 Download Data",
+    "text": "2 Download Data\nPlease download the datasets ames.csv here.",
+    "crumbs": [
+      "Practices",
+      "Week 6 Practices (1007)"
+    ]
+  },
+  {
+    "objectID": "practices/wk06.html#housing-price-in-2025",
+    "href": "practices/wk06.html#housing-price-in-2025",
+    "title": "Week 6 Practices (1007)",
+    "section": "3 Housing Price in 2025",
+    "text": "3 Housing Price in 2025\n\nUse paste() and for-loop to create a character vector date_2025 that contains 365 days in 2025, and each date repeat 3 times. i.e., c(\"2025-01-01\", \"2025-01-01\", \"2025-01-01\", ..., \"2025-12-31\")\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse if (month %in% vec) to check if there are 28, 30 or 31 days in that month.\n\n\n\nUse as.Date() to convert the date_2025 as type date.\nCreate a numeric vector housing_price with length 1095 having the value generated from a normal distribution with mean = 10000, sd = 2000.\nCombine date_2025 and housing_price_2025 as a new dataframe housing_2025.\nUse geom_line() with linewidth = 0.3 to plot the average housing price for each date in 2025.",
+    "crumbs": [
+      "Practices",
+      "Week 6 Practices (1007)"
+    ]
+  },
+  {
+    "objectID": "practices/wk09.html",
+    "href": "practices/wk09.html",
+    "title": "Week 9 Practices (1028)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 9 Practices (1028)"
+    ]
+  },
+  {
+    "objectID": "practices/wk09.html#reminders",
+    "href": "practices/wk09.html#reminders",
+    "title": "Week 9 Practices (1028)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 9 Practices (1028)"
+    ]
+  },
+  {
+    "objectID": "practices/wk09.html#download-data",
+    "href": "practices/wk09.html#download-data",
+    "title": "Week 9 Practices (1028)",
+    "section": "2 Download Data",
+    "text": "2 Download Data\nPlease download the datasets restaurants.csv (right click here)",
+    "crumbs": [
+      "Practices",
+      "Week 9 Practices (1028)"
+    ]
+  },
+  {
+    "objectID": "practices/wk09.html#nohara-hiroshi-hiru-meshi-no-ryuugi-野原廣志-午餐的流派",
+    "href": "practices/wk09.html#nohara-hiroshi-hiru-meshi-no-ryuugi-野原廣志-午餐的流派",
+    "title": "Week 9 Practices (1028)",
+    "section": "3 Nohara Hiroshi: Hiru Meshi no Ryuugi (野原廣志 午餐的流派)",
+    "text": "3 Nohara Hiroshi: Hiru Meshi no Ryuugi (野原廣志 午餐的流派)\n“My name is Hiroshi Nohara (野原廣志). I’m an office worker and often eat lunch out. Based on the state of my body and my wallet, I quickly decide what to eat each day. You could say that while I’m a business expert, I’m also a lunch expert.”\nHiroshi keeps a list of restaurants in restaurants.csv. The file has five columns:\n\nname: The restaurant’s name.\ntype: The type of cuisine.\nclosed: The restaurant’s closed day; some restaurants are permanently closed.\nlunch_set: Whether the restaurant offers lunch sets at noon.\nrating: Hiroshi’s personal rating for the restaurant.\n\nToday is Thursday. Hiroshi feels like seafood, but curry or noodles would also be fine. Since he had fast food yesterday, he’d rather avoid it today. It’s close to the end of the month, so it would be better if the restaurant offers lunch sets.\nFollow the instructions below to help Hiroshi choose the restaurants that best fit his needs:\n\n\n\n\n\n\nTipHint\n\n\n\nIn this practice, filter(), select(), mutate(), arrange() will all be used.\n\n\n\nUse the pipe %&gt;% in the steps below.\nFilter the restaurants that are open today.\nAdd a column lunch_set_score that is 1.5 if the restaurant offers lunch sets and 0 otherwise.\nAdd a column preference_score that takes value 1.5 for seafood, 1 for curry and noodle, -2 for fastfood, and 0 otherwise.\nAdd a column total_score that sums up the columns rating, lunch_set_score and preference_score.\nRemove the lunch_set_score and preference_score columns.\nArrange the rows in descending order of total_score.\nPrint the top 5 rows with the highest total_score.",
+    "crumbs": [
+      "Practices",
+      "Week 9 Practices (1028)"
+    ]
+  },
+  {
+    "objectID": "practices/wk11.html",
+    "href": "practices/wk11.html",
+    "title": "Week 11 Practices (1111)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 11 Practices (1111)"
+    ]
+  },
+  {
+    "objectID": "practices/wk11.html#reminders",
+    "href": "practices/wk11.html#reminders",
+    "title": "Week 11 Practices (1111)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 11 Practices (1111)"
+    ]
+  },
+  {
+    "objectID": "practices/wk11.html#download-data",
+    "href": "practices/wk11.html#download-data",
+    "title": "Week 11 Practices (1111)",
+    "section": "2 Download Data",
+    "text": "2 Download Data\nPlease download the datasets garden_shifts.csv (right click here)",
+    "crumbs": [
+      "Practices",
+      "Week 11 Practices (1111)"
+    ]
+  },
+  {
+    "objectID": "practices/wk11.html#isekai-nonbiri-nouka-異世界悠閒農家",
+    "href": "practices/wk11.html#isekai-nonbiri-nouka-異世界悠閒農家",
+    "title": "Week 11 Practices (1111)",
+    "section": "3 Isekai Nonbiri Nouka (異世界悠閒農家)",
+    "text": "3 Isekai Nonbiri Nouka (異世界悠閒農家)\nHiraku is the village head of Taiju no mura (大樹村) and owns a big farmland. He keeps a log of when each villager — Hiraku, Rurushi, Tia, Ria, Daga, Fraurem, Senna — is responsible for a plot. However, because the log was kept by hand and then typed in, the dates are a bit messy and some entries are incomplete.\nHiraku sees a dataset garden_shifts.csv with the following columns:\n\nname: villager name\nstart_str: start date of the shift\n\nend_str: end date of the shift\nplot: which plant/plot they look after\n\nAll shifts are in September and October 2025, and no villager works on more than one plot on the same day.\nHiraku wants to know how many days each villager works in October.\n\nUse the pipe %&gt;% in the steps below.\nCreate a new data frame shifts_complete that adds two new columns, start_date and end_date, which convert start_str and end_date to Date types for the original data.\n\n\n\n\n\n\n\nTipHint\n\n\n\nRemember to keep NA as NA when using mutate().\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse grepl(\"-\", start_str) ~ in case_when().\n\n\n\nDrops any rows containing NA (in any column) in shifts_complete .\nCreate a new data frame shifts_coverage that includes the full sequence of dates from start_date to end_date in shifts_coverage.\n\n\n\n\n\n\n\nTipHint\n\n\n\nFor example, if Hiraku is responsible for cabbage from 2025-09-10 to 2025-09-13, then there would be 4 rows that take value 2025-09-10, 2025-09-11, 2025-09-12 and 2025-09-13 in column date for shifts_complete.\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nFor each row in shifts_complete, create a temperate data frame temp in the for-loop with columns name, plot, date, where date columns includes all the dates between start_date and end_date.\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse rbind() to combine data frames in each loop.\n\n\n\nAdd a column month to shifts_coverage that contains only the YYYY-MM part of column date.\nCreate a new data frame shifts_coverage_oct for dates in October only.\nHow many days does each villager work in October?",
+    "crumbs": [
+      "Practices",
+      "Week 11 Practices (1111)"
+    ]
+  },
+  {
+    "objectID": "practices/wk13.html",
+    "href": "practices/wk13.html",
+    "title": "Week 13 Practices (1125)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 13 Practices (1125)"
+    ]
+  },
+  {
+    "objectID": "practices/wk13.html#reminders",
+    "href": "practices/wk13.html#reminders",
+    "title": "Week 13 Practices (1125)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practices",
+      "Week 13 Practices (1125)"
+    ]
+  },
+  {
+    "objectID": "practices/wk13.html#shangri-la-frontier-香格里拉開拓異境",
+    "href": "practices/wk13.html#shangri-la-frontier-香格里拉開拓異境",
+    "title": "Week 13 Practices (1125)",
+    "section": "2 Shangri-La Frontier (香格里拉·開拓異境)",
+    "text": "2 Shangri-La Frontier (香格里拉·開拓異境)\nShangri-La Frontier is a cutting-edge VRMMO game. After a major update, Sunraku is testing a new build and wants to know whether it actually increases his average damage per combo compared to his old build, which had a known average of 1200 damage per combo in similar areas.\nSunraku goes to a stable grinding spot and records the damage per combo for 15 battles using the new build:\n\\[\n1310, 1195, 1240, 1285, 1220,\n1350, 1290, 1210, 1265, 1305,\n1330, 1275, 1255, 1190, 1320\n\\]\n\nRun an appropriate one-sample t-test using t.test(), and report a 95% confidence interval for the mean damage with the form: 95 percent confidence interval: (a, b).\n\nPsyger-0 is another top-tier player in Shangri-La Frontier, known for her insane burst damage. She tests her own optimized build in the same area and logs her damage per combo in 12 battles:\n\\[\n1380, 1425, 1405, 1360, 1390,\n1435, 1410, 1375, 1440, 1400,\n1395, 1420\n\\]\n\nDoes Psyger-0’s build have a different mean damage than Sunraku’s new build? Report the p-value.",
+    "crumbs": [
+      "Practices",
+      "Week 13 Practices (1125)"
+    ]
+  },
+  {
+    "objectID": "answers/wk02_answer.html",
+    "href": "answers/wk02_answer.html",
+    "title": "Week 2 Answers (0909)",
+    "section": "",
+    "text": "Please download the datasets county.csv and loan50.csv here.",
     "crumbs": [
       "Practice Answers",
-      "Week 12 Answers (1118)"
+      "Week 2 Answers (0909)"
+    ]
+  },
+  {
+    "objectID": "answers/wk02_answer.html#download-data",
+    "href": "answers/wk02_answer.html#download-data",
+    "title": "Week 2 Answers (0909)",
+    "section": "",
+    "text": "Please download the datasets county.csv and loan50.csv here.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 2 Answers (0909)"
+    ]
+  },
+  {
+    "objectID": "answers/wk02_answer.html#import-data",
+    "href": "answers/wk02_answer.html#import-data",
+    "title": "Week 2 Answers (0909)",
+    "section": "2 Import Data",
+    "text": "2 Import Data\n\nImport the package tidyverse, which contains several useful functions for data wrangling and visualization.\nCreate a folder on your computer to store the dataset downloaded from NTU COOL or OpenIntro website.\nSet your working directory as that folder and import the datasets county.csv and loan50.csv.\n\nlibrary(tidyverse)\nsetwd(\"/your/working/directory\")\ncounty &lt;- read.csv(\"county.csv\")\nloan &lt;- read.csv(\"loan50.csv\")",
+    "crumbs": [
+      "Practice Answers",
+      "Week 2 Answers (0909)"
+    ]
+  },
+  {
+    "objectID": "answers/wk02_answer.html#scatter-plot",
+    "href": "answers/wk02_answer.html#scatter-plot",
+    "title": "Week 2 Answers (0909)",
+    "section": "3 Scatter Plot",
+    "text": "3 Scatter Plot\n\nUse county.csv to draw the scatter plot of unemployment_rate (x-axis) and per_capita_income (y-axis).\n\n\n\n\n\n\n\nTipHint\n\n\n\nHint: You don’t need to specify any parameter in geom_point().\n\n\nggplot(county, aes(x = unemployment_rate, y = per_capita_income)) + \n  geom_point()\n\n\n\n\n\n\n\n\n\n\nDraw the same graph again, but this time make the following adjustments:\n\nadjust the point color to lightcoral\nadjust the point size to 0.5\n\n\nggplot(county, aes(x = unemployment_rate, y = per_capita_income)) +\n  geom_point(color = \"lightcoral\", size = 0.5)",
+    "crumbs": [
+      "Practice Answers",
+      "Week 2 Answers (0909)"
+    ]
+  },
+  {
+    "objectID": "answers/wk02_answer.html#histogram",
+    "href": "answers/wk02_answer.html#histogram",
+    "title": "Week 2 Answers (0909)",
+    "section": "4 Histogram",
+    "text": "4 Histogram\nUse loan50.csv data to draw the histogram of loan_amount (set as x-axis), and adjust the parameter binwidth in geom_histogram() to 5000.\nggplot(loan, aes(x = loan_amount)) +\n  geom_histogram(binwidth = 5000)",
+    "crumbs": [
+      "Practice Answers",
+      "Week 2 Answers (0909)"
+    ]
+  },
+  {
+    "objectID": "answers/wk04_answer.html",
+    "href": "answers/wk04_answer.html",
+    "title": "Week 4 Answers (0923)",
+    "section": "",
+    "text": "Remember to use the project you create last week!",
+    "crumbs": [
+      "Practice Answers",
+      "Week 4 Answers (0923)"
+    ]
+  },
+  {
+    "objectID": "answers/wk04_answer.html#project",
+    "href": "answers/wk04_answer.html#project",
+    "title": "Week 4 Answers (0923)",
+    "section": "",
+    "text": "Remember to use the project you create last week!",
+    "crumbs": [
+      "Practice Answers",
+      "Week 4 Answers (0923)"
+    ]
+  },
+  {
+    "objectID": "answers/wk04_answer.html#draw-uniform-random-sample",
+    "href": "answers/wk04_answer.html#draw-uniform-random-sample",
+    "title": "Week 4 Answers (0923)",
+    "section": "2 Draw Uniform Random Sample",
+    "text": "2 Draw Uniform Random Sample\nSet random seed as 2025. Draw 200 observations from uniform distribution [0, 100] and compute the mean of the observations.\n\n\n\n\n\n\nTipHint\n\n\n\nHint: Use mean() function.\n\n\nset.seed(2025)\nsample_size &lt;- 200\nrdn &lt;- runif(n = sample_size, min = 0, max = 100)\nmean &lt;- mean(rdn)\nprint(mean)\n## [1] 52.17858",
+    "crumbs": [
+      "Practice Answers",
+      "Week 4 Answers (0923)"
+    ]
+  },
+  {
+    "objectID": "answers/wk04_answer.html#histogram",
+    "href": "answers/wk04_answer.html#histogram",
+    "title": "Week 4 Answers (0923)",
+    "section": "3 Histogram",
+    "text": "3 Histogram\n\nUsing the random sample you just generated, create a DataFrame to store the drawn values by using data.frame() function, and draw the histogram graph to see the distribution.\n\ndf_1 &lt;- data.frame(\n  values = rdn\n)\nggplot(df_1, aes(x = values)) +\n  geom_histogram()\n\n\n\n\n\n\n\n\n\n\nNow, draw another 10,000 observations from uniform distribution [0, 100], and draw the histogram graph to see the distribution.\n\nrdn_2 &lt;- runif(n = 10000, min = 0, max = 100)\ndf_2 &lt;- data.frame(\n  values = rdn_2\n)\nggplot(df_2, aes(x = values)) +\n  geom_histogram()",
+    "crumbs": [
+      "Practice Answers",
+      "Week 4 Answers (0923)"
+    ]
+  },
+  {
+    "objectID": "answers/wk06_answer.html",
+    "href": "answers/wk06_answer.html",
+    "title": "Week 6 Practices (1007)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 6 Practices (1007)"
+    ]
+  },
+  {
+    "objectID": "answers/wk06_answer.html#reminders",
+    "href": "answers/wk06_answer.html#reminders",
+    "title": "Week 6 Practices (1007)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nSet the seed to be 2025.\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 6 Practices (1007)"
+    ]
+  },
+  {
+    "objectID": "answers/wk06_answer.html#download-data",
+    "href": "answers/wk06_answer.html#download-data",
+    "title": "Week 6 Practices (1007)",
+    "section": "2 Download Data",
+    "text": "2 Download Data\nPlease download the datasets ames.csv here.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 6 Practices (1007)"
+    ]
+  },
+  {
+    "objectID": "answers/wk06_answer.html#housing-price-in-2025",
+    "href": "answers/wk06_answer.html#housing-price-in-2025",
+    "title": "Week 6 Practices (1007)",
+    "section": "3 Housing Price in 2025",
+    "text": "3 Housing Price in 2025\n\nUse paste() and for-loop to create a character vector date_2025 that contains 365 days in 2025, and each date repeat 3 times. i.e., c(\"2025-01-01\", \"2025-01-01\", \"2025-01-01\", ..., \"2025-12-31\")\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse if (month %in% vec) to check if there are 28, 30 or 31 days in that month.\n\n\n\nUse as.Date() to convert the date_2025 as type date.\nCreate a numeric vector housing_price with length 1095 having the value generated from a normal distribution with mean = 10000, sd = 2000.\nCombine date_2025 and housing_price_2025 as a new dataframe housing_2025.\nUse geom_line() with linewidth = 0.3 to plot the average housing price for each date in 2025.\n\nset.seed(2025)\n\nlibrary(tidyverse)\n\ndate_2025 &lt;- c()\n\nfor (month in 1:12){\n  if (month %in% c(1, 3, 5, 7, 8, 10, 12)){\n    for (day in 1:31){\n      temp &lt;- replicate(n = 3, expr = paste(\"2025\", month, day, \n                                            sep = \"-\")\n                        )\n      date_2025 &lt;- c(date_2025, temp)\n    }\n  }\n  else if (month %in% c(4, 6, 9, 11)){\n    for (day in 1:30){\n      temp &lt;- replicate(n = 3, expr = paste(\"2025\", month, day, \n                                            sep = \"-\")\n                        )\n      date_2025 &lt;- c(date_2025, temp)\n    }    \n  }\n  else{\n    for (day in 1:28){\n      temp &lt;- replicate(n = 3, expr = paste(\"2025\", \"2\", day, \n                                            sep = \"-\")\n                        )\n      date_2025 &lt;- c(date_2025, temp)\n    }        \n  }\n}\n\ndate_2025 &lt;- as.Date(date_2025)\n\nhousing_price_2025 &lt;- rnorm(n = 1095, mean = 10000, sd = 2000)\n\nhousing_2025 &lt;- data.frame(date = date_2025,\n                           price = housing_price_2025\n                           )\n\nggplot(housing_2025, aes(x = date, y = price)) + \n    geom_line(stat = \"summary\", \n              fun = \"mean\", \n              linewidth = 0.3, \n              color = \"steelblue\"\n              )",
+    "crumbs": [
+      "Practice Answers",
+      "Week 6 Practices (1007)"
+    ]
+  },
+  {
+    "objectID": "answers/wk09_answer.html",
+    "href": "answers/wk09_answer.html",
+    "title": "Week 9 Answers (1028)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 9 Answers (1028)"
+    ]
+  },
+  {
+    "objectID": "answers/wk09_answer.html#reminders",
+    "href": "answers/wk09_answer.html#reminders",
+    "title": "Week 9 Answers (1028)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 9 Answers (1028)"
+    ]
+  },
+  {
+    "objectID": "answers/wk09_answer.html#download-data",
+    "href": "answers/wk09_answer.html#download-data",
+    "title": "Week 9 Answers (1028)",
+    "section": "2 Download Data",
+    "text": "2 Download Data\nPlease download the datasets restaurants.csv (right click here)",
+    "crumbs": [
+      "Practice Answers",
+      "Week 9 Answers (1028)"
+    ]
+  },
+  {
+    "objectID": "answers/wk09_answer.html#nohara-hiroshi-hiru-meshi-no-ryuugi-野原廣志-午餐的流派",
+    "href": "answers/wk09_answer.html#nohara-hiroshi-hiru-meshi-no-ryuugi-野原廣志-午餐的流派",
+    "title": "Week 9 Answers (1028)",
+    "section": "3 Nohara Hiroshi: Hiru Meshi no Ryuugi (野原廣志 午餐的流派)",
+    "text": "3 Nohara Hiroshi: Hiru Meshi no Ryuugi (野原廣志 午餐的流派)\n“My name is Hiroshi Nohara (野原廣志). I’m an office worker and often eat lunch out. Based on the state of my body and my wallet, I quickly decide what to eat each day. You could say that while I’m a business expert, I’m also a lunch expert.”\nHiroshi keeps a list of restaurants in restaurants.csv. The file has five columns:\n\nname: The restaurant’s name.\ntype: The type of cuisine.\nclosed: The restaurant’s closed day; some restaurants are permanently closed.\nlunch_set: Whether the restaurant offers lunch sets at noon.\nrating: Hiroshi’s personal rating for the restaurant.\n\nToday is Thursday. Hiroshi feels like seafood, but curry or noodles would also be fine. Since he had fast food yesterday, he’d rather avoid it today. It’s close to the end of the month, so it would be better if the restaurant offers lunch sets.\nFollow the instructions below to help Hiroshi choose the restaurants that best fit his needs:\n\n\n\n\n\n\nTipHint\n\n\n\nIn this practice, filter(), select(), mutate(), arrange() will all be used.\n\n\n\nUse the pipe %&gt;% in the steps below.\nFilter the restaurants that are open today.\nAdd a column lunch_set_score that is 1.5 if the restaurant offers lunch sets and 0 otherwise.\nAdd a column preference_score that takes value 1.5 for seafood, 1 for curry and noodle, -2 for fastfood, and 0 otherwise.\nAdd a column total_score that sums up the columns rating, lunch_set_score and preference_score.\nRemove the lunch_set_score and preference_score columns.\nArrange the rows in descending order of total_score.\nPrint the top 5 rows with the highest total_score.\n\nlibrary(tidyverse)\n\nrestaurants &lt;- read.csv(\"data/restaurants.csv\")\n\nrestaurants_cleaned &lt;- restaurants %&gt;% \n  filter(closed != \"Thu\" & closed != \"close down\") %&gt;%\n  mutate(lunch_set_score = ifelse(lunch_set == \"Yes\", 1.5, 0)) %&gt;%\n  mutate(preference_score = case_when(\n    type == \"seafood\" ~ 1.5,\n    type == \"curry\" | type == \"noodle\" ~ 1,\n    type == \"fastfood\" ~ -2,\n    TRUE ~ 0\n    )) %&gt;%\n  mutate(total_score = rating + lunch_set_score + preference_score) %&gt;%\n  select(-c(lunch_set_score, preference_score)) %&gt;%\n  arrange(desc(total_score))\n  \nprint(restaurants_cleaned[1:5, ])\n#### Answers\n##               name    type closed lunch_set rating total_score\n## 1       Curry Spot   curry    Fri       Yes    4.4         6.9\n## 2    Curry Delight   curry    Sun       Yes    3.9         6.4\n## 3 Blue Ocean Grill seafood    Fri        No    4.2         5.7\n## 4   Mama’s Kitchen   other    Fri       Yes    4.1         5.6\n## 5      Urban Pizza   pizza    Sun       Yes    4.0         5.5",
+    "crumbs": [
+      "Practice Answers",
+      "Week 9 Answers (1028)"
+    ]
+  },
+  {
+    "objectID": "answers/wk11_answer.html",
+    "href": "answers/wk11_answer.html",
+    "title": "Week 11 Answers (1111)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 11 Answers (1111)"
+    ]
+  },
+  {
+    "objectID": "answers/wk11_answer.html#reminders",
+    "href": "answers/wk11_answer.html#reminders",
+    "title": "Week 11 Answers (1111)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 11 Answers (1111)"
+    ]
+  },
+  {
+    "objectID": "answers/wk11_answer.html#download-data",
+    "href": "answers/wk11_answer.html#download-data",
+    "title": "Week 11 Answers (1111)",
+    "section": "2 Download Data",
+    "text": "2 Download Data\nPlease download the datasets garden_shifts.csv (right click here)",
+    "crumbs": [
+      "Practice Answers",
+      "Week 11 Answers (1111)"
+    ]
+  },
+  {
+    "objectID": "answers/wk11_answer.html#isekai-nonbiri-nouka-異世界悠閒農家",
+    "href": "answers/wk11_answer.html#isekai-nonbiri-nouka-異世界悠閒農家",
+    "title": "Week 11 Answers (1111)",
+    "section": "3 Isekai Nonbiri Nouka (異世界悠閒農家)",
+    "text": "3 Isekai Nonbiri Nouka (異世界悠閒農家)\nHiraku is the village head of Taiju no mura (大樹村) and owns a big farmland. He keeps a log of when each villager — Hiraku, Rurushi, Tia, Ria, Daga, Fraurem, Senna — is responsible for a plot. However, because the log was kept by hand and then typed in, the dates are a bit messy and some entries are incomplete.\nHiraku sees a dataset garden_shifts.csv with the following columns:\n\nname: villager name\nstart_str: start date of the shift\n\nend_str: end date of the shift\nplot: which plant/plot they look after\n\nAll shifts are in September and October 2025, and no villager works on more than one plot on the same day.\nHiraku wants to know how many days each villager works in October.\n\nUse the pipe %&gt;% in the steps below.\nCreate a new data frame shifts_complete that adds two new columns, start_date and end_date, which convert start_str and end_date to Date types for the original data.\n\n\n\n\n\n\n\nTipHint\n\n\n\nRemember to keep NA as NA when using mutate().\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse grepl(\"-\", start_str) ~ in case_when().\n\n\n\nDrops any rows containing NA (in any column) in shifts_complete .\nCreate a new data frame shifts_coverage that includes the full sequence of dates from start_date to end_date in shifts_coverage.\n\n\n\n\n\n\n\nTipHint\n\n\n\nFor example, if Hiraku is responsible for cabbage from 2025-09-10 to 2025-09-13, then there would be 4 rows that take value 2025-09-10, 2025-09-11, 2025-09-12 and 2025-09-13 in column date for shifts_complete.\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nFor each row in shifts_complete, create a temperate data frame temp in the for-loop with columns name, plot, date, where date columns includes all the dates between start_date and end_date.\n\n\n\n\n\n\n\n\nTipHint\n\n\n\nUse rbind() to combine data frames in each loop.\n\n\n\nAdd a column month to shifts_coverage that contains only the YYYY-MM part of column date.\nCreate a new data frame shifts_coverage_oct for dates in October only.\nHow many days does each villager work in October?\n\nlibrary(tidyverse)\n\nshifts &lt;- read.csv(\"data/garden_shifts.csv\")\n\n# Part 1\nshifts_complete &lt;- shifts %&gt;%\n  mutate(\n    start_date = case_when(\n      grepl(\"-\", start_str) ~ as.Date(start_str, format = \"%Y-%m-%d\"),\n      grepl(\"/\", start_str) ~ as.Date(start_str, format = \"%Y/%m/%d\"),\n      TRUE ~ NA\n      )\n    ) %&gt;% \n  mutate(\n    end_date = case_when(\n      grepl(\"-\", end_str) ~ as.Date(end_str, format = \"%Y-%m-%d\"),\n      grepl(\"/\", end_str) ~ as.Date(end_str, format = \"%Y/%m/%d\"),\n      TRUE ~ NA\n      )\n    )\n\n# Part 2 \nshifts_complete &lt;- shifts_complete %&gt;% \n  na.omit()\n\n# Part 3\nfor(i in seq_along(shifts_complete$name)){\n  days &lt;- seq(from = shifts_complete$start_date[i],\n              to = shifts_complete$end_date[i],\n              by = \"day\")\n  \n  temp &lt;- data.frame(\n    name = shifts_complete$name[i],\n    plot = shifts_complete$plot[i],\n    date = days\n  )\n  if(i == 1){\n    shifts_coverage &lt;- temp\n  }\n  else{\n    shifts_coverage &lt;- rbind(shifts_coverage, temp)\n  }\n}\n\n# Part 4\nshifts_coverage &lt;- shifts_coverage %&gt;% \n  mutate(month = substring(date, 1, 7))\n\n# Part 5\nshifts_coverage_oct &lt;- shifts_coverage %&gt;%\n  filter(month == \"2025-10\")\n\n# Part 6\nvillagers &lt;- c(\"Hiraku\", \"Rurushi\", \"Tia\", \"Ria\", \"Daga\", \"Fraurem\", \"Senna\")\ndays_vec &lt;- c()\n\nfor(villager in villagers){\n  temp &lt;- shifts_coverage_oct %&gt;% \n    filter(name == villager)\n  days_vec &lt;- c(days_vec, nrow(temp))\n}\n\nvillager_oct_days &lt;- data.frame(\n  name = villagers,\n  num_days = days_vec\n)\n\nprint(villager_oct_days)\n\n\n     name num_days\n1  Hiraku       22\n2 Rurushi       10\n3     Tia       21\n4     Ria       18\n5    Daga       20\n6 Fraurem       20\n7   Senna       19",
+    "crumbs": [
+      "Practice Answers",
+      "Week 11 Answers (1111)"
+    ]
+  },
+  {
+    "objectID": "answers/wk13_answer.html",
+    "href": "answers/wk13_answer.html",
+    "title": "Week 13 Answers (1125)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 13 Answers (1125)"
+    ]
+  },
+  {
+    "objectID": "answers/wk13_answer.html#reminders",
+    "href": "answers/wk13_answer.html#reminders",
+    "title": "Week 13 Answers (1125)",
+    "section": "",
+    "text": "Remember to use the project and create a new script in your script folder!\nBetter to use only the functions taught in the course.",
+    "crumbs": [
+      "Practice Answers",
+      "Week 13 Answers (1125)"
+    ]
+  },
+  {
+    "objectID": "answers/wk13_answer.html#shangri-la-frontier-香格里拉開拓異境",
+    "href": "answers/wk13_answer.html#shangri-la-frontier-香格里拉開拓異境",
+    "title": "Week 13 Answers (1125)",
+    "section": "2 Shangri-La Frontier (香格里拉·開拓異境)",
+    "text": "2 Shangri-La Frontier (香格里拉·開拓異境)\nShangri-La Frontier is a cutting-edge VRMMO game. After a major update, Sunraku is testing a new build and wants to know whether it actually increases his average damage per combo compared to his old build, which had a known average of 1200 damage per combo in similar areas.\nSunraku goes to a stable grinding spot and records the damage per combo for 15 battles using the new build:\n\\[\n1310, 1195, 1240, 1285, 1220,\n1350, 1290, 1210, 1265, 1305,\n1330, 1275, 1255, 1190, 1320\n\\]\n\nRun an appropriate one-sample t-test using t.test(), and report a 95% confidence interval for the mean damage with the form: 95 percent confidence interval: (a, b).\n\ndamage_sunraku &lt;- c(\n  1310, 1195, 1240, 1285, 1220,\n  1350, 1290, 1210, 1265, 1305,\n  1330, 1275, 1255, 1190, 1320\n)\n\n# Test if mean &gt; 1200\nt.test(\n  damage_sunraku,\n  mu = 1200,\n  alternative = \"greater\",\n  conf.level = 0.95\n)\n\nprint(paste0(\"95 percent confidence interval:(\",\n             test_1$conf.int[1], \n             \" \", \n             test_1$conf.int[2], \n             \")\"\n             )\n      )\n\n# (Optional) you can also run a two-sided test\nt.test(\n  damage_sunraku,\n  mu = 1200,\n  alternative = \"two.sided\",\n  conf.level = 0.95\n)\n\n\n\n    One Sample t-test\n\ndata:  damage_sunraku\nt = 5.352, df = 14, p-value = 5.105e-05\nalternative hypothesis: true mean is greater than 1200\n95 percent confidence interval:\n 1246.516      Inf\nsample estimates:\nmean of x \n 1269.333 \n\n\n[1] \"95 percent confidence interval:(1246.51601109891 Inf)\"\n\n\nPsyger-0 is another top-tier player in Shangri-La Frontier, known for her insane burst damage. She tests her own optimized build in the same area and logs her damage per combo in 12 battles:\n\\[\n1380, 1425, 1405, 1360, 1390,\n1435, 1410, 1375, 1440, 1400,\n1395, 1420\n\\]\n\nDoes Psyger-0’s build have a different mean damage than Sunraku’s new build? Report the p-value.\n\ndamage_psyger0 &lt;- c(\n  1380, 1425, 1405, 1360, 1390,\n  1435, 1410, 1375, 1440, 1400,\n  1395, 1420\n)\n\n# Test if their damage if different\nt.test(\n  damage_sunraku,\n  damage_psyger0,\n  alternative = \"two.sided\",\n  conf.level = 0.95\n)\n\n\n\n    Welch Two Sample t-test\n\ndata:  damage_sunraku and damage_psyger0\nt = -9.0474, df = 21.21, p-value = 9.95e-09\nalternative hypothesis: true difference in means is not equal to 0\n95 percent confidence interval:\n -164.2699 -102.8967\nsample estimates:\nmean of x mean of y \n 1269.333  1402.917 \n\n\n[1] 9.949658e-09",
+    "crumbs": [
+      "Practice Answers",
+      "Week 13 Answers (1125)"
     ]
   },
   {
@@ -1591,6 +1635,17 @@
     "crumbs": [
       "Quizzes",
       "Quiz 4"
+    ]
+  },
+  {
+    "objectID": "quiz/Quiz_5.html",
+    "href": "quiz/Quiz_5.html",
+    "title": "Quiz 5",
+    "section": "",
+    "text": "Open in new tab · Download PDF",
+    "crumbs": [
+      "Quizzes",
+      "Quiz 5"
     ]
   }
 ]
