@@ -19,7 +19,12 @@
   # 1-1. one-proportion t-test
   
     ## example 1: Is the weekly childcare time (for male) equal to 25 hrs?
-    china_male <- china %>% filter(gender == 1)
+    china <- china %>% 
+      filter(child_care >= 0)
+  
+    china_male <- china %>% 
+      filter(gender == 1)
+  
     t.test(china_male$child_care,
            mu = 25, 
            conf.level = 0.95)
