@@ -1,0 +1,219 @@
+---
+title: 'Week 11 Answers (1111)'
+fig-cap: false
+---
+
+
+## Reminders
+
+1. Remember to use the project and create a new script in your script folder!
+
+2. Better to use only the functions taught in the course.
+
+
+## Download Data
+
+Please download the datasets `garden_shifts.csv` [(right click here)](garden_shifts.csv){target="_blank" rel="noopener"}
+
+
+## Isekai Nonbiri Nouka (異世界悠閒農家)
+
+Hiraku is the village head of Taiju no mura (大樹村) and owns a big farmland.
+He keeps a log of when each villager — Hiraku, Rurushi, Tia, Ria, Daga, Fraurem, Senna — is responsible for a plot. However, because the log was kept by hand and then typed in, the dates are a bit messy and some entries are incomplete.
+
+Hiraku sees a dataset `garden_shifts.csv` with the following columns:
+
+   - `name`: villager name
+   - `start_str`: start date of the shift  
+   - `end_str`: end date of the shift
+   - `plot`: which plant/plot they look after
+
+All shifts are in September and October 2025, and no villager works on more than one plot on the same day.
+
+Hiraku wants to know how many days each villager works in October.
+
+0. Use the pipe `%>%` in the steps below.
+
+1. Create a new data frame `shifts_complete` that adds two new columns, `start_date` and `end_date`, which convert `start_str` and `end_date`  to `Date` types for the original data.
+
+::: {.callout-tip title="Hint"}
+Remember to keep `NA` as `NA` when using `mutate()`.
+:::
+
+::: {.callout-tip title="Hint"}
+Use `grepl("-", start_str) ~` in `case_when()`.
+:::
+
+2. Drops any rows containing `NA` (in any column) in `shifts_complete` .
+
+3. Create a new data frame `shifts_coverage` that includes the full sequence of dates from `start_date` to `end_date` in `shifts_coverage`.
+
+::: {.callout-tip title="Hint"}
+For example, if Hiraku is responsible for cabbage from `2025-09-10` to `2025-09-13`, then there would be 4 rows that take value  `2025-09-10`, `2025-09-11`, `2025-09-12` and  `2025-09-13` in column `date` for `shifts_complete`.
+:::
+
+::: {.callout-tip title="Hint"}
+For each row in `shifts_coverage`, create a temperate data frame `temp` in the for-loop with columns `name`, `plot`, `date`, where `date` columns includes all the dates between `start_date` and `end_date`. 
+:::
+
+::: {.callout-tip title="Hint"}
+Use `rbind()` to combine data frames in each loop. 
+:::
+
+4. Add a column `month` to `shifts_coverage` that contains only the `YYYY-MM` part of column `date`.
+
+5. Create a new data frame `shifts_coverage_oct` for dates in October only.
+
+6. How many days does each villager work in October?
+
+```r
+library(tidyverse)
+
+shifts <- read.csv("data/garden_shifts.csv")
+
+# Part 1
+shifts_complete <- shifts %>%
+  mutate(
+    start_date = case_when(
+      grepl("-", start_str) ~ as.Date(start_str, format = "%Y-%m-%d"),
+      grepl("/", start_str) ~ as.Date(start_str, format = "%Y/%m/%d"),
+      TRUE ~ NA
+      )
+    ) %>% 
+  mutate(
+    end_date = case_when(
+      grepl("-", end_str) ~ as.Date(end_str, format = "%Y-%m-%d"),
+      grepl("/", end_str) ~ as.Date(end_str, format = "%Y/%m/%d"),
+      TRUE ~ NA
+      )
+    )
+
+# Part 2 
+shifts_complete <- shifts_complete %>% 
+  na.omit()
+
+# Part 3
+for(i in seq_along(shifts_complete$name)){
+  days <- seq(from = shifts_complete$start_date[i],
+              to = shifts_complete$end_date[i],
+              by = "day")
+  
+  temp <- data.frame(
+    name = shifts_complete$name[i],
+    plot = shifts_complete$plot[i],
+    date = days
+  )
+  if(i == 1){
+    shifts_coverage <- temp
+  }
+  else{
+    shifts_coverage <- rbind(shifts_coverage, temp)
+  }
+}
+
+# Part 4
+shifts_coverage <- shifts_coverage %>% 
+  mutate(month = substring(date, 1, 7))
+
+# Part 5
+shifts_coverage_oct <- shifts_coverage %>%
+  filter(month == "2025-10")
+
+# Part 6
+villagers <- c("Hiraku", "Rurushi", "Tia", "Ria", "Daga", "Fraurem", "Senna")
+days_vec <- c()
+
+for(villager in villagers){
+  temp <- shifts_coverage_oct %>% 
+    filter(name == villager)
+  days_vec <- c(days_vec, nrow(temp))
+}
+
+villager_oct_days <- data.frame(
+  name = villagers,
+  num_days = days_vec
+)
+
+print(villager_oct_days)
+```
+
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+
+library(tidyverse)
+library(here)
+
+shifts <- read.csv(here("data", "garden_shifts.csv"))
+
+# Part 1
+shifts_complete <- shifts %>%
+  mutate(
+    start_date = case_when(
+      grepl("-", start_str) ~ as.Date(start_str, format = "%Y-%m-%d"),
+      grepl("/", start_str) ~ as.Date(start_str, format = "%Y/%m/%d"),
+      TRUE ~ NA
+      )
+    ) %>% 
+  mutate(
+    end_date = case_when(
+      grepl("-", end_str) ~ as.Date(end_str, format = "%Y-%m-%d"),
+      grepl("/", end_str) ~ as.Date(end_str, format = "%Y/%m/%d"),
+      TRUE ~ NA
+      )
+    )
+
+# Part 2 
+shifts_complete <- shifts_complete %>% 
+  na.omit()
+
+# Part 3
+for(i in seq_along(shifts_complete$name)){
+  days <- seq(from = shifts_complete$start_date[i],
+              to = shifts_complete$end_date[i],
+              by = "day")
+  
+  temp <- data.frame(
+    name = shifts_complete$name[i],
+    plot = shifts_complete$plot[i],
+    date = days
+  )
+  if(i == 1){
+    shifts_coverage <- temp
+  }
+  else{
+    shifts_coverage <- rbind(shifts_coverage, temp)
+  }
+}
+
+# Part 4
+shifts_coverage <- shifts_coverage %>% 
+  mutate(month = substring(date, 1, 7))
+
+# Part 5
+shifts_coverage_oct <- shifts_coverage %>%
+  filter(month == "2025-10")
+
+# Part 6
+villagers <- c("Hiraku", "Rurushi", "Tia", "Ria", "Daga", "Fraurem", "Senna")
+days_vec <- c()
+
+for(villager in villagers){
+  temp <- shifts_coverage_oct %>% 
+    filter(name == villager)
+  days_vec <- c(days_vec, nrow(temp))
+}
+
+villager_oct_days <- data.frame(
+  name = villagers,
+  num_days = days_vec
+)
+
+print(villager_oct_days)
+```
+
+
+
+![](nonbiri.gif){width="960" fig-align="center" fig-alt="Animated welcome"}
+
+

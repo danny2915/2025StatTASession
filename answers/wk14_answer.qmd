@@ -1,0 +1,117 @@
+---
+title: 'Week 14 Answers (1202)'
+fig-cap: false
+---
+
+
+## Reminders
+
+1. Remember to use the project and create a new script in your script folder!
+
+2. Better to use only the functions taught in the course.
+
+
+## Download Data
+
+Please download the datasets `nba_players_19.csv` and `gpa_iq.csv` [here](https://www.openintro.org/data/){target="_blank"}.
+
+
+## ANOVA
+
+### ANOVA Testing
+
+Use the `aov()` function to perform an ANOVA test to determine if there is no difference in height among players in each position group. Then, use the `summary()` function to obtain the p-value and make a conclusion. 
+
+```r
+aov_result <- aov(nba$height ~ nba$position)
+summary(aov_result)
+```
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+rm(list = ls())
+library(tidyverse)
+library(here)
+
+nba <- read.csv(here("data", "nba_players_19.csv"))
+
+aov_result <- aov(nba$height ~ nba$position)
+summary(aov_result)
+```
+We reject the null hypothesis, which states that there is no difference in height among position groups. This indicates that the height of a player is significantly associated with their position.
+
+## Linear Regression
+
+### Correlation Coefficient
+Using the `gpa` dataset, use the `summarize()` function to compute the standard deviation of `gpa`, the standard deviation of `iq`, and the correlation coefficient between `gpa` and `iq`.
+
+
+::: {.callout-tip title="Hint"}
+Use `cor(x, y)` to compute the correlation coefficient between the variables `x` and `y`.
+:::
+
+```r
+gpa %>% summarize(
+    sd_gpa = sd(gpa),
+    sd_iq = sd(iq),
+    cor = cor(gpa, iq)
+  )
+```
+
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+
+gpa <- read.csv(here("data", "gpa_iq.csv"))
+
+gpa %>% summarize(
+    sd_gpa = sd(gpa),
+    sd_iq = sd(iq),
+    cor = cor(gpa, iq)
+  )
+```
+
+
+### Regression
+
+Now suppose `gpa` is the outcome (dependent variable), and `iq` is the explanatory (independent variable). Use the `lm()` function to predict `gpa` based on `iq`. In other words, fit a linear model to estimate the relationship between `gpa` and `iq`.
+
+
+```r
+lm_model <- lm(gpa$gpa ~ gpa$iq)
+summary(lm_model)$coefficient
+```
+
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+
+gpa <- read.csv(here("data", "gpa_iq.csv"))
+
+lm_model <- lm(gpa$gpa ~ gpa$iq)
+summary(lm_model)$coefficient
+```
+
+
+## Regression with Plot
+
+Lastly, let’s visualize the linear regression on a scatter plot. Create the plot with the following specifications:
+
+- Use the `ggplot()` and `geom_point()` function to create a scatter plot, with the x-axis representing `iq` and the y-axis representing `gpa`.
+
+- Use the `geom_smooth()` function to add a fitted line based on a linear model.
+
+```r
+ggplot(gpa, aes(x = iq, y = gpa)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = TRUE)
+```
+
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+
+ggplot(gpa, aes(x = iq, y = gpa)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = TRUE)
+```

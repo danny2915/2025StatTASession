@@ -1,0 +1,394 @@
+---
+title: 'Homework 6 Answers'
+fig-cap: false
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+-   If you find any typos or errors, please feel free to contact me via
+    email at r13323002\@ntu.edu.tw. I would appreciate it and will
+    correct the solution to prevent any misunderstandings.
+
+-   For some R commands marked with ‘OPTIONAL,’ you don’t need to learn
+    them. You will be completely fine on the computer quiz even if you
+    choose to ignore them.
+
+-   If you’re having trouble understanding the code, don’t hesitate to
+    ask me for help. I’ll do my best to assist you during office hours
+    or after the TA session.
+
+``` r
+# clear the mamory and import package
+rm(list = ls())
+library(tidyverse)
+
+xydata <- read.csv("data/xydata.csv")
+```
+
+```{r}
+#| echo: false 
+
+# clear the mamory and import package
+rm(list = ls())
+library(tidyverse)
+library(here)
+
+# Import data
+
+xydata <- read.csv(here("data", "xydata.csv"))
+```
+
+## Computer Exercises
+
+### Correlation Coefficient
+
+```{r}
+# correlation between x1 and y1
+cor(xydata$x1, xydata$y1)
+```
+
+```{r}
+# correlation between x2 and y2
+cor(xydata$x2, xydata$y2)
+```
+
+```{r}
+# correlation between x3 and y3
+cor(xydata$x3, xydata$y3)
+```
+
+```{r}
+# correlation between x4 and y4
+cor(xydata$x4, xydata$y4)
+```
+
+### Least Squares Regression
+
+```{r}
+fit1 <- lm(xydata$y1 ~ xydata$x1)
+summary(fit1)
+```
+
+```{r}
+fit2 <- lm(xydata$y2 ~ xydata$x2)
+summary(fit2)
+```
+
+```{r}
+fit3 <- lm(xydata$y3 ~ xydata$x3)
+summary(fit3)
+```
+
+```{r}
+fit4 <- lm(xydata$y4 ~ xydata$x4)
+summary(fit4)
+```
+
+### Scatter Plot & Residual Plot
+
+#### Scatter Plot
+
+``` r
+ggplot(xydata, aes(x = x1, y = y1)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, col = "red") +
+  labs(title = "Scatter plot of x1 and y1") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+
+ggplot(xydata, aes(x = x1, y = y1)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, col = "red") +
+  labs(title = "Scatter plot of x1 and y1") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+``` r
+ggplot(xydata, aes(x = x2, y = y2)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, col = "red") +
+  labs(title = "Scatter plot of x2 and y2") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+
+ggplot(xydata, aes(x = x2, y = y2)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, col = "red") +
+  labs(title = "Scatter plot of x2 and y2") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+``` r
+ggplot(xydata, aes(x = x3, y = y3)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, col = "red") +
+  labs(title = "Scatter plot of x3 and y3") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+
+ggplot(xydata, aes(x = x3, y = y3)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, col = "red") +
+  labs(title = "Scatter plot of x3 and y3") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+``` r
+ggplot(xydata, aes(x = x4, y = y4)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, col = "red") +
+  labs(title = "Scatter plot of x4 and y4") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+
+ggplot(xydata, aes(x = x4, y = y4)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, col = "red") +
+  labs(title = "Scatter plot of x4 and y4") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+#### Residual Plot
+
+``` r
+ggplot() +
+  geom_point(mapping = aes(x = xydata$x1, y = fit1$residuals)) +
+  labs(title = "Scatter plot of x1 and residual") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+
+ggplot() +
+  geom_point(mapping = aes(x = xydata$x1, y = fit1$residuals)) +
+  labs(title = "Scatter plot of x1 and residual") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+``` r
+ggplot() +
+  geom_point(mapping = aes(x = xydata$x2, y = fit2$residuals)) +
+  labs(title = "Scatter plot of x2 and residual") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+
+ggplot() +
+  geom_point(mapping = aes(x = xydata$x2, y = fit2$residuals)) +
+  labs(title = "Scatter plot of x2 and residual") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+``` r
+ggplot() +
+  geom_point(mapping = aes(x = xydata$x3, y = fit3$residuals)) +
+  labs(title = "Scatter plot of x3 and residual") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+
+ggplot() +
+  geom_point(mapping = aes(x = xydata$x3, y = fit3$residuals)) +
+  labs(title = "Scatter plot of x3 and residual") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+``` r
+ggplot() +
+  geom_point(mapping = aes(x = xydata$x4, y = fit4$residuals)) +
+  labs(title = "Scatter plot of x4 and residual") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+
+ggplot() +
+  geom_point(mapping = aes(x = xydata$x4, y = fit4$residuals)) +
+  labs(title = "Scatter plot of x4 and residual") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+From the scatter plot for each pair of data, we can notice that pairs
+$(x_1,y_1)$ and $(x_3,y_3)$ basically follows the linear trend despite
+an outlier in pair $(x_3,y_3)$. The linear model with higer-order
+polynomial term will be more appropriate for pair $(x_2,y_4)$; while
+pair $(x_4,y_4)$ doesn’t suit linear estimation.
+
+## Textbook Exercise
+
+### Question 8.2
+
+a.  There is a fan shape in the residual plot. Variability around the
+    regression line increases as $x$ increases. Since there is a trend
+    in the residual plot, the linear model method we have described
+    would not be appropriate for these data.
+
+b.  There is an apparent curvature in the residual plot. A linear model
+    would not be appropriate for these data.
+
+### Question 8.14
+
+a.  **The relationship is linear, strong and positive.** However, there
+    appears to be some departure from linearity as the scatterplot shows
+    somewhat of a fan shape. There is less variability in weights for
+    people with lower hip girth measurements than for people with larger
+    hip girth measurements.
+
+    One explanation for the fan shape might be that the data are
+    composed of two groups of people who are likely to have a different
+    relationship between their weights and hip girths.
+
+b.  Changing the units, even if just for one of the variables, will not
+    change the form, direction or strength of the relationship between
+    the two variables.
+
+### Question 8.22
+
+a.  There is a positive, moderate, linear association between number of
+    calories and amount of carbohydrates. In addition, the amount of
+    carbohydrates is more variable for menu items with higher calories,
+    indicating non-constant variance. There also appear to be two
+    clusters of data: a patch of about a dozen observations in the lower
+    left and a larger patch on the right side.
+
+b.  Explanatory: number of calories. Response: amount of carbohydrates
+    (in grams).
+
+c.  With a regression line, we can predict the amount of carbohydrates
+    for a given number of calories. This may be useful if only calorie
+    counts for the food items are posted but the amount of carbohydrates
+    in each food item is not readily available.
+
+d.  Even though the relationship appears linear in the scatterplot, the
+    constant variability assumption is violated. We should not fit a
+    least squares line to these data.
+
+### Question 8.26
+
+a.  $$
+     \widehat{\text{headrwt}}=-0.357+4.034\times\text{body\_weight}
+    $$
+
+b.  Explanatory: number of calories. Response: amount of carbohydrates
+    (in grams).
+
+c.  With a regression line, we can predict the amount of carbohydrates
+    for a given number of calories. This may be useful if only calorie
+    counts for the food items are posted but the amount of carbohydrates
+    in each food item is not readily available.
+
+d.  Even though the relationship appears linear in the scatterplot, the
+    constant variability assumption is violated. We should not fit a
+    least squares line to these data.
+
+e.  $\sqrt{0.6466}=0.8041$.
+
+### Question 8.32
+
+a.  The relationship appears to be strong, positive, and linear. There
+    is one potential outlier: the student who had 9 cans of beer.
+
+b.  $$
+    \widehat{\text{BAC}}=-0.0127+0.0180\times\text{beers}
+    $$ Slope: For each additional can of beer consumed, the model
+    predicts an additional 0.0180 grams per deciliter BAC.
+
+    Intercept: Students who don’t have any beer are expected to have a
+    blood alcohol content of -0.0127.
+
+c.  The hypotheses are as follows: $$ 
+    \begin{cases}
+    H_0: \text{The true slope coefficient of number of beers is zero. } (\beta_1=0)\\
+    H_A: \text{The true slope coefficient of number of beers is different than zero. } (\beta_1\neq 0)
+    \end{cases} 
+    $$ The p-value is approximately 0. (Note that this output doesn’t
+    mean the p-value is exactly zero, only that when rounded to four
+    decimal places it is zero.) With such a small p-value and since the
+    data showed a positive relationship, we reject $H_0$ and conclude
+    that the data provide convincing evidence that number of cans of
+    beer consumed and blood alcohol content are positively correlated
+    and the true slope parameter is greater than 0.
+
+d.  $R^2=0.892=0.79$. Approximately 79% of the variability in blood
+    alcohol content can be explained by number of cans of beer consumed.
+
+e.  It would probably be weaker. This study had people of very similar
+    ages, and they also had identical drinks. In bars and elsewhere,
+    drinks vary widely in the amount of alcohol they contain.
+
+### Question 8.42
+
+a.  Since $R^2 = r^2 = 0.72$ and the scatterplot shows a negative trend,
+    $$ r = -\sqrt{0.72} \approx -0.85. $$
+
+b.  Slope:
+    $$ b_1 = r \frac{s_y}{s_x} \;=\; (-0.8485)\frac{16.9}{26.7} \approx -0.536. $$
+    Intercept:
+    $$ b_0 = \bar y - b_1 \bar x \;=\; 38.8 - (-0.536)(30.8) \approx 55.3. $$
+    Thus the fitted line is $$ \hat y = 55.3 - 0.536\,x. $$
+
+c.  For a neighborhood with 0% reduced-fee lunches ($x=0$), the model
+    predicts about 55.3% of bike riders wear helmets.
+
+d.  For each 1 percentage-point increase in the reduced-fee lunch rate,
+    the predicted helmet-wearing rate decreases by about 0.536
+    percentage points.
+
+e.  Predicted: $$ \hat y = 55.3 - 0.536(40) \approx 33.9. $$ Residual:
+    $$ e = y - \hat y = 40 - 33.9 \approx 6.1. $$ Interpretation: This
+    neighborhood’s helmet-wearing rate is about 6.1 percentage points
+    higher than the model predicts given its reduced-fee lunch rate.
+
+### Question 8.44
+
+a.  Because the point $(\bar x,\bar y)$ lies on the least-squares line,
+    $$
+    \bar y=\hat\beta_0+\hat\beta_1\bar x
+    \;\Rightarrow\;
+    \hat\beta_1=\frac{\bar y-\hat\beta_0}{\bar x}
+            =\frac{3.9983-4.010}{-0.0883}
+            \approx 0.133.
+    $$ So the fitted model is $$
+    \widehat{\text{eval}} = 4.010 + 0.133\,(\text{beauty}).
+    $$
+
+b.  The regression output reports $t=4.13$ with $p<0.0001$ for the
+    beauty coefficient. Since the $p$-value is far below 0.05, we have
+    convincing evidence that the slope is positive: higher
+    (standardized) beauty scores are associated with higher teaching
+    evaluations.
+
+c.  
+
+```{=html}
+<!-- -->
+```
+1.  **Linearity:** The scatterplot of evaluation vs. beauty shows a
+    roughly linear trend.
+2.  **Normal residuals:** The residual histogram is approximately
+    symmetric and centered at 0 with no outliers.
+3.  **Constant variance:** The residuals vs. beauty plot shows a fairly
+    constant spread across the range of $x$.
+4.  **Independence:** The residuals vs. order plot shows no pattern.
+
+Given these diagnostics, the simple linear regression assumptions are
+satisfied.

@@ -1,0 +1,40 @@
+---
+title: 'Week 3 Practices (0916)'
+fig-cap: false
+---
+
+
+## Download Data
+
+Please download the datasets `county.csv` and `loan_full_schema.csv` [here](https://www.openintro.org/data/){target="_blank"}.
+
+## Coding Style
+
+1. Create an RStudio project inside a folder with proper names (e.g. TA_Session).  
+
+2. Create folders for R scripts and data.
+(optional: put scripts for the first two weeks' TA session in the script folder as well.)
+
+3. For the following questions, your code should follow the coding styles in the slides.
+
+## Contingency Table
+
+Using the dataset `loans_full_schema.csv`, create a contingency table by `loan_purpose` (set as row) and `application_type` (set as column), and add the sum row and sum column.
+
+
+## Bar Graph
+
+Using the dataset `loans_full_schema.csv`, draw the bar graph to show the numbers of applicant according to each credit grade by following procedures:
+
+1. Specify `sub_grade` as the x-axis, and fill the bar with `grade`.
+2. Add graph title and axis labels  
+   - **Title:** `Number of Applicant by Credit Grade`  
+   - **x-axis:** `Credit Grade`  
+   - **y-axis:** `Number of Applicant`
+3. Center the graph title.
+
+::: {.callout-tip title="Hint"}
+**Hint:** Add `theme(plot.title = element_text(hjust = 0.5))` to the graph.
+:::
+
+After that, you should have a beautiful graph and share it with me! :)

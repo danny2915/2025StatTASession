@@ -1,0 +1,72 @@
+---
+title: 'Week 5 Practices (0930)'
+fig-cap: false
+---
+
+
+## Reminders
+
+1. Remember to use the project and create a new script in your script folder!
+
+2. Set the seed to be `2025`.
+
+3. Better to use only the functions taught in the course.
+
+
+
+## Control Flow
+
+Print out the characters `"NTU"` for four times, and then print out the characters `"National Taiwan University"` for six times.
+
+(There are multiple ways to accomplish this, but I encourage you to use a single `for-loop` and an `if-else` statement to complete the task so you can get familiar with these syntax.)
+
+
+## Binomial Random Sample
+
+1. Draw 400 observations from binomial distribution `[size = 1000, prob = 0.5]` and compute the mean of the observations.
+
+2. Using the random sample you just generated, create a DataFrame to store the drawn values by using `data.frame()` function, and draw the histogram graph to see the distribution.
+
+
+## Certification Exam
+
+A certification exam is organized for 10 students: Alice, Bob, Charlie, Diana, Ethan, Fiona, George, Hannah, Ivan, and Julia. Each student participates in 10 tests, named test_1, test_2, …, test_10. If the students pass certain amount of tests, they can claim the certificate.
+
+1. Create a vector `students` that contains 10 students' name.
+
+2. Create a matrix `scores` that uses the `rnorm()` to generate students score in 10 tests (average score: 60, standard deviation: 15). Let the column name of the matrix be `test_1`, `test_2`, …, `test_10`.
+
+::: {.callout-tip title="Hint"}
+Use `replicate()` function to create the matrix first, create a character vector `test_names` for column names, then use `colnames()` to assign `test_names` as the column names of the matrix.
+:::
+
+3. Create a dataframe `stu_scores` that combines `students` and `scores`.
+
+::: {.callout-tip title="Hint"}
+data.frame(name = students, scores) is our new dataframe.
+:::
+
+4. Create a function `certificate_winner` containing three parameters: `data`, `passing_score`, `min_passed` such that a student
+   - passes the test if the his/her score of that test is greater than or equal `passing_score`
+   - wins the certificate if the number of passing test is greater than or equal `min_passed`
+   
+   Finally, the function should return the students who wins the certificate.
+
+::: {.callout-tip title="Hint"}
+You can use `seq_along` in the for-loop, such as `for(i in seq_along(data[, 1])){}`
+:::
+
+::: {.callout-tip title="Hint"}
+Set a counter that counts the number of tests the student passed in a for-loop. Remember to reset the counter to be 0 when the next loop begins.
+:::
+
+::: {.callout-tip title="Hint"}
+Create a vector `passed_students` in the function that saves the student's name if his/her meets the requirements.
+:::
+
+5. Answer the following questions:
+   - Who are the certificate winner if `passing_score` is 60, and the `passing_score` is 5?
+   - Who are the certificate winner if `passing_score` is 65, and the `passing_score` is 6?
+
+
+

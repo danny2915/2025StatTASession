@@ -1,0 +1,29 @@
+---
+title: "Week 1 Practices (0902)"
+---
+
+## Assign Values
+
+Create two variables called `x` and `y`, and assign values `20250902` and `1031`. Compute `x / y`.
+
+
+
+## Help
+
+Use the `help()` function to check docs, e.g. `data.frame()` or `mean()`.
+
+## Matrix
+
+Create the following vectors:
+``` r
+name_vec <- c("James", "Noc", "Monica")
+
+age_vec <- c(25, 30, 28)
+```
+
+and create a 3 × 2 matrix with these two vectors.
+
+Do you encounter errors? Can you print the matrix out?
+What’s the data type of the matrix?
+
+

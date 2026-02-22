@@ -1,0 +1,9 @@
+---
+title: "Week 2 Slides (0909)"
+---
+
+```{=html}
+<iframe src="Slides_wk2.pdf" width="100%" height="800" style="border:1px solid #ddd;"></iframe>
+[Open in new tab](Slides_wk2.pdf){target=_blank rel="noopener"}
+ ·
+[Download PDF](Slides_wk2.pdf)

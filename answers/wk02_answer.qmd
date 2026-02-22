@@ -1,0 +1,94 @@
+---
+title: 'Week 2 Answers (0909)'
+fig-cap: false
+---
+
+
+## Download Data
+
+Please download the datasets `county.csv` and `loan50.csv` [here](https://www.openintro.org/data/){target="_blank"}.
+
+## Import Data
+
+1.  Import the package `tidyverse`, which contains several useful functions for data wrangling and visualization.
+
+2.  Create a folder on your computer to store the dataset downloaded from NTU COOL or OpenIntro website.\
+    Set your working directory as that folder and import the datasets `county.csv` and `loan50.csv`.
+
+``` r
+library(tidyverse)
+setwd("/your/working/directory")
+county <- read.csv("county.csv")
+loan <- read.csv("loan50.csv")
+```
+
+## Scatter Plot
+
+1.  Use `county.csv` to draw the scatter plot of `unemployment_rate` (x-axis) and `per_capita_income` (y-axis).
+
+:::{.callout-tip title="Hint"}
+**Hint:** You don’t need to specify any parameter in `geom_point()`.
+:::
+
+``` r
+ggplot(county, aes(x = unemployment_rate, y = per_capita_income)) + 
+  geom_point()
+```
+
+```{r}
+#| label: scatter
+#| fig-width: 8       # inches
+#| fig-height: 5
+#| out-width: "90%"   # scales in the page
+#| fig-align: center
+#| echo: false        # hide code if this is the Answers page
+
+library(ggplot2)
+library(here)
+county <- read.csv(here("data", "county.csv"))
+ggplot(county, aes(unemployment_rate, per_capita_income)) +
+  geom_point()
+```
+
+2.  Draw the same graph again, but this time make the following adjustments:
+
+    -   adjust the point color to `lightcoral`
+    -   adjust the point size to `0.5`
+
+``` r
+ggplot(county, aes(x = unemployment_rate, y = per_capita_income)) +
+  geom_point(color = "lightcoral", size = 0.5)
+```
+
+```{r}
+#| label: scatter-colored
+#| fig-width: 8       # inches
+#| fig-height: 5
+#| out-width: "90%"   # scales in the page
+#| fig-align: center
+#| echo: false        # hide code if this is the Answers page
+
+ggplot(county, aes(unemployment_rate, per_capita_income)) +
+  geom_point(color = "lightcoral", size = 0.5)
+```
+
+## Histogram
+
+Use `loan50.csv` data to draw the histogram of `loan_amount` (set as x-axis), and adjust the parameter `binwidth` in `geom_histogram()` to 5000.
+
+``` r
+ggplot(loan, aes(x = loan_amount)) +
+  geom_histogram(binwidth = 5000)
+```
+
+```{r}
+#| label: hist-loan
+#| fig-width: 8
+#| fig-height: 5
+#| out-width: "90%"
+#| fig-align: center
+#| echo: false
+loan   <- read.csv(here("data", "loan50.csv"))
+ggplot(loan, aes(x = loan_amount)) +
+  geom_histogram(binwidth = 5000)
+```

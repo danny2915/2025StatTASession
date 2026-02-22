@@ -1,0 +1,114 @@
+---
+title: 'Week 9 Practices (1028)'
+fig-cap: false
+---
+
+
+## Reminders
+
+1. Remember to use the project and create a new script in your script folder!
+
+2. Better to use only the functions taught in the course.
+
+
+## Download Data
+
+Please download the datasets `restaurants.csv`
+[(right click here)](restaurants.csv){target=_blank rel="noopener"}
+
+
+## Nohara Hiroshi: Hiru Meshi no Ryuugi (野原廣志 午餐的流派)
+
+"My name is Hiroshi Nohara (野原廣志). I’m an office worker and often eat lunch out. Based on the state of my body and my wallet, I quickly decide what to eat each day. You could say that while I’m a business expert, I’m also a lunch expert."
+
+Hiroshi keeps a list of restaurants in `restaurants.csv`. The file has five columns:  
+
+   - `name`: The restaurant's name.
+   - `type`: The type of cuisine.
+   - `closed`: The restaurant’s closed day; some restaurants are permanently closed.
+   - `lunch_set`: Whether the restaurant offers lunch sets at noon.
+   - `rating`: Hiroshi’s personal rating for the restaurant.
+   
+Today is Thursday. Hiroshi feels like seafood, but curry or noodles would also be fine. Since he had fast food yesterday, he’d rather avoid it today. It’s close to the end of the month, so it would be better if the restaurant offers lunch sets.
+
+Follow the instructions below to help Hiroshi choose the restaurants that best fit his needs:
+
+::: {.callout-tip title="Hint"}
+In this practice, `filter(), select(), mutate(), arrange()` will all be used.
+:::
+
+0. Use the pipe `%>%` in the steps below.
+
+1. Filter the restaurants that are open today.
+
+2. Add a column `lunch_set_score` that is `1.5` if the restaurant offers lunch sets and `0` otherwise.
+
+3. Add a column `preference_score` that takes value `1.5` for `seafood`, `1` for `curry` and `noodle`, `-2` for `fastfood`, and `0` otherwise.
+
+4. Add a column `total_score` that sums up the columns `rating`, `lunch_set_score` and `preference_score`.
+
+5. Remove the `lunch_set_score` and `preference_score` columns.
+
+6. Arrange the rows in descending order of `total_score`.
+
+7. Print the top 5 rows with the highest `total_score`.
+
+
+
+``` r
+library(tidyverse)
+
+restaurants <- read.csv("data/restaurants.csv")
+
+restaurants_cleaned <- restaurants %>% 
+  filter(closed != "Thu" & closed != "close down") %>%
+  mutate(lunch_set_score = ifelse(lunch_set == "Yes", 1.5, 0)) %>%
+  mutate(preference_score = case_when(
+    type == "seafood" ~ 1.5,
+    type == "curry" | type == "noodle" ~ 1,
+    type == "fastfood" ~ -2,
+    TRUE ~ 0
+    )) %>%
+  mutate(total_score = rating + lunch_set_score + preference_score) %>%
+  select(-c(lunch_set_score, preference_score)) %>%
+  arrange(desc(total_score))
+  
+print(restaurants_cleaned[1:5, ])
+```
+
+``` r
+#### Answers
+##               name    type closed lunch_set rating total_score
+## 1       Curry Spot   curry    Fri       Yes    4.4         6.9
+## 2    Curry Delight   curry    Sun       Yes    3.9         6.4
+## 3 Blue Ocean Grill seafood    Fri        No    4.2         5.7
+## 4   Mama’s Kitchen   other    Fri       Yes    4.1         5.6
+## 5      Urban Pizza   pizza    Sun       Yes    4.0         5.5
+```
+
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+
+library(tidyverse)
+library(here)
+
+restaurants <- read.csv(here("data", "restaurants.csv"))
+
+restaurants_cleaned <- restaurants %>% 
+  filter(closed != "Thu" & closed != "close down") %>%
+  mutate(lunch_set_score = ifelse(lunch_set == "Yes", 1.5, 0)) %>%
+  mutate(preference_score = case_when(
+    type == "seafood" ~ 1.5,
+    type == "curry" | type == "noodle" ~ 1,
+    type == "fastfood" ~ -2,
+    TRUE ~ 0
+    )) %>%
+  mutate(total_score = rating + lunch_set_score + preference_score) %>%
+  select(-c(lunch_set_score, preference_score)) %>%
+  arrange(desc(total_score))
+```
+
+![](ryouiki.gif){width="960" fig-align="center" fig-alt="Animated welcome"}
+
+

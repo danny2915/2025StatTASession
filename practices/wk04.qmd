@@ -1,0 +1,25 @@
+---
+title: 'Week 4 Practices (0923)'
+fig-cap: false
+---
+
+
+## Project
+
+Remember to use the project you create last week!
+
+## Draw Uniform Random Sample
+
+Set random seed as 2025. Draw 200 observations from uniform distribution [0, 100] and compute the mean of the observations.
+
+
+
+::: {.callout-tip title="Hint"}
+**Hint:** Use `mean()` function.
+:::
+
+## Histogram
+
+1. Using the random sample you just generated, create a DataFrame to store the drawn values by using `data.frame()` function, and draw the histogram graph to see the distribution.
+
+2. Now, draw another 10,000 observations from uniform distribution [0, 100], and draw the histogram graph to see the distribution.

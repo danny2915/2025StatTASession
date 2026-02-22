@@ -1,0 +1,133 @@
+---
+title: 'Week 12 Answers (1118)'
+fig-cap: false
+---
+
+
+## Reminders
+
+1. Remember to use the project and create a new script in your script folder!
+
+2. Better to use only the functions taught in the course.
+
+
+## Download Data
+
+Please download the datasets `transactions.csv` [(right click here)](transactions.csv){target="_blank" rel="noopener"}
+
+
+## Silent Witch: Chinmoku no Majo no Kakushigoto (Silent Witch 沉默魔女的祕密)
+
+Monica is the new accountant for the Serendia Academy's student association.
+She suspects that cash vs non-cash transactions in 2024 look quite different from previous years, and worries there might be some false accounting going on.
+
+Monica sees a dataset `transactions.csv` with the following columns:
+
+   - `year`: the year of the transaction (2015–2024)  
+   - `payment_type`: `"cash"`, `"bank_transfer"`, or `"online"`  
+   - `amount`: transaction amount in dollars  
+
+She wants to use a chi-squared test to check if the distribution of payment types in 2024's accounting is significantly different from the other years.
+
+0. Use the pipe `%>%` in the steps below.
+
+1. Create a new column period with two categories: `pre_2024` for years `2015–2023`, 
+`year_2024` for year `2024` only. Save the result as `transactions_by2024`.
+
+```r
+library(tidyverse)
+
+transactions <- read.csv("data/transactions.csv")
+
+transactions_by2024 <- transactions %>%
+  mutate(
+    period = if_else(year == 2024, "year_2024", "pre_2024")
+  )
+```
+
+2. Using `group_by()` and `summarise()`, compute a table of the number and mean of transactions for each combination of `period` and `payment_type` from `transactions_by2024`.
+
+```r
+summary_counts <- transactions_by2024 %>%
+  group_by(period, payment_type) %>%
+  summarize(n = n(), 
+            mean = mean(amount)
+            ) %>%
+  ungroup()
+```
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+
+library(tidyverse)
+library(here)
+
+transactions <- read.csv(here("data", "transactions.csv"))
+
+transactions_by2024 <- transactions %>%
+  mutate(
+    period = if_else(year == 2024, "year_2024", "pre_2024")
+  )
+
+summary_counts <- transactions_by2024 %>%
+  group_by(period, payment_type) %>%
+  summarize(n = n(), 
+            mean = mean(amount)
+            ) %>%
+  ungroup()
+
+print(summary_counts)
+```
+
+3. From `transactions_by2024`, create a 2 × 3 contingency table `tab` (`period` × `payment_type`) using `table()`.
+
+```r
+tab <- table(transactions_by2024$period, 
+             transactions_by2024$payment_type
+             )
+```
+```{r}
+#| echo: false        # hide code if this is the Answers page
+
+tab <- table(transactions_by2024$period, 
+             transactions_by2024$payment_type
+             )
+
+print(tab)
+```
+
+4. Use chisq.test() on `tab` to test:
+
+   - $H_0$: The distribution of `payment_type` is the same in `pre_2024` and `year_2024`.
+
+   - $H_1$: The distribution of `payment_type` is different in `year_2024`.
+   
+```r
+chisq_result <- chisq.test(tab)
+```
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+
+chisq_result <- chisq.test(tab)
+
+print(chisq_result)
+```
+   
+5. Report the p-value from the chi-squared test. Is there false accounting in 2024?
+
+```r
+print(chisq_result[["p.value"]]) # reject the null hypothesis
+```
+
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+
+print(chisq_result[["p.value"]]) # reject the null hypothesis
+```
+
+
+![](monica.gif){width="960" fig-align="center" fig-alt="Animated welcome"}
+
+

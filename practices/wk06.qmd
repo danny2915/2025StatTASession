@@ -1,0 +1,38 @@
+---
+title: 'Week 6 Practices (1007)'
+fig-cap: false
+---
+
+
+## Reminders
+
+1. Remember to use the project and create a new script in your script folder!
+
+2. Set the seed to be `2025`.
+
+3. Better to use only the functions taught in the course.
+
+
+## Download Data
+
+Please download the datasets `ames.csv`
+[here](https://www.openintro.org/data/){target="_blank"}.
+
+
+## Housing Price in 2025
+
+1. Use `paste()` and for-loop to create a character vector `date_2025` that contains 365 days in 2025, and each date repeat 3 times. i.e., `c("2025-01-01", "2025-01-01", "2025-01-01", ..., "2025-12-31")`
+
+::: {.callout-tip title="Hint"}
+Use `if (month %in% vec)` to check if there are 28, 30 or 31 days in that month.
+:::
+
+
+2. Use `as.Date()` to convert the `date_2025` as type `date`.
+
+3. Create a numeric vector `housing_price` with length 1095 having the value generated from a normal distribution with `mean = 10000`, `sd = 2000`.
+
+4. Combine `date_2025` and `housing_price_2025` as a new dataframe `housing_2025`.
+
+5. Use `geom_line()` with `linewidth = 0.3` to plot the average housing price for each date in 2025.
+

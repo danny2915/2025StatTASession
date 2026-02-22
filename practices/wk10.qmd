@@ -1,0 +1,49 @@
+---
+title: 'Week 10 Practices (1104)'
+fig-cap: false
+---
+
+
+## Reminders
+
+1. Remember to use the project and create a new script in your script folder!
+
+2. Better to use only the functions taught in the course.
+
+
+## CLT Simulation
+
+### Draw Poisson Sample
+
+Write a function called `sample_mean_pois(n)` with the following specification:
+
+1. Draw $n$ random samples from a Poisson distribution $\lambda = 5$.
+
+2.Compute the sample mean.
+
+3. Return the sample mean.
+
+This function allows you to draw $n$ random samples from a Poisson distribution ($\lambda=5$) and compute the sample mean.
+
+
+### Build Sample Mean DataFrame
+
+Now, we’re going to utilize the function to help us compute the sample mean multiple times. Please follow the instructions step-by-step:
+
+1. Set the random seed to `2025`.
+
+2. Given $n=500$, use the function `replicate()` to execute the function `sample_mean_pois(n)` we just defined for `1,000` times.
+
+3. After that, you should obtain `1,000` sample means. Assign the `1,000` sample means to a variable called rdmean and build a DataFrame from it.
+
+So far, we have obtained $1,000$ sample means, each calculated from $500$ Poisson samples.
+
+
+### Histogram
+
+Using the DataFrame we just built, draw a histogram to examine the distribution of the sample means.
+
+
+
+
+

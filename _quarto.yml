@@ -1,12 +1,24 @@
+execute-dir: project
+
 project:
   type: website
   render:
     - index.qmd
+    - slides/*.qmd
     - practices/*.qmd
     - answers/*.qmd
+    - example_code/*.qmd
+    - homework/*.qmd
+    - quiz/*.qmd
+  resources:
+    - slides/**/*.pdf
+    - example_code/**/*.R
+    - quiz/**/*.pdf
+    - assets/audio/**
 
 website:
-  title: "2025Fall Statistics TA Session In-Class Practice Answers"
+  site-url: https://danny2915.github.io/2025StatTASession/
+  title: "2025Fall Statistics TA Session"
   navbar: false
   page-navigation: true
   search: false
@@ -17,10 +29,18 @@ website:
     contents:
       - text: "Home"
         file: index.qmd
+      - section: "Slides"
+        contents: "slides/*.qmd"
+      - section: "Example R code"
+        contents: "example_code/*.qmd"
       - section: "Practices"
         contents: "practices/*.qmd"
-      - section: "Answers"
+      - section: "Practice Answers"
         contents: "answers/*.qmd"
+      - section: "Homework Solutions"
+        contents: "homework/*.qmd"
+      - section: "Quizzes"
+        contents: "quiz/*.qmd"
 
 format:
   html:
@@ -32,4 +52,10 @@ format:
     code-copy: true
     anchor-sections: true
     smooth-scroll: true
-    embed-resources: true
+    embed-resources: false
+    math: katex
+    include-after-body:
+      - assets/bgm.html
+execute:
+  warning: false
+  message: false

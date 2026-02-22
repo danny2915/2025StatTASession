@@ -1,0 +1,36 @@
+---
+title: 'Week 7 Practices (1014)'
+fig-cap: false
+---
+
+
+## Reminders
+
+1. Remember to use the project and create a new script in your script folder!
+
+2. Better to use only the functions taught in the course.
+
+
+## Download Data
+
+Please download the datasets `loan_full_schema.csv`
+[here](https://www.openintro.org/data/){target="_blank"}.
+
+
+## Wrap the graph
+
+Use the dataset `loans_full_schema.csv` to create a histogram of the variable `interest_rate`. Set the bin width to 2.5, and facet the graph by the variable `loan_purpose`, and allow each sub-graph to have a different y-axis scale.
+
+
+## Save the graph
+
+1. Create a folder `figures` in your project folder.
+
+2. Save the graph in the last question to the `figures` folder with name `wk7_default_plot` without any 
+customized setting.
+
+3. Save another graph with name `wk7_sized_plot` using `height = 6`, `width = 4`.
+
+4. Add assignment `dpi = 150` to the last graph, and named the new graph as `wk7_sized_plot_150dpi`.
+
+5. Compare the differences between `wk7_default_plot`, `wk7_sized_plot` and `wk7_sized_plot_150dpi`.

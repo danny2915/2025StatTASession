@@ -1,0 +1,119 @@
+---
+title: 'Week 7 Answers (1014)'
+fig-cap: false
+---
+
+
+## Reminders
+
+1. Remember to use the project and create a new script in your script folder!
+
+2. Better to use only the functions taught in the course.
+
+
+## Download Data
+
+Please download the datasets `loan_full_schema.csv`
+[here](https://www.openintro.org/data/){target="_blank"}.
+
+
+## Wrap the graph
+
+Use the dataset `loans_full_schema.csv` to create a histogram of the variable `interest_rate`. Set the bin width to 2.5, and facet the graph by the variable `loan_purpose`, and allow each sub-graph to have a different y-axis scale.
+
+``` r
+library(tidyverse)
+
+loan <- read.csv("data/loans_full_schema.csv")
+interest_purpose_plot <- ggplot(loan, aes(x = interest_rate)) +
+  geom_histogram(binwidth = 2.5) +
+  facet_wrap(~loan_purpose,
+             scales = "free_y"
+             )
+
+print(interest_purpose_plot)
+```
+
+
+```{r}
+#| fig-width: 8       # inches
+#| fig-height: 5
+#| out-width: "90%"   # scales in the page
+#| fig-align: center
+#| echo: false        # hide code if this is the Answers page
+
+library(tidyverse)
+library(here)
+
+loan <- read.csv(here("data", "loans_full_schema.csv"))
+interest_purpose_plot <- ggplot(loan, aes(x = interest_rate)) +
+  geom_histogram(binwidth = 2.5) +
+  facet_wrap(~loan_purpose,
+             scales = "free_y"
+             )
+
+print(interest_purpose_plot)
+```
+
+
+## Save the graph
+
+1. Create a folder `figures` in your project folder.
+
+2. Save the graph in the last question to the `figures` folder with name `wk7_default_plot` without any 
+customized setting.
+
+3. Save another graph with name `wk7_sized_plot` using `height = 6`, `width = 4`.
+
+4. Add assignment `dpi = 150` to the last graph, and named the new graph as `wk7_sized_plot_150dpi`.
+
+5. Compare the differences between `wk7_default_plot`, `wk7_sized_plot` and `wk7_sized_plot_150dpi`.
+
+
+``` r
+
+# Without any customized setting
+ggsave(filename = "wk7_default_plot.png",
+       path = "figures",
+       plot = interest_purpose_plot.
+       )
+
+# Set height = 6, width = 4
+ggsave(filename = "wk7_sized_plot.png",
+       path = "figures",
+       plot = interest_purpose_plot,
+       width = 6,
+       height = 4
+       )
+
+# Set dpi = 150
+ggsave(filename = "wk7_sized_plot_150dpi.png",
+       path = "figures",
+       plot = interest_purpose_plot,
+       width = 6,
+       height = 4,
+       dpi = 150
+       )
+```
+
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+
+ggsave(filename = file.path(here("figures"), "wk7_default_plot.png"),
+       plot = interest_purpose_plot
+       )
+
+ggsave(filename = file.path(here("figures"), "wk7_sized_plot.png"),
+       plot = interest_purpose_plot,
+       width = 6,
+       height = 4
+       )
+
+ggsave(filename = file.path(here("figures"), "wk7_sized_plot_150dpi.png"),
+       plot = interest_purpose_plot,
+       width = 6,
+       height = 4,
+       dpi = 150
+       )
+```

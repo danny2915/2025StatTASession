@@ -1,0 +1,92 @@
+---
+title: 'Week 4 Answers (0923)'
+fig-cap: false
+---
+
+
+## Project
+
+Remember to use the project you create last week!
+
+## Draw Uniform Random Sample
+
+Set random seed as 2025. Draw 200 observations from uniform distribution [0, 100] and compute the mean of the observations.
+
+::: {.callout-tip title="Hint"}
+**Hint:** Use `mean()` function.
+:::
+
+``` r
+set.seed(2025)
+sample_size <- 200
+rdn <- runif(n = sample_size, min = 0, max = 100)
+mean <- mean(rdn)
+print(mean)
+```
+
+``` r
+## [1] 52.17858
+```
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+
+rm(list = ls())
+set.seed(2025)
+sample_size <- 200
+rdn <- runif(n = sample_size, min = 0, max = 100)
+```
+
+## Histogram
+
+1. Using the random sample you just generated, create a DataFrame to store the drawn values by using `data.frame()` function, and draw the histogram graph to see the distribution.
+
+``` r
+df_1 <- data.frame(
+  values = rdn
+)
+ggplot(df_1, aes(x = values)) +
+  geom_histogram()
+```
+
+```{r}
+#| fig-width: 8       # inches
+#| fig-height: 5
+#| out-width: "90%"   # scales in the page
+#| fig-align: center
+#| echo: false        # hide code if this is the Answers page
+
+library(ggplot2)
+df_1 <- data.frame(
+  values = rdn
+)
+ggplot(df_1, aes(x = values)) +
+  geom_histogram()
+```
+
+2. Now, draw another 10,000 observations from uniform distribution [0, 100], and draw the histogram graph to see the distribution.
+
+
+``` r
+rdn_2 <- runif(n = 10000, min = 0, max = 100)
+df_2 <- data.frame(
+  values = rdn_2
+)
+ggplot(df_2, aes(x = values)) +
+  geom_histogram()
+```
+
+```{r}
+#| fig-width: 8       # inches
+#| fig-height: 5
+#| out-width: "90%"   # scales in the page
+#| fig-align: center
+#| echo: false        # hide code if this is the Answers page
+
+rdn_2 <- runif(n = 10000, min = 0, max = 100)
+df_2 <- data.frame(
+  values = rdn_2
+)
+ggplot(df_2, aes(x = values)) +
+  geom_histogram()
+```

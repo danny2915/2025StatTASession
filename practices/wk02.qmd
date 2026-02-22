@@ -1,0 +1,33 @@
+---
+title: 'Week 2 Practices (0909)'
+---
+
+## Download Data
+
+Please download the datasets `county.csv` and `loan50.csv` [here](https://www.openintro.org/data/){target=_blank}.
+
+
+## Import Data
+
+1. Import the package `tidyverse`, which contains several useful functions for data wrangling and visualization.
+
+2. Create a folder on your computer to store the dataset downloaded from NTU COOL or OpenIntro website.  
+   Set your working directory as that folder and import the datasets `county.csv` and `loan50.csv`.
+
+## Scatter Plot
+
+1. Use `county.csv` to draw the scatter plot of `unemployment_rate` (x-axis) and `per_capita_income` (y-axis).
+
+::: {.callout-tip title="Hint"}
+**Hint:** You don’t need to specify any parameter in `geom_point()`.
+:::
+
+2. Draw the same graph again, but this time make the following adjustments:
+
+   - adjust the point color to `lightcoral`
+   - adjust the point size to `0.5`
+   
+## Histogram
+
+Use `loan50.csv` data to draw the histogram of `loan_amount` (set as x-axis), and adjust the parameter `binwidth` in `geom_histogram()` to 5000.
+

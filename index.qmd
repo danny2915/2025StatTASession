@@ -1,10 +1,14 @@
 ---
-title: "2025Fall Statistics TA Session In-Class Practice"
+title: "2025Fall Statistics TA Session"
 author: "Danny Po-Hsien Kang"
 date: "2025-09-09"
 ---
 
+Welcome! Use the sidebar to open weekly **Slides**, **Practices** and **Answers**
 
-Welcome! Use the sidebar to open weekly **Practices** and **Answers**.
+Answers to the practice will be published after each TA Session.
 
-![](welcome.gif){width=960 fig-align="center" fig-alt="Animated welcome"}
+**Sending email**: r13323002\@ntu.edu.tw (mail title including \[Statistics TA\]) \
+**TA Office hours**: Tuesday, 4:30-5:20 p.m. at SSB. (社會科學院) Room 645.
+
+![](welcome.gif){width="960" fig-align="center" fig-alt="Animated welcome"}

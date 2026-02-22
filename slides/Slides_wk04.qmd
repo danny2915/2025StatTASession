@@ -1,0 +1,9 @@
+---
+title: "Week 4 Slides (0923)"
+---
+
+```{=html}
+<iframe src="Slides_wk4.pdf" width="100%" height="800" style="border:1px solid #ddd;"></iframe>
+[Open in new tab](Slides_wk4.pdf){target=_blank rel="noopener"}
+ ·
+[Download PDF](Slides_wk4.pdf)

@@ -1,0 +1,291 @@
+---
+title: 'Week 5 Answers (0930)'
+fig-cap: false
+---
+
+
+## Reminders
+
+1. Remember to use the project and create a new script in your script folder!
+
+2. Set the seed to be `2025`.
+
+3. Better to use only the functions taught in the course.
+
+
+
+## Control Flow
+
+Print out the characters `"NTU"` for four times, and then print out the characters `"National Taiwan University"` for six times.
+
+(There are multiple ways to accomplish this, but I encourage you to use a single `for-loop` and an `if-else` statement to complete the task so you can get familiar with these syntax.)
+
+``` r
+for (i in 1:10){
+  if (i <= 4){
+    print("NTU")
+  }else{
+    print("National Taiwan University")
+  }
+}
+```
+
+``` r
+## [1] "NTU"
+## [1] "NTU"
+## [1] "NTU"
+## [1] "NTU"
+## [1] "National Taiwan University"
+## [1] "National Taiwan University"
+## [1] "National Taiwan University"
+## [1] "National Taiwan University"
+## [1] "National Taiwan University"
+## [1] "National Taiwan University"
+```
+
+
+## Binomial Random Sample
+
+1. Draw 400 observations from binomial distribution `[size = 1000, prob = 0.5]` and compute the mean of the observations.
+
+``` r
+set.seed(2025)
+sample_size <- 400
+rdn <- rbinom(n = sample_size, size = 1000, prob = 0.5)
+mean <- mean(rdn)
+print(mean)
+```
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+
+rm(list = ls())
+set.seed(2025)
+sample_size <- 400
+rdn <- rbinom(n = sample_size, size = 1000, prob = 0.5)
+mean <- mean(rdn)
+```
+
+``` r
+## [1] 499.2225
+```
+
+2. Using the random sample you just generated, create a DataFrame to store the drawn values by using `data.frame()` function, and draw the histogram graph to see the distribution.
+
+``` r
+library(ggplot2)
+
+df <- data.frame(
+  values = rdn
+)
+ggplot(df, aes(x = values)) +
+  geom_histogram()
+```
+
+```{r}
+#| fig-width: 8       # inches
+#| fig-height: 5
+#| out-width: "90%"   # scales in the page
+#| fig-align: center
+#| echo: false        # hide code if this is the Answers page
+
+library(ggplot2)
+df <- data.frame(
+  values = rdn
+)
+ggplot(df, aes(x = values)) +
+  geom_histogram()
+```
+
+## Certification Exam
+
+A certification exam is organized for 10 students: Alice, Bob, Charlie, Diana, Ethan, Fiona, George, Hannah, Ivan, and Julia. Each student participates in 10 tests, named test_1, test_2, …, test_10. If the students pass certain amount of tests, they can claim the certificate.
+
+1. Create a vector `students` that contains 10 students' name.
+
+2. Create a matrix `scores` that uses the `rnorm()` to generate students score in 10 tests (average score: 60, standard deviation: 15). Let the column name of the matrix be `test_1`, `test_2`, …, `test_10`.
+
+::: {.callout-tip title="Hint"}
+Use `replicate()` function to create the matrix first, create a character vector `test_names` for column names, then use `colnames()` to assign `test_names` as the column names of the matrix.
+:::
+
+3. Create a dataframe `stu_scores` that combines `students` and `scores`.
+
+::: {.callout-tip title="Hint"}
+data.frame(name = students, scores) is our new dataframe.
+:::
+
+4. Create a function `certificate_winner` containing three parameters: `data`, `passing_score`, `min_passed` such that a student
+   - passes the test if the his/her score of that test is greater than or equal `passing_score`
+   - wins the certificate if the number of passing test is greater than or equal `min_passed`
+   
+   Finally, the function should return the students who wins the certificate.
+
+::: {.callout-tip title="Hint"}
+You can use `seq_along` in the for-loop, such as `for(i in seq_along(data[, 1])){}`
+:::
+
+::: {.callout-tip title="Hint"}
+Set a counter that counts the number of tests the student passed in a for-loop. Remember to reset the counter to be 0 when the next loop begins.
+:::
+
+::: {.callout-tip title="Hint"}
+Create a vector `passed_students` in the function that saves the student's name if his/her meets the requirements.
+:::
+
+5. Answer the following questions:
+   - Who are the certificate winner if `passing_score` is 60, and the `passing_score` is 5?
+   - Who are the certificate winner if `passing_score` is 65, and the `passing_score` is 6?
+
+``` r
+# Part 1: Create student vector
+students <- c("Alice", "Bob", "Charlie", "Diana", "Ethan",
+              "Fiona", "George", "Hannah", "Ivan", "Julia")
+
+# Part 2: Create score matrix
+test_names <- c("test_1", "test_2", "test_3", "test_4", "test_5",
+              "test_6", "test_7", "test_8", "test_9", "test_10")
+
+
+scores <- replicate(10, rnorm(10, mean = 60, sd = 15))
+
+colnames(scores) <- test_names
+
+# Part 3: Create the dataframe that combines students and scores
+stu_scores <- data.frame(name = students, scores)
+
+# Part 4: Create the certificate_winner function
+certificate_winner <- function(data, passing_score, min_passed){
+  
+  # Students names are in the first column
+  stu_vec <- data[, 1]
+  
+  # Test names are in 2~11th columns
+  test_cols <- colnames(data[, 2:11])
+  
+  # Counter for the number of exam passed
+  pass_count <- 0
+  
+  # Students that wins the certificate
+  passed_students <- c()
+  
+  # for i in 1:10
+  for(i in seq_along(stu_vec)){
+    
+    # Remember the counter should be reset for each student
+    pass_count <- 0
+    
+    # for j in 1:10
+    for (j in seq_along(test_cols)){
+      
+      # Passed if score larger than passing_score
+      if(data[i, j+1] >= passing_score){
+        
+        # Count how many tests student i passed
+        pass_count <- pass_count + 1
+      }
+      
+    }
+      # Claims the certificate if number of exam passed > minimum requirements
+      if(pass_count >= min_passed){
+        
+        passed_students <- c(passed_students, data[i, 1])
+        
+      }
+  }
+  
+  # Return the winners
+  return(passed_students)
+}
+
+# Question 1
+question_1_winners <- certificate_winner(stu_scores, 60, 5)
+print(question_1_winners)
+
+# Question 2
+question_2_winners <- certificate_winner(stu_scores, 70, 6)
+print(question_2_winners)
+
+```
+
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+
+# Part 1: Create student vector
+students <- c("Alice", "Bob", "Charlie", "Diana", "Ethan",
+              "Fiona", "George", "Hannah", "Ivan", "Julia")
+
+# Part 2: Create score matrix
+test_names <- c("test_1", "test_2", "test_3", "test_4", "test_5",
+              "test_6", "test_7", "test_8", "test_9", "test_10")
+
+
+scores <- replicate(10, rnorm(10, mean = 60, sd = 15))
+
+colnames(scores) <- test_names
+
+# Part 3: Create the dataframe that combines students and scores
+stu_scores <- data.frame(name = students, scores)
+
+# Part 4: Create the certificate_winner function
+certificate_winner <- function(data, passing_score, min_passed){
+  
+  # Students names are in the first column
+  stu_vec <- data[, 1]
+  
+  # Test names are in 2~11th columns
+  test_cols <- colnames(data[, 2:11])
+  
+  # Counter for the number of exam passed
+  pass_count <- 0
+  
+  # Students that wins the certificate
+  passed_students <- c()
+  
+  # for i in 1:10
+  for(i in seq_along(stu_vec)){
+    
+    # Remember the counter should be reset for each student
+    pass_count <- 0
+    
+    # for j in 1:10
+    for (j in seq_along(test_cols)){
+      
+      # Passed if score larger than passing_score
+      if(data[i, j+1] >= passing_score){
+        
+        # Count how many tests student i passed
+        pass_count <- pass_count + 1
+      }
+      
+    }
+      # Claims the certificate if number of exam passed > minimum requirements
+      if(pass_count >= min_passed){
+        
+        passed_students <- c(passed_students, data[i, 1])
+        
+      }
+  }
+  
+  # Return the winners
+  return(passed_students)
+}
+
+# Question 1
+question_1_winners <- certificate_winner(stu_scores, 60, 5)
+
+# Question 2
+question_2_winners <- certificate_winner(stu_scores, 65, 6)
+
+```
+
+``` r
+#### Question 1 Answers
+## [1] "Bob"     "Charlie" "Diana"   "Ethan"   "Fiona"   "Hannah" 
+```
+
+``` r
+#### Question 2 Answers
+## [1] "Ethan"
+```

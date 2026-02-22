@@ -1,0 +1,460 @@
+---
+title: 'Homework 5 Answers'
+fig-cap: false
+---
+
+-   If you find any typos or errors, please feel free to contact me via
+    email at r13323002\@ntu.edu.tw. I would appreciate it and will
+    correct the solution to prevent any misunderstandings.
+
+-   For some R commands marked with ‘OPTIONAL,’ you don’t need to learn
+    them. You will be completely fine on the computer quiz even if you
+    choose to ignore them.
+
+-   If you’re having trouble understanding the code, don’t hesitate to
+    ask me for help. I’ll do my best to assist you during office hours
+    or after the TA session.
+
+``` r
+# clear the mamory and import package
+rm(list = ls())
+library(tidyverse)
+
+read.csv("data/china.csv")
+```
+
+```{r}
+#| echo: false 
+
+# clear the mamory and import package
+rm(list = ls())
+library(tidyverse)
+library(here)
+
+# Import data
+
+china <- read.csv(here("data", "china.csv"))
+```
+
+## Computer Exercises
+
+### Summary Table & Histogram
+
+``` r
+# clean data: drop samples with unknown education degree, or unknown childcare hours
+china_clean <- china %>% 
+   filter(edu != 9 & is.na(edu) == FALSE) %>% 
+   filter(child_care != -99 & is.na(child_care) == FALSE)
+  
+# summary statistics table
+china_clean %>% summarize(
+    count = n(),
+    mean = mean(child_care),
+    sd = sd(child_care),
+    min = min(child_care),
+    max = max(child_care)
+  )
+```
+
+``` r
+# plot a histogram for `child_care`
+ggplot(china_clean, aes(x = child_care)) +
+  
+  ## select an appropriate bin width
+  geom_histogram(binwidth = 10, fill = "steelblue", color = "gray") +
+  
+  ## add label and graph title to make the graph more readable
+  labs(
+    title = "Histogram of Child Care Hours",
+    x = "Child Care Hours",
+    y = "Frequency"
+  ) +
+  
+  ## center the graph title
+  theme(plot.title = element_text(hjust = 0.5))
+x(child_care)
+  )
+```
+
+```{r}
+# clean data: drop samples with unknown education degree, or unknown childcare hours
+china_clean <- china %>% 
+   filter(edu != 9 & is.na(edu) == FALSE) %>% 
+   filter(child_care != -99 & is.na(child_care) == FALSE)
+  
+# summary statistics table
+china_clean %>% summarize(
+    count = n(),
+    mean = mean(child_care),
+    sd = sd(child_care),
+    min = min(child_care),
+    max = max(child_care)
+  )
+
+#| echo: false        # hide code if this is the Answers page
+
+# plot a histogram for `child_care`
+ggplot(china_clean, aes(x = child_care)) +
+  
+  ## select an appropriate bin width
+  geom_histogram(binwidth = 10, fill = "steelblue", color = "gray") +
+  
+  ## add label and graph title to make the graph more readable
+  labs(
+    title = "Histogram of Child Care Hours",
+    x = "Child Care Hours",
+    y = "Frequency"
+  ) +
+  
+  ## center the graph title
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+
+### Summary Table & Histogram: By Parent’s Gender
+``` r
+# summary statistics table: by parent's gender
+china_clean %>%
+  group_by(gender) %>%
+  summarize(
+    count = n(),
+    mean = mean(child_care),
+    sd = sd(child_care),
+    min = min(child_care),
+    max = max(child_care)
+  )
+```
+
+``` r
+# plot a histogram for `child_care`: by parent's gender
+ggplot(china_clean, aes(x = child_care)) +
+  
+  ## select an appropriate bin width
+  geom_histogram(binwidth = 5, color = "gray", fill = "steelblue") +
+  
+  ## split the sample by parent's gender, set the nrow = 2 for comparison
+  facet_wrap(~gender, nrow = 2) +
+  
+  ## add label and graph title to make the graph more readable
+  labs(
+    title = "Histogram of Child Care Hours: by Parent's Gender",
+    x = "Child Care Hours",
+    y = "Frequency",
+    fill = "Gender"
+  ) +
+  
+  ## center the graph title
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+
+china_clean %>%
+  group_by(gender) %>%
+  summarize(
+    count = n(),
+    mean = mean(child_care),
+    sd = sd(child_care),
+    min = min(child_care),
+    max = max(child_care)
+  )
+  
+ggplot(china_clean, aes(x = child_care)) +
+  
+  ## select an appropriate bin width
+  geom_histogram(binwidth = 5, color = "gray", fill = "steelblue") +
+  
+  ## split the sample by parent's gender, set the nrow = 2 for comparison
+  facet_wrap(~gender, nrow = 2) +
+  
+  ## add label and graph title to make the graph more readable
+  labs(
+    title = "Histogram of Child Care Hours: by Parent's Gender",
+    x = "Child Care Hours",
+    y = "Frequency",
+    fill = "Gender"
+  ) +
+  
+  ## center the graph title
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+### Hypothesis Testing (Child Care and Parent’s Gender)
+
+``` r
+# t-test
+t_test_result <- t.test(child_care ~ gender, data = china_clean)
+print(t_test_result)
+```
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+# t-test
+t_test_result <- t.test(child_care ~ gender, data = china_clean)
+print(t_test_result)
+```
+
+Set $\alpha=0.05$. The absolute value of the t-statistic (-8.25) is greater than the critical value of 1.96. Besides, the p-value is less than 0.05. So we reject $H_0$, implying the average childcare hours is significantly different between males and females.
+
+### Summary Table & Box Plot: By Parent’s Education Level
+
+``` r
+# summary statistics table: by parent's education level
+china_clean %>%
+    group_by(edu) %>%
+    summarise(
+      count = n(),
+      mean = mean(child_care),
+      sd = sd(child_care),
+      min = min(child_care),
+      max = max(child_care)
+    )
+```
+
+``` r
+# plot side-by-side box plots for `child_care`: by parent's educational level
+ggplot(china_clean, aes(y = child_care)) +
+  
+  ## remove the scale of x-axis
+  geom_boxplot(aes(x = "")) +
+  
+  ## split the sample by education level, set nrow = 1 for comparison
+  facet_wrap(~edu, nrow = 1) +
+  
+  ## add label and graph title to make the graph more readable
+  labs(
+    title = "Box Plot of Child Care Hours: by Parent's Education Level",
+    x = "Education Level",
+    y = "Child Care Hours"
+  ) +
+  
+  ## center the graph title
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+china_clean %>%
+    group_by(edu) %>%
+    summarise(
+      count = n(),
+      mean = mean(child_care),
+      sd = sd(child_care),
+      min = min(child_care),
+      max = max(child_care)
+    )
+
+ggplot(china_clean, aes(y = child_care)) +
+  
+  ## remove the scale of x-axis
+  geom_boxplot(aes(x = "")) +
+  
+  ## split the sample by education level, set nrow = 1 for comparison
+  facet_wrap(~edu, nrow = 1) +
+  
+  ## add label and graph title to make the graph more readable
+  labs(
+    title = "Box Plot of Child Care Hours: by Parent's Education Level",
+    x = "Education Level",
+    y = "Child Care Hours"
+  ) +
+  
+  ## center the graph title
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+### Hypothesis Testing (Child Care and Parent’s Education Level)
+
+``` r
+# summary statistics table: by parent's education level
+anova_result <- aov(child_care ~ as.factor(edu), data = china_clean)
+print(anova_result)
+summary(anova_result)
+```
+
+```{r}
+#| echo: false        # hide code if this is the Answers page
+anova_result <- aov(child_care ~ as.factor(edu), data = china_clean)
+print(anova_result)
+summary(anova_result)
+```
+
+Set $\alpha=0.05$. The F-statistics (1.259) is less than the critical value of $X$. Besides, the p-value (0.285) is greater than 0.05. Thus, we do not reject $H_0$. We don’t have strong evidence that the average childcare hours vary with parents’ education.
+
+
+## Textbook Exercise
+
+### Question 7.4
+a. We have $n = 26$, $T = 2.485$, $df = 26 - 1 = 25$, and $p\text{-value} = 0.020$. **Do not reject** $H_0$.
+
+b. We have $n = 26$, $T = 0.5$, $df = 18 - 1 = 17$, and $p\text{-value} = 0.623$. **Do not reject** $H_0$.
+
+### Question 7.12
+a.
+$$
+\begin{cases}
+H_0:\ \mu = 35,\\
+H_A:\ \mu \neq 35
+\end{cases}
+$$
+
+b.
+1. **Independence:** if we can assume that these 52 officers represent a random sample (big assumption), then independence would be satisfied, but we cannot check this.  
+
+2. **Normality:** we don’t have a plot of the distribution that we can use to check this condition. We at least have more than 30 observations, so the distribution would have to be extremely skewed to be an issue. We again cannot check this, but this seems like a less concerning issue than the independence consideration.
+
+c. The test statistic and the p-value can be calculated as follows:
+
+$$
+T \;=\; \frac{124.32 - 35}{\dfrac{37.74}{\sqrt{52}}} \;\approx\; 17.17
+$$
+
+$$
+df \;=\; 52 - 1 \;=\; 51
+$$
+
+$$
+p\text{-value} \;=\; 2 \times P\!\left(T_{51} > 17.07\right) \;<\; 0.001
+$$
+
+The hypothesis test yields a very small p-value, so we **reject** $H_0$. Given the direction of the data, there is very convincing evidence that the police officers have been exposed to a higher concentration of lead than individuals living in a suburban area.
+
+
+### Question 7.20
+
+a. The median writing score is slightly higher but it’s difficult to tell if the average scores on the two tests are different or not.
+
+b. No, the score of one student on the reading test is **not** independent of their score on the writing test.
+
+c. Let $\text{diff} = \text{read} - \text{write}$. Then the hypotheses are:
+$$
+\begin{cases}
+H_0:\ \mu_{\text{diff}} = 0\\
+H_A:\ \mu_{\text{diff}} \ne 0
+\end{cases}
+$$
+
+d. The conditions for the sampling distribution of $\bar{x}_{\text{diff}}$ to be nearly normal and the estimate of the standard error to be sufficiently accurate are as follows:
+
+1. **Independence:** Students are randomly sampled and $200 < 10\%$ of all students who take this survey, therefore we can assume that the reading and writing scores of one student are independent of another.  
+2. **Normality:** The distribution of the differences appears fairly symmetric, so we can assume that the sampling distribution of average differences will be approximately normal.
+
+e. The test statistic and the p-value can be calculated as follows:
+$$
+T
+= \frac{\bar{x}_{\text{diff}} - \mu_{\text{diff}}}{s_{\text{diff}}/\sqrt{n}}
+= \frac{-0.545 - 0}{\dfrac{8.887}{\sqrt{200}}}
+= \frac{-0.545}{0.628}
+\approx -0.87
+$$
+
+$$
+df = 200 - 1 = 199
+$$
+
+$$
+p\text{-value} = P\!\left(\lvert T_{199}\rvert > 0.87\right) > 0.2
+$$
+
+Since the p-value $> 0.05$, **fail to reject** $H_0$. The data do not provide convincing evidence of a difference between the average reading and writing scores.
+
+f. We may have made a **Type 2 error**, i.e. we may have incorrectly failed to reject $H_0$. In this context, a Type 2 error means deciding that the data do not provide convincing evidence of a difference between the average reading and writing scores of students when in reality there **is** a difference.
+
+g. Since we failed to reject $H_0$, which claimed the average difference is equal to $0$, we would expect a confidence interval to include this value.
+
+### Question 7.28
+
+The hypotheses are as follows:
+$$
+\begin{cases}
+H_0:\ \mu_{A,c} = \mu_{M,c} \\
+H_A:\ \mu_{A,c} \ne \mu_{M,c}
+\end{cases}
+$$
+
+We are told to assume that conditions for inference are satisfied. Then, the test statistic and the p-value can be calculated as follows:
+$$
+T
+= \frac{(\bar{x}_{A,c}-\bar{x}_{M,c})-(\mu_{A,c}-\mu_{M,c})}
+       {\sqrt{\dfrac{s_{A,c}^2}{n_{A,c}}+\dfrac{s_{M,c}^2}{n_{M,c}}}}
+= \frac{16.12-19.85-0}{\sqrt{\dfrac{3.58^2}{26}+\dfrac{4.51^2}{26}}}
+= \frac{-3.37}{1.13} \approx -3.3
+$$
+
+$$
+df=\min(n_{M,c}-1,\ n_{A,c}-1)=\min(26-1,\ 26-1)=25
+$$
+
+$$
+p\text{-value}=P\!\left(|T_{25}|>3.3\right) < 0.01
+$$
+
+Since p-value $< 0.05$, reject $H_0$. The data provide strong evidence that there is a difference in the average city mileage between cars with automatic and manual transmissions.
+
+### Question 7.30
+
+$$
+df=\min(n_1-1,\ n_2-1)=\min(26-1,\ 26-1)=25
+\qquad\Rightarrow\qquad t^*_{25}=2.49
+$$
+
+$$
+(\bar{x}_{A,\text{hwy}}-\bar{x}_{M,\text{hwy}})\ \pm\ t^*_{df}
+\sqrt{\dfrac{s_{A,\text{hwy}}^2}{n_{A,\text{hwy}}}+\dfrac{s_{M,\text{hwy}}^2}{n_{M,\text{hwy}}}}
+= (22.92-27.88)\ \pm\ 2.49\times \sqrt{\dfrac{5.29^2}{26}+\dfrac{5.01^2}{26}}
+$$
+
+$$
+= -4.96 \ \pm\ 2.49\times 1.43
+= -4.96 \ \pm\ 3.56
+= (-8.52,\ -1.4)
+$$
+
+We are 98% confident that on the highway cars with **manual** transmissions get on average **1.4 to 8.52 MPG more** than cars with **automatic** transmissions.
+
+### Question 7.34
+
+Difference we care about: 0.5. Single tail of 90%: $0.84 \times SE$. At the 5% significance level, the rejection region bounds span $\pm 1.96 \times SE$.
+
+$$
+0.5 = 0.84 \times SE + 1.96 \times SE = 2.8 \times SE
+$$
+
+$$
+SE = 0.1786 \;=\; \sqrt{\frac{(2.2)^2}{n} + \frac{(2.2)^2}{n}}
+$$
+
+$$
+n = 303.47
+$$
+
+We will need **304 plots of land for each fertilizer**.
+
+
+### Question 7.40
+
+The conditions that need to be satisfied for ANOVA are:
+
+1. **Independence:** We are not told if the students are randomly assigned to discussion sections, so we cannot be sure of independence of observations. That is, these data will not allow us to attribute any differences in scores to the teaching assistants since these data are observational. Students with different academic strengths may have tended to enroll in different sections.
+
+2. **Approximately normal:** We are not given plots of the distributions of grades by discussion section, therefore we cannot check this condition. Also, the sample sizes are not all large, so we can’t relax this condition.
+
+3. **Constant variance:** Based on the standard deviations given in the summary table, the constant variance assumption appears to be reasonable for most groups, but not all. Also, the sample sizes aren’t consistent so we can’t relax this condition.
+
+In order to proceed with the test, we will need to assume independence and approximately normal distributions within groups.
+
+The hypotheses are as follows:
+
+$$
+\begin{cases}
+H_0: \mu_1 = \mu_2 = \cdots = \mu_8, \\
+H_A: \text{The average score varies across some (or all) groups.}
+\end{cases}
+$$
+
+$$
+F_{7,198} = 1.87
+$$
+
+With a p-value $= 0.0767$. With a p-value $> 0.05$, we fail to reject $H_0$. The data do not provide convincing evidence that the average score varies across some (or all) groups.

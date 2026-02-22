@@ -1,0 +1,7 @@
+---
+title: "Week 14 Example R Code (1202)"
+---
+
+Right click to download:
+
+- [wk14_example_code.R](wk14_example_code.R)
